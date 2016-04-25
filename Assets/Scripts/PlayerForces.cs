@@ -26,6 +26,7 @@ public class PlayerForces : MonoBehaviour {
     float m_horVel = 10f;
     float m_airBorneSlow = .75f;
     #endregion
+    int m_lastMovedDirection = 1;
 
 
     void Start () {
@@ -40,6 +41,7 @@ public class PlayerForces : MonoBehaviour {
     void FixedUpdate() {
         checkIfOnJumpableSurface();
         checkWorldFieldPull();
+        Debug.DrawRay(transform.position, new Vector3(absHor, 0f), Color.red);
     }
 
     void checkIfOnJumpableSurface() {
@@ -81,8 +83,7 @@ public class PlayerForces : MonoBehaviour {
     //will be replaced
     public void jump() {
         if (grounded) {
-            Debug.Log(transform.up);
-            if (transform.up.y < 0) {
+            if (absUp < 0) {
                 m_rigidBody.velocity = new Vector2(
                     m_rigidBody.velocity.x, -10f);
                 //m_rigidBody.AddForce(new Vector2(0f, -10f));
@@ -97,6 +98,7 @@ public class PlayerForces : MonoBehaviour {
 
     public void run(int _direction) {
         Vector2 newVel;
+        m_lastMovedDirection = _direction;
         if (grounded) {
             newVel = new Vector2(m_horVel * _direction,
                 m_rigidBody.velocity.y);
@@ -106,5 +108,22 @@ public class PlayerForces : MonoBehaviour {
                 * _direction, m_rigidBody.velocity.y);
         }
         m_rigidBody.velocity = newVel; 
+    }
+
+    public int absUp {
+        get {
+            if(transform.up.y < 0) {
+                return -1;
+            }
+            else {
+                return 1;
+            }
+        }
+    }
+
+    public int absHor {
+        get {
+            return m_lastMovedDirection;
+        }
     }
 }
