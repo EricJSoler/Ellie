@@ -71,7 +71,7 @@ public class PlayerDevToss : MonoBehaviour {
     private float getDist() { return MIN_DIST + additionalDist < MAX_DIST ? MIN_DIST + additionalDist : MAX_DIST; }
 
     //TODO: Make throw device less convoluted
-    public void throwDevice(int _polarity) { 
+    public void throwDevice(float _polarity) { 
         Vector3 spawn;
         Vector2 vel = new Vector2(m_horVel + m_body.velocity.x, m_upVel + m_body.velocity.y);
         
@@ -128,5 +128,8 @@ public class PlayerDevToss : MonoBehaviour {
         Rigidbody2D rb = dev.GetComponent<Rigidbody2D>();
         rb.velocity = vel;
         rb.gravityScale = this.GetComponent<Rigidbody2D>().gravityScale * 3f; //3f is some arbitrary weight that makes gravity feel and look better
+        //adding polarity to the instantiation of the field
+        dev.GetComponentInChildren<Field>().setPolarity(_polarity);
+
     }
 }

@@ -4,30 +4,81 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
 
     PlayerBase m_base;
+    //last recorded time a device was thrown
+    float m_lastThrow;
+    //time between throws
+    public float m_reloadTime = 2f;
+    //set to r if the device to be thrown is positive
+    //set to e if the device to be throw is negative
+    //set to n if nothing is in the process of being thrown
+    char m_devToBeTossed;
+
+    bool ericSettings = false;
+
 
     void Start () {
         m_base = this.GetComponent<PlayerBase>();
+        m_devToBeTossed = 'n';
     }
 	
 	// Update is called once per frame
 	void Update () {
-        
-        if (Input.GetKeyDown(KeyCode.Space) ) {
-            m_base.playerForces.jump();
+
+        //if (Input.GetKeyDown(KeyCode.Space) ) {
+        //   // m_base.playerForces.jump();
+        //}
+
+        if (!ericSettings) {
+            if (m_devToBeTossed == 'n') {
+                if (Input.GetKeyDown(KeyCode.R)) {
+                    m_base.playerDevice.startTimer();
+                    m_devToBeTossed = 'r';
+                }
+                else if (Input.GetKeyDown(KeyCode.E)) {
+                    m_base.playerDevice.startTimer();
+                    m_devToBeTossed = 'e';
+                }
+            }
+
+            if (Input.GetKeyUp(KeyCode.R) && m_devToBeTossed == 'r') {
+                m_base.playerDevice.throwDevice(10f);
+                m_devToBeTossed = 'n';
+            }
+
+            if (Input.GetKeyUp(KeyCode.E) && m_devToBeTossed == 'e') {
+                m_base.playerDevice.throwDevice(-10f);
+                m_devToBeTossed = 'n';
+            }
+        }
+        else {
+            if (m_devToBeTossed == 'n') {
+                if (Input.GetKeyDown(KeyCode.UpArrow)) {
+                    m_base.playerDevice.startTimer();
+                    m_devToBeTossed = 'r';
+                }
+                else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+                    m_base.playerDevice.startTimer();
+                    m_devToBeTossed = 'e';
+                }
+            }
+
+            if (Input.GetKeyUp(KeyCode.UpArrow) && m_devToBeTossed == 'r') {
+                m_base.playerDevice.throwDevice(10f);
+                m_devToBeTossed = 'n';
+            }
+
+            if (Input.GetKeyUp(KeyCode.DownArrow) && m_devToBeTossed == 'e') {
+                m_base.playerDevice.throwDevice(-10f);
+                m_devToBeTossed = 'n';
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.R)) {
-            m_base.playerDevice.startTimer();
-        }
 
-        if (Input.GetKeyUp(KeyCode.R)) {
-            m_base.playerDevice.throwDevice(1);
-        }
-
-        if (Input.GetKey(KeyCode.D)) {
+        float run = Input.GetAxis("Horizontal");
+        if(run > 0) {
             m_base.playerForces.run(1);
         }
-        if (Input.GetKey(KeyCode.A)) {
+        else if(run <0) {
             m_base.playerForces.run(-1);
         }
     }
