@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerDevToss : MonoBehaviour {
 
-    //Constants with arbitrary values used to make set 'Look Good' limits on device velocity
+    //Constants with arbitrary values used to set 'Look Good' limits on device velocity
     private const float MIN_DIST = 3f;
     private const float MAX_DIST = 10f;
     private const float MAX_ANGL = Mathf.PI / 3.25f;
@@ -46,7 +46,8 @@ public class PlayerDevToss : MonoBehaviour {
 	void Update () //MAY NEED TO CHANGE tempX & tempY CALCULATION
     {
         //Get angle between player and mouse pointer
-        float tempX = Mathf.Abs(Input.mousePosition.x - Screen.width / 2);
+        //float tempX = Mathf.Abs(Input.mousePosition.x - Screen.width / 2);
+        float tempX = Mathf.Abs(Input.mousePosition.x - m_base.transform.position.x);
         float tempY = m_base.playerForces.absUp > 0 ? 
             Input.mousePosition.y - Screen.height / 2 : Screen.height / 2 - Input.mousePosition.y;
         float theta = Mathf.Atan(tempY / tempX);
