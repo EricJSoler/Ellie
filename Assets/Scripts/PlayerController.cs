@@ -17,6 +17,10 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (Input.GetKeyDown(KeyCode.R)) {
+            m_base.playerDevice.startTimer();
+        }
+
+        if (Input.GetKeyUp(KeyCode.R)) {
             m_base.playerDevice.throwDevice(1);
         }
 
