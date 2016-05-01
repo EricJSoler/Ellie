@@ -9,15 +9,57 @@ public class SmoothCamera : MonoBehaviour
 
     public GameObject player;
 
+    private int headingAngle;
+    private int prevHeadingAngle;
 
-    void Start() {
+    void Start()
+    {
         player = GameObject.FindGameObjectWithTag("Player");
-    }
 
+<<<<<<< HEAD
+=======
     void FixedUpdate() {
         float posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x, ref velocity.x, smoothTimeX);
         float posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y, ref velocity.y, smoothTimeY);
+>>>>>>> refs/remotes/origin/master
 
+    }
+
+    void FixedUpdate()
+    {
+        float posX;
+        float posY;
+        prevHeadingAngle = headingAngle;
+        headingAngle = player.GetComponent<PlayerForces>().absHor;
+        if (headingAngle > 0)
+        {
+            if (prevHeadingAngle == headingAngle)
+            {
+                posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x + 10, ref velocity.x, smoothTimeX);
+                posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y, ref velocity.y, smoothTimeY);
+            }
+            else
+            {
+                posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x + 10, ref velocity.x, .5f);
+                posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y, ref velocity.y, .5f);
+            }
+        }
+        else
+        {
+           if(headingAngle == prevHeadingAngle)
+            {
+                posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x - 10, ref velocity.x, smoothTimeX);
+                posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y, ref velocity.y, smoothTimeY);
+            }
+            else
+            {
+                posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x - 10, ref velocity.x, .5f);
+                posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y, ref velocity.y, smoothTimeY + .5f);
+            }
+        }
+        
+        // float posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x, ref velocity.x, smoothTimeX);
+        //flaot posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y, ref velocity.y, smoothTimeY);
         transform.position = new Vector3(posX, posY, transform.position.z);
     }
 }
