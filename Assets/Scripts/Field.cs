@@ -2,8 +2,11 @@
 using System.Collections;
 
 public class Field : MonoBehaviour {
+    
+    //negative or positive scalar that will control
+    //how hard player is pushed or pulled
+    float m_fieldStrength = 20f;
 
-	// Use this for initialization
 	void Start () {
 	
 	}
@@ -13,15 +16,17 @@ public class Field : MonoBehaviour {
 	
 	}
 
+    public void setPolarity(float _polarity) {
+        m_fieldStrength = _polarity;
+    }
+
     void OnTriggerStay2D(Collider2D other) {
         if (other.gameObject.tag == "Player") {
             if (other.attachedRigidbody) {
-                other.attachedRigidbody.velocity =
-                    new Vector2(this.transform.up.x + other.attachedRigidbody.velocity.x,
-                    this.transform.up.y + other.attachedRigidbody.velocity.y);
+                other.attachedRigidbody.AddForce(
+                    this.transform.up * m_fieldStrength, 
+                    ForceMode2D.Force);
             }
-            Debug.Log("Trigger stay");
-            Debug.DrawRay(this.transform.position, this.transform.up, Color.green);
         }
         
     }

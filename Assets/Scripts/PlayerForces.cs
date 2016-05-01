@@ -23,8 +23,8 @@ public class PlayerForces : MonoBehaviour {
     public LayerMask jumpAbleSurface;
     #endregion
     #region MovementSettings
-    float m_horVel = 10f;
-    float m_airBorneSlow = .75f;
+    float m_horVel = 5f;
+    float m_airBorneSlow = .5f;
     #endregion
     int m_lastMovedDirection = 1;
 
@@ -86,7 +86,8 @@ public class PlayerForces : MonoBehaviour {
             if (absUp < 0) {
                 m_rigidBody.velocity = new Vector2(
                     m_rigidBody.velocity.x, -10f);
-                //m_rigidBody.AddForce(new Vector2(0f, -10f));
+                
+                
             }
             else {
                 m_rigidBody.velocity = new Vector2(
