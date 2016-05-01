@@ -16,10 +16,6 @@ public class Device : MonoBehaviour {
     }
     // Update is called once per frame
     void Update () {
-        if (normal != null) {
-         //   Debug.DrawRay(transform.position, normal, Color.blue);
-        }
-
         if(Time.time > spawnTime + lifeSpan) {
             Destroy(gameObject);
         }
