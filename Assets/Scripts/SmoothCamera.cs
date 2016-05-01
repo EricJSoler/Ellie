@@ -14,7 +14,7 @@ public class SmoothCamera : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    void Update() {
+    void FixedUpdate() {
         float posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x, ref velocity.x, smoothTimeX);
         float posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y, ref velocity.y, smoothTimeY);
 
