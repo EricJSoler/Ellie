@@ -16,12 +16,7 @@ public class SmoothCamera : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
-<<<<<<< HEAD
-=======
-    void FixedUpdate() {
-        float posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x, ref velocity.x, smoothTimeX);
-        float posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y, ref velocity.y, smoothTimeY);
->>>>>>> refs/remotes/origin/master
+
 
     }
 
@@ -40,8 +35,8 @@ public class SmoothCamera : MonoBehaviour
             }
             else
             {
-                posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x + 10, ref velocity.x, .5f);
-                posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y, ref velocity.y, .5f);
+                posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x + 10, ref velocity.x, .6f);
+                posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y, ref velocity.y, .6f);
             }
         }
         else
@@ -53,8 +48,8 @@ public class SmoothCamera : MonoBehaviour
             }
             else
             {
-                posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x - 10, ref velocity.x, .5f);
-                posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y, ref velocity.y, smoothTimeY + .5f);
+                posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x - 10, ref velocity.x, .6f);
+                posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y, ref velocity.y, .6f);
             }
         }
         
