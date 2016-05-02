@@ -47,7 +47,8 @@ public class PlayerDevToss : MonoBehaviour {
     {
         //Get angle between player and mouse pointer
         //float tempX = Mathf.Abs(Input.mousePosition.x - Screen.width / 2);
-        float tempX = Mathf.Abs(Input.mousePosition.x - m_base.transform.position.x);
+        float tempX = m_base.playerForces.absHor > 0 ?
+            Mathf.Abs(Input.mousePosition.x - m_base.transform.position.x) : Mathf.Abs(Screen.width - Input.mousePosition.x);
         float tempY = m_base.playerForces.absUp > 0 ? 
             Input.mousePosition.y - Screen.height / 2 : Screen.height / 2 - Input.mousePosition.y;
         float theta = Mathf.Atan(tempY / tempX);
