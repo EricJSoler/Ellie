@@ -15,12 +15,29 @@ public class SmoothCamera : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-
-
-
     }
-
+  
     void FixedUpdate()
+    {
+        MouseCamera();
+    }
+    public Vector3 LerpByDistance(Vector3 A, Vector3 B, float x)
+    {
+        Vector3 P = x * Vector3.Normalize(B - A) + A;
+        return P;
+    }
+    void MouseCamera()
+    {
+        float posX;
+        float posY;
+        Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y,0);
+        posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x + (Input.mousePosition.x / Screen.width), ref velocity.x, smoothTimeX);
+        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + (Input.mousePosition.y / Screen.height), ref velocity.y, smoothTimeY);
+
+
+        transform.position = new Vector3(posX, posY, transform.position.z);
+    }
+    void TiedCamera()
     {
         float posX;
         float posY;
@@ -41,7 +58,7 @@ public class SmoothCamera : MonoBehaviour
         }
         else
         {
-           if(headingAngle == prevHeadingAngle)
+            if (headingAngle == prevHeadingAngle)
             {
                 posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x - 10, ref velocity.x, smoothTimeX);
                 posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y, ref velocity.y, smoothTimeY);
@@ -52,7 +69,7 @@ public class SmoothCamera : MonoBehaviour
                 posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y, ref velocity.y, .6f);
             }
         }
-        
+
         // float posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x, ref velocity.x, smoothTimeX);
         //flaot posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y, ref velocity.y, smoothTimeY);
         transform.position = new Vector3(posX, posY, transform.position.z);
