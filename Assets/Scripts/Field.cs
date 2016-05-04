@@ -24,7 +24,8 @@ public class Field : MonoBehaviour {
         if (other.gameObject.tag == "Player") {
             if (other.attachedRigidbody) {
                 other.attachedRigidbody.AddForce(
-                    this.transform.up * m_fieldStrength, 
+                    this.transform.up * m_fieldStrength
+                    * other.GetComponent<PlayerBase>().m_PlayerPolarity, 
                     ForceMode2D.Force);
             }
         }
