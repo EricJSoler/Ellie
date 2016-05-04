@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
-public class PlayerForces : MonoBehaviour {
+public class PlayerForces : MonoBehaviour
+{
 
     PlayerBase m_base;
     Rigidbody2D m_rigidBody;
@@ -28,28 +30,39 @@ public class PlayerForces : MonoBehaviour {
     #endregion
     int m_lastMovedDirection = 1;
 
+    Stack<Vector2> m_checkPoints = new Stack<Vector2>();
 
-    void Start () {
+    public Vector2 lastCheckPoint {
+        get {
+            return m_checkPoints.Peek();
+        }
+    }
+    void Start() {
         m_rigidBody = this.GetComponent<Rigidbody2D>();
         m_base = this.GetComponent<PlayerBase>();
     }
-	
-	void Update () {
-	    
-	}
+
+    void Update() {
+       
+    }
 
     void FixedUpdate() {
-        checkIfOnJumpableSurface();
-        checkWorldFieldPull();
+  //      if (!m_base.relocationPlayer) {
+            checkIfOnJumpableSurface();
+            checkWorldFieldPull();
+//        }
         Debug.DrawRay(transform.position, new Vector3(absHor, 0f), Color.red);
     }
 
+    public void storeCurrentCheckPoint() {
+        m_checkPoints.Push(transform.position);
+    }
     void checkIfOnJumpableSurface() {
-        if (Physics2D.OverlapCircle(m_groundCheck.position, 
+        if (Physics2D.OverlapCircle(m_groundCheck.position,
                 m_groundCheckRadius, jumpAbleSurface)) {
             m_grounded = true;
         }
-        else if (Physics2D.OverlapCircle(m_groundCheck.position, 
+        else if (Physics2D.OverlapCircle(m_groundCheck.position,
                 m_groundCheckRadius, worldGround)) {
             m_grounded = true;
         }
@@ -86,8 +99,8 @@ public class PlayerForces : MonoBehaviour {
             if (absUp < 0) {
                 m_rigidBody.velocity = new Vector2(
                     m_rigidBody.velocity.x, -10f);
-                
-                
+
+
             }
             else {
                 m_rigidBody.velocity = new Vector2(
@@ -105,15 +118,15 @@ public class PlayerForces : MonoBehaviour {
                 m_rigidBody.velocity.y);
         }
         else {
-            newVel = new Vector2(m_airBorneSlow * m_horVel 
+            newVel = new Vector2(m_airBorneSlow * m_horVel
                 * _direction, m_rigidBody.velocity.y);
         }
-        m_rigidBody.velocity = newVel; 
+        m_rigidBody.velocity = newVel;
     }
 
     public int absUp {
         get {
-            if(transform.up.y < 0) {
+            if (transform.up.y < 0) {
                 return -1;
             }
             else {
