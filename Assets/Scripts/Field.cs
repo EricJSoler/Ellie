@@ -31,4 +31,13 @@ public class Field : MonoBehaviour {
         }
         
     }
+
+    public int isPosOrNeg() {
+        if(m_fieldStrength < 0) {
+            return -1;
+        }
+        else {
+            return 1;
+        }
+    }
 }
