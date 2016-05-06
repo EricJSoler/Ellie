@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour {
     //set to n if nothing is in the process of being thrown
     char m_devToBeTossed;
 
-    bool ericSettings = false;
+    bool ericSettings = true;
 
     bool m_lockedControls = false;
 

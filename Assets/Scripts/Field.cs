@@ -2,13 +2,24 @@
 using System.Collections;
 
 public class Field : MonoBehaviour {
-    
+
     //negative or positive scalar that will control
     //how hard player is pushed or pulled
-    float m_fieldStrength = 20f;
+    public float m_fieldStrength;
 
-	void Start () {
-	
+    //#region EnviromentFieldVariables
+    //public GameObject m_particles;
+    //public float scale;
+    //public bool enviromentField = false;
+    //public float baseMag = 10f;
+    //public float baseVel = 3.3f;
+    //#endregion
+
+    void Start () {
+        //if (enviromentField) {
+        //        ParticleSystem myParticles = m_particles.GetComponent<ParticleSystem>();
+        //        myParticles.startLifetime = myParticles.startLifetime * scale;
+        //}
 	}
 	
 	// Update is called once per frame
@@ -29,7 +40,7 @@ public class Field : MonoBehaviour {
                     ForceMode2D.Force);
             }
         }
-        
+        Debug.Log("here");
     }
 
     public int isPosOrNeg() {

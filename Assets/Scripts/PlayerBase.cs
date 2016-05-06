@@ -55,6 +55,7 @@ public class PlayerBase : MonoBehaviour {
         m_forces = GetComponent<PlayerForces>();
         m_dev = GetComponent<PlayerDevToss>();
         m_stats = new PlayerStats(m_startHealth);
+        
     }
 
 	void Start () {
@@ -83,12 +84,12 @@ public class PlayerBase : MonoBehaviour {
                 destination.x - transform.position.x,
                 destination.y - transform.position.y);
             direction.Normalize();
+            float speed = Vector2.Distance(transform.position, destination);
             Vector3 newposition = new Vector3(
-                transform.position.x + (direction * 3f * Time.deltaTime).x,
-                transform.position.y + (direction * 3f * Time.deltaTime).y,
+                transform.position.x + (direction * speed * Time.deltaTime).x,
+                transform.position.y + (direction * speed * Time.deltaTime).y,
                 0f);
             this.transform.position = newposition;
-            //this.transform.position += new Vector3(new Vector2(direction * 3f * Time.deltaTime), 0f);
         }
 
     }
