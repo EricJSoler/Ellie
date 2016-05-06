@@ -4,9 +4,10 @@ using System.Collections;
 public class PlayerDevToss : MonoBehaviour {
 
     //Constants with arbitrary values used to set 'Look Good' limits on device velocity
-    private const float MIN_DIST = 3f;
-    private const float MAX_DIST = 10f;
-    private const float MAX_ANGL = Mathf.PI / 3.25f;
+    private const float MIN_DIST = 15f;                  // <-- Min distance (or considered 'strength') of throwing device
+    private const float MAX_DIST = 20f;                 // <-- Max distance (or considered 'strength') of throwing device
+    private const float MAX_ANGL = Mathf.PI / 2;    // <-- Max angle player can throw upward and downward
+    private const float GRAV_WEIGHT = 6f;               // <-- Weight against rigidbody2d gravity scale
 
     private float additionalDist;
 
@@ -14,6 +15,7 @@ public class PlayerDevToss : MonoBehaviour {
     Rigidbody2D m_body;
     public string devicePrefab = "device";
     GameObject m_device;
+    public GameObject player;
 
     //Vectors to throw device in correct direction
     public Vector2 m_rightFacingSpawn;
@@ -40,17 +42,37 @@ public class PlayerDevToss : MonoBehaviour {
 
         //Intialize additional distance to be added to the throw distance
         additionalDist = 0;
+
     }
 	
 	// Update is called once per frame
 	void Update () //MAY NEED TO CHANGE tempX & tempY CALCULATION
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        float tempX, tempY;
+
+        //Facing right case
+        if (m_base.playerForces.absHor > 0)
+        {
+            //Get mouse position relative to player's X coordinate
+            tempX = Input.mousePosition.x - Screen.width / 5 >= 0 ?
+                Input.mousePosition.x - Screen.width / 5 : 0;
+            //Get mouse position relative to player's Y coordinate
+            tempY = m_base.playerForces.absUp > 0 ?
+                Input.mousePosition.y - Screen.height / 2 : Screen.height / 2 - Input.mousePosition.y;
+        }
+        //Facing left cause
+        else
+        {
+            //Get mouse position relative to player's X coordinate
+            tempX = Screen.width * 4 / 5 - Input.mousePosition.x >= 0 ?
+                Screen.width * 4 / 5 - Input.mousePosition.x : 0;
+            //Get mouse position relative to player's Y coordinate
+            tempY = m_base.playerForces.absUp > 0 ?
+                Input.mousePosition.y - Screen.height / 2 : Screen.height / 2 - Input.mousePosition.y;
+        }
         //Get angle between player and mouse pointer
-        //float tempX = Mathf.Abs(Input.mousePosition.x - Screen.width / 2);
-        float tempX = m_base.playerForces.absHor > 0 ?
-            Mathf.Abs(Input.mousePosition.x - m_base.transform.position.x) : Mathf.Abs(Screen.width - Input.mousePosition.x);
-        float tempY = m_base.playerForces.absUp > 0 ? 
-            Input.mousePosition.y - Screen.height / 2 : Screen.height / 2 - Input.mousePosition.y;
         float theta = Mathf.Atan(tempY / tempX);
 
         //Set maximum and minimum angle for theta
@@ -58,13 +80,12 @@ public class PlayerDevToss : MonoBehaviour {
         if (theta < -1 * MAX_ANGL) theta = -1 * MAX_ANGL;
 
         //Set horVel and upVel to have magnitude of MAX_DIST based on theta
-        m_upVel  = getDist() * Mathf.Asin(theta);
-        m_horVel = getDist() * Mathf.Acos(theta);
+        m_upVel = getDist() * Mathf.Sin(theta);
+        m_horVel = getDist() * Mathf.Cos(theta);
 
         //Increment additional distance for velocity to where 2 second hold down gives max extra distance
         additionalDist += Time.deltaTime * MAX_DIST / 1.5f;
-        //Debug.Log("addDist is " + additionalDist);
-	}
+    }
 
     //Reset additionalDist back to 0 and prepare for key release
     public void startTimer() { additionalDist = 0; }
@@ -129,7 +150,7 @@ public class PlayerDevToss : MonoBehaviour {
 
         Rigidbody2D rb = dev.GetComponent<Rigidbody2D>();
         rb.velocity = vel;
-        rb.gravityScale = this.GetComponent<Rigidbody2D>().gravityScale * 3f; //3f is some arbitrary weight that makes gravity feel and look better
+        rb.gravityScale = this.GetComponent<Rigidbody2D>().gravityScale * GRAV_WEIGHT; //3f is some arbitrary weight that makes gravity feel and look better
         //adding polarity to the instantiation of the field
         dev.GetComponentInChildren<Field>().setPolarity(_polarity);
 
