@@ -8,6 +8,9 @@ public class Device : MonoBehaviour {
 
     Vector2 normal;
 
+    public GameObject m_particlesPos;
+    public GameObject m_particlesNeg;
+
     public float lifeSpan = 60f;
     private float spawnTime;
     void Start() {
@@ -27,6 +30,14 @@ public class Device : MonoBehaviour {
             normal = a.contacts[0].normal;
             transform.up = normal;
             this.GetComponent<Collider2D>().enabled = false;
+            Field myField = this.GetComponentInChildren<Field>();
+            if(myField.isPosOrNeg() == 1) {
+                m_particlesPos.GetComponent<ParticleSystem>().Play();  //Play();
+            }
+            else {
+                m_particlesNeg.GetComponent<ParticleSystem>().Play();
+            }
+            
         }
     }
 }
