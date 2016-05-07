@@ -40,7 +40,7 @@ public class Field : MonoBehaviour {
                     ForceMode2D.Force);
             }
         }
-        Debug.Log("here");
+       // Debug.Log("here");
     }
 
     public int isPosOrNeg() {

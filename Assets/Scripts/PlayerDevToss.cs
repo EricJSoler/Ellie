@@ -4,10 +4,10 @@ using System.Collections;
 public class PlayerDevToss : MonoBehaviour {
 
     //Constants with arbitrary values used to set 'Look Good' limits on device velocity
-    private const float MIN_DIST = 15f;                  // <-- Min distance (or considered 'strength') of throwing device
-    private const float MAX_DIST = 20f;                 // <-- Max distance (or considered 'strength') of throwing device
+    public const float MIN_DIST = 15f;                  // <-- Min distance (or considered 'strength') of throwing device
+    public const float MAX_DIST = 20f;                 // <-- Max distance (or considered 'strength') of throwing device
     private const float MAX_ANGL = Mathf.PI / 2;    // <-- Max angle player can throw upward and downward
-    private const float GRAV_WEIGHT = 6f;               // <-- Weight against rigidbody2d gravity scale
+    public const float GRAV_WEIGHT = 6f;               // <-- Weight against rigidbody2d gravity scale
 
     private float additionalDist;
 
@@ -48,43 +48,12 @@ public class PlayerDevToss : MonoBehaviour {
 	// Update is called once per frame
 	void Update () //MAY NEED TO CHANGE tempX & tempY CALCULATION
     {
-
-        float tempX, tempY;
-        Vector3 cursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 pos = player.transform.position;
-
-        //Facing right case
-        if (m_base.playerForces.absHor > 0)
-        {
-            //Get mouse position relative to player's X and Y coordinates
-            tempX = cursor.x - pos.x >= 0 ? cursor.x - pos.x : 0;
-            tempY = m_base.playerForces.absUp > 0 ? cursor.y - pos.y : pos.y - cursor.y;
-        }
-        //Facing left cause
-        else
-        {
-            //Get mouse position relative to player's X and Y coordinate
-            tempX = pos.x - cursor.x >= 0 ? pos.x - cursor.x : 0;
-            tempY = m_base.playerForces.absUp > 0 ? cursor.y - pos.y : pos.y - cursor.y;
-        }
-        //Get angle between player and mouse pointer
-        float theta = Mathf.Atan(tempY / tempX);
-
-        //Set maximum and minimum angle for theta
-        if (theta > MAX_ANGL) theta = MAX_ANGL;
-        if (theta < -1 * MAX_ANGL) theta = -1 * MAX_ANGL;
-
-        //Set horVel and upVel to have magnitude of MAX_DIST based on theta
-        m_upVel = getDist() * Mathf.Sin(theta);
-        m_horVel = getDist() * Mathf.Cos(theta);
+        Vector2 v = determineVelocity();
+        m_horVel = v.x;
+        m_upVel = v.y;
 
         //Increment additional distance for velocity to where 2 second hold down gives max extra distance
         additionalDist += Time.deltaTime * MAX_DIST / 1.5f;
-    }
-
-    public void determineVelocity()
-    {
-
     }
 
     //Reset additionalDist back to 0 and prepare for key release
@@ -95,9 +64,27 @@ public class PlayerDevToss : MonoBehaviour {
 
     //TODO: Make throw device less convoluted
     public void throwDevice(float _polarity) { 
+        Vector3[] v = determineRB();
+        Vector3 spawn = v[0];
+        Vector2 vel = new Vector2(v[1].x, v[1].y);
+
+        GameObject dev = (GameObject)Instantiate(m_device,
+            spawn, transform.rotation);
+
+        Rigidbody2D rb = dev.GetComponent<Rigidbody2D>();
+        rb.velocity = vel;
+        rb.gravityScale = this.GetComponent<Rigidbody2D>().gravityScale * GRAV_WEIGHT;
+
+        //adding polarity to the instantiation of the field
+        dev.GetComponentInChildren<Field>().setPolarity(_polarity);
+
+    }
+
+    public Vector3[] determineRB()
+    {
         Vector3 spawn;
-        Vector2 vel = new Vector2(m_horVel + m_body.velocity.x, m_upVel + m_body.velocity.y);
-        
+        Vector3 vel = new Vector3(m_horVel + m_body.velocity.x, m_upVel + m_body.velocity.y, 0);
+
         if (m_base.playerForces.absHor == 1)
         { //facing right
             if (m_base.playerForces.absUp == 1)
@@ -108,7 +95,6 @@ public class PlayerDevToss : MonoBehaviour {
 
                 //Move forward * forward weight, Move up * upward weight
                 vel = new Vector2(m_horVel + m_body.velocity.x, m_upVel + m_body.velocity.y);
-                //Debug.Log("throwing from normal up and right");
             }
             else
             {
@@ -118,7 +104,6 @@ public class PlayerDevToss : MonoBehaviour {
 
                 //Move forward * forward weight, Move up * upward weight
                 vel = new Vector2(m_horVel + m_body.velocity.x, -1 * m_upVel + m_body.velocity.y);
-                //Debug.Log("throwing from normal down and right");
             }
         }
         else
@@ -143,16 +128,40 @@ public class PlayerDevToss : MonoBehaviour {
             }
         }
 
-        //vel = new Vector2(m_horVel + m_body.velocity.x, m_upVel + m_body.velocity.y);
+        Vector3[] v = { spawn, vel };
+        return v;
+    }
 
-        GameObject dev = (GameObject)Instantiate(m_device,
-            spawn, transform.rotation);
 
-        Rigidbody2D rb = dev.GetComponent<Rigidbody2D>();
-        rb.velocity = vel;
-        rb.gravityScale = this.GetComponent<Rigidbody2D>().gravityScale * GRAV_WEIGHT;
-        //adding polarity to the instantiation of the field
-        dev.GetComponentInChildren<Field>().setPolarity(_polarity);
+    public Vector2 determineVelocity()
+    {
+        float tempX = 0, tempY = 0;
+        Vector3 cursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 pos = GameObject.FindGameObjectWithTag("Player").transform.position;//player.transform.position;
 
+        //Facing right case
+        if (m_base.playerForces.absHor > 0)
+        {
+            //Get mouse position relative to player's X and Y coordinates
+            tempX = cursor.x - pos.x >= 0 ? cursor.x - pos.x : 0;
+            tempY = m_base.playerForces.absUp > 0 ? cursor.y - pos.y : pos.y - cursor.y;
+        }
+        //Facing left cause
+        else
+        {
+            //Get mouse position relative to player's X and Y coordinate
+            tempX = pos.x - cursor.x >= 0 ? pos.x - cursor.x : 0;
+            tempY = m_base.playerForces.absUp > 0 ? cursor.y - pos.y : pos.y - cursor.y;
+        }
+
+        //Get angle between player and mouse pointer
+        float theta = Mathf.Atan(tempY / tempX);
+
+        //Set maximum and minimum angle for theta
+        if (theta > MAX_ANGL) theta = MAX_ANGL;
+        if (theta < -1 * MAX_ANGL) theta = -1 * MAX_ANGL;
+
+        //Set horVel and upVel to have magnitude of MAX_DIST based on theta
+        return new Vector2(getDist() * Mathf.Cos(theta), getDist() * Mathf.Sin(theta));
     }
 }
