@@ -9,7 +9,6 @@ public class PlayerStats {
             return m_health;
         }
     }
-
     public PlayerStats(int startHealth) {
         m_health = startHealth;
     }

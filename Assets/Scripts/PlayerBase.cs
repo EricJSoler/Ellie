@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PlayerBase : MonoBehaviour {
 
-
     #region PlayerComponents
     PlayerAnim m_anim;
     PlayerController m_controller;
@@ -54,8 +53,7 @@ public class PlayerBase : MonoBehaviour {
         m_controller = GetComponent<PlayerController>();
         m_forces = GetComponent<PlayerForces>();
         m_dev = GetComponent<PlayerDevToss>();
-        m_stats = new PlayerStats(m_startHealth);
-        
+        m_stats = new PlayerStats(m_startHealth);       
     }
 
 	void Start () {
@@ -99,7 +97,7 @@ public class PlayerBase : MonoBehaviour {
             if (m_stats.takeHit()) { //player dead
 
             }
-            Debug.Log(m_stats.health);
+            Debug.Log("Health of Ellie: " + m_stats.health);
             repositionPlayer(playerForces.lastCheckPoint);
         }
     }
@@ -115,5 +113,9 @@ public class PlayerBase : MonoBehaviour {
         yield return new WaitForSeconds(2f);
         m_repositioningPlayer = false;
         playerController.unlockControls();
+    }
+
+    public int Health() {
+        return m_stats.health;
     }
 }
