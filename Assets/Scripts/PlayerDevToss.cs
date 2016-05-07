@@ -42,35 +42,30 @@ public class PlayerDevToss : MonoBehaviour {
 
         //Intialize additional distance to be added to the throw distance
         additionalDist = 0;
-
+        player = GameObject.FindGameObjectWithTag("Player");
     }
 	
 	// Update is called once per frame
 	void Update () //MAY NEED TO CHANGE tempX & tempY CALCULATION
     {
-        player = GameObject.FindGameObjectWithTag("Player");
 
         float tempX, tempY;
+        Vector3 cursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 pos = player.transform.position;
 
         //Facing right case
         if (m_base.playerForces.absHor > 0)
         {
-            //Get mouse position relative to player's X coordinate
-            tempX = Input.mousePosition.x - Screen.width / 5 >= 0 ?
-                Input.mousePosition.x - Screen.width / 5 : 0;
-            //Get mouse position relative to player's Y coordinate
-            tempY = m_base.playerForces.absUp > 0 ?
-                Input.mousePosition.y - Screen.height / 2 : Screen.height / 2 - Input.mousePosition.y;
+            //Get mouse position relative to player's X and Y coordinates
+            tempX = cursor.x - pos.x >= 0 ? cursor.x - pos.x : 0;
+            tempY = m_base.playerForces.absUp > 0 ? cursor.y - pos.y : pos.y - cursor.y;
         }
         //Facing left cause
         else
         {
-            //Get mouse position relative to player's X coordinate
-            tempX = Screen.width * 4 / 5 - Input.mousePosition.x >= 0 ?
-                Screen.width * 4 / 5 - Input.mousePosition.x : 0;
-            //Get mouse position relative to player's Y coordinate
-            tempY = m_base.playerForces.absUp > 0 ?
-                Input.mousePosition.y - Screen.height / 2 : Screen.height / 2 - Input.mousePosition.y;
+            //Get mouse position relative to player's X and Y coordinate
+            tempX = pos.x - cursor.x >= 0 ? pos.x - cursor.x : 0;
+            tempY = m_base.playerForces.absUp > 0 ? cursor.y - pos.y : pos.y - cursor.y;
         }
         //Get angle between player and mouse pointer
         float theta = Mathf.Atan(tempY / tempX);
@@ -85,6 +80,11 @@ public class PlayerDevToss : MonoBehaviour {
 
         //Increment additional distance for velocity to where 2 second hold down gives max extra distance
         additionalDist += Time.deltaTime * MAX_DIST / 1.5f;
+    }
+
+    public void determineVelocity()
+    {
+
     }
 
     //Reset additionalDist back to 0 and prepare for key release
@@ -150,7 +150,7 @@ public class PlayerDevToss : MonoBehaviour {
 
         Rigidbody2D rb = dev.GetComponent<Rigidbody2D>();
         rb.velocity = vel;
-        rb.gravityScale = this.GetComponent<Rigidbody2D>().gravityScale * GRAV_WEIGHT; //3f is some arbitrary weight that makes gravity feel and look better
+        rb.gravityScale = this.GetComponent<Rigidbody2D>().gravityScale * GRAV_WEIGHT;
         //adding polarity to the instantiation of the field
         dev.GetComponentInChildren<Field>().setPolarity(_polarity);
 
