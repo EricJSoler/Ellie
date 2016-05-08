@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class UIHealth : MonoBehaviour {
     private Text healthText;
     PlayerBase m_playerStats;
-
     private int m_health;  
 
     void Start () {
