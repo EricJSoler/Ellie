@@ -8,7 +8,7 @@ public class PlayerDevToss : MonoBehaviour {
     private const float MAX_DIST = 20f;                 // <-- Max distance (or considered 'strength') of throwing device
     private const float MAX_ANGL = Mathf.PI / 2;    // <-- Max angle player can throw upward and downward
     private const float GRAV_WEIGHT = 6f;               // <-- Weight against rigidbody2d gravity scale
-    private const float MAX_WAIT = 20f;               // <-- Time needed to weight before another throw
+    private const float MAX_WAIT = 40f;               // <-- Time needed to weight before another throw
 
     private float additionalDist;
 
