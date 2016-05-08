@@ -47,7 +47,7 @@ public class SmoothCamera : MonoBehaviour
 
         if (facingDirection > 0)    //facing right
         {
-            if (transform.position.x > player.transform.position.x + 10)
+            if (transform.position.x > player.transform.position.x + 9)
             {
                 facingDirection = -facingDirection;
             }
@@ -73,7 +73,7 @@ public class SmoothCamera : MonoBehaviour
         }
         else                        //facing left
         {
-            if (transform.position.x < player.transform.position.x - 10)
+            if (transform.position.x < player.transform.position.x - 9)
             {
                 facingDirection = -facingDirection;
             }
