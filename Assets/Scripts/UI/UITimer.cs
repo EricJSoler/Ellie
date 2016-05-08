@@ -26,4 +26,8 @@ public class UITimer : MonoBehaviour {
         //timer.text = string.Format("{0:00} : {1:00} : {2:000}", minutes, seconds, fraction);
         timer.text = minutes.ToString("00") + ":" + seconds.ToString("00");
     }
+
+    public float getTime() {
+        return time;
+    }
 }
