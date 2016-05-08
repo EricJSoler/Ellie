@@ -3,9 +3,8 @@ using System.Collections;
 
 public class Device : MonoBehaviour {
 
-    
-    Rigidbody2D m_rigidBody;
 
+    Rigidbody2D m_rigidBody;
     Vector2 normal;
 
     public GameObject m_particlesPos;
@@ -18,33 +17,36 @@ public class Device : MonoBehaviour {
         spawnTime = Time.time;
     }
     // Update is called once per frame
-    void Update () {
-        if(Time.time > spawnTime + lifeSpan) {
+    void Update() {
+        if (Time.time > spawnTime + lifeSpan) {
             Destroy(gameObject);
-
-
         }
     }
 
-    void OnCollisionEnter2D(Collision2D a) {
-        if (a.gameObject.tag == "Device") { Destroy(gameObject); Debug.Log("Hello"); }
+    void OnCollisionEnter2D(Collision2D other) {
 
+        // Ignore collision with Nubbie, Prottie, and Eddie
+        if (other.gameObject.tag == "Nubbie" || other.gameObject.tag == "Prottie" || other.gameObject.tag == "Eddie") {
+            Physics2D.IgnoreCollision(other.collider, this.GetComponent<Collider2D>());
+        }
 
-        if (a.gameObject.tag != "Player") {
+       
+        else if (other.gameObject.tag != "Player") {
 
-
+            // Device Landing
             m_rigidBody.isKinematic = true;
-            normal = a.contacts[0].normal;
+            normal = other.contacts[0].normal;
             transform.up = normal;
             this.GetComponent<Collider2D>().enabled = false;
             Field myField = this.GetComponentInChildren<Field>();
+
+            // Play Particle System
             if(myField.isPosOrNeg() == 1) {
-                m_particlesPos.GetComponent<ParticleSystem>().Play();  //Play();
+                m_particlesPos.GetComponent<ParticleSystem>().Play();  
             }
             else {
                 m_particlesNeg.GetComponent<ParticleSystem>().Play();
             } 
-            
-        }else Debug.Log("hello");
+        }
     }
 }
