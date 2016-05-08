@@ -7,7 +7,8 @@ public class PlayerController : MonoBehaviour {
     //last recorded time a device was thrown
     float m_lastThrow;
     //time between throws
-    public float m_reloadTime = 2f;
+    public float m_reloadTime = 5f;
+    float m_timeSinceLastThrow;
     //set to r if the device to be thrown is positive
     //set to e if the device to be throw is negative
     //set to n if nothing is in the process of being thrown
@@ -20,9 +21,13 @@ public class PlayerController : MonoBehaviour {
     float m_timeControlsLocked;
     float m_TimeUntilUnlocked;
 
+
+
+
     void Start () {
         m_base = this.GetComponent<PlayerBase>();
         m_devToBeTossed = 'n';
+        m_timeSinceLastThrow = Time.time;
     }
 	
 	// Update is called once per frame
@@ -32,6 +37,27 @@ public class PlayerController : MonoBehaviour {
         //   // m_base.playerForces.jump();
         //}
         if (!m_lockedControls) {
+            runningInput();
+            deviceThrowInput();
+        }
+        else {
+            if(Time.time > m_TimeUntilUnlocked)
+                m_lockedControls = false;
+        }
+    }
+
+    void runningInput() {
+        float run = Input.GetAxis("Horizontal");
+        if (run > 0) {
+            m_base.playerForces.run(1);
+        }
+        else if (run < 0) {
+            m_base.playerForces.run(-1);
+        }
+    }
+
+    void deviceThrowInput() {
+        if (Time.time > m_timeSinceLastThrow + m_reloadTime) {
             if (!ericSettings) {
                 if (m_devToBeTossed == 'n') {
                     if (Input.GetKeyDown(KeyCode.R)) {
@@ -47,11 +73,13 @@ public class PlayerController : MonoBehaviour {
                 if (Input.GetKeyUp(KeyCode.R) && m_devToBeTossed == 'r') {
                     m_base.playerDevice.throwDevice(-10f);
                     m_devToBeTossed = 'n';
+                    m_timeSinceLastThrow = Time.time;
                 }
 
                 if (Input.GetKeyUp(KeyCode.E) && m_devToBeTossed == 'e') {
                     m_base.playerDevice.throwDevice(10f);
                     m_devToBeTossed = 'n';
+                    m_timeSinceLastThrow = Time.time;
                 }
             }
             else {
@@ -69,26 +97,15 @@ public class PlayerController : MonoBehaviour {
                 if ((Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.Mouse0)) && m_devToBeTossed == 'r') {
                     m_base.playerDevice.throwDevice(-10f);
                     m_devToBeTossed = 'n';
+                    m_timeSinceLastThrow = Time.time;
                 }
 
                 if ((Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.Mouse1)) && m_devToBeTossed == 'e') {
                     m_base.playerDevice.throwDevice(10f);
                     m_devToBeTossed = 'n';
+                    m_timeSinceLastThrow = Time.time;
                 }
             }
-
-
-            float run = Input.GetAxis("Horizontal");
-            if (run > 0) {
-                m_base.playerForces.run(1);
-            }
-            else if (run < 0) {
-                m_base.playerForces.run(-1);
-            }
-        }
-        else {
-            if(Time.time > m_TimeUntilUnlocked)
-                m_lockedControls = false;
         }
     }
 
