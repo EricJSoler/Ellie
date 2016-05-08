@@ -21,4 +21,8 @@ public class PlayerStats {
             return false;
     }
 
+    public void addHealth () {
+        m_health++;
+    }
+
 }

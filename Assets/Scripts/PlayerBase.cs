@@ -118,4 +118,8 @@ public class PlayerBase : MonoBehaviour {
     public int Health() {
         return m_stats.health;
     }
+
+    public void addHealth() {
+        m_stats.addHealth();
+    }
 }
