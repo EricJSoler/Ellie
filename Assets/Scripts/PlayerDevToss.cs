@@ -8,6 +8,7 @@ public class PlayerDevToss : MonoBehaviour {
     private const float MAX_DIST = 20f;                 // <-- Max distance (or considered 'strength') of throwing device
     private const float MAX_ANGL = Mathf.PI / 2;    // <-- Max angle player can throw upward and downward
     private const float GRAV_WEIGHT = 6f;               // <-- Weight against rigidbody2d gravity scale
+    private const float MAX_WAIT = 20f;               // <-- Time needed to weight before another throw
 
     private float additionalDist;
 
@@ -16,6 +17,7 @@ public class PlayerDevToss : MonoBehaviour {
     public string devicePrefab = "device";
     GameObject m_device;
     public GameObject player;
+    private float throwLimit;
 
     //Vectors to throw device in correct direction
     public Vector2 m_rightFacingSpawn;
@@ -42,6 +44,7 @@ public class PlayerDevToss : MonoBehaviour {
 
         //Intialize additional distance to be added to the throw distance
         additionalDist = 0;
+        throwLimit = MAX_WAIT;
         player = GameObject.FindGameObjectWithTag("Player");
     }
 	
@@ -80,6 +83,7 @@ public class PlayerDevToss : MonoBehaviour {
 
         //Increment additional distance for velocity to where 2 second hold down gives max extra distance
         additionalDist += Time.deltaTime * MAX_DIST / 1.5f;
+        throwLimit += throwLimit <= MAX_WAIT ? 1 : 0;
     }
 
     public void determineVelocity()
@@ -94,7 +98,10 @@ public class PlayerDevToss : MonoBehaviour {
     private float getDist() { return MIN_DIST + additionalDist < MAX_DIST ? MIN_DIST + additionalDist : MAX_DIST; }
 
     //TODO: Make throw device less convoluted
-    public void throwDevice(float _polarity) { 
+    public void throwDevice(float _polarity) {
+        if (throwLimit < MAX_WAIT) return;
+        else throwLimit = 0;
+
         Vector3 spawn;
         Vector2 vel = new Vector2(m_horVel + m_body.velocity.x, m_upVel + m_body.velocity.y);
         
