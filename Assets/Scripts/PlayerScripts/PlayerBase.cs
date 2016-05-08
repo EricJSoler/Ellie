@@ -95,9 +95,8 @@ public class PlayerBase : MonoBehaviour {
     public void loseHealthTrap() {
         if (!relocationPlayer) {
             if (m_stats.takeHit()) { //player dead
-
+                FindObjectOfType<LevelManager>().restartLevel();
             }
-            Debug.Log("Health of Ellie: " + m_stats.health);
             repositionPlayer(playerForces.lastCheckPoint);
         }
     }
