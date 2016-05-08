@@ -56,22 +56,22 @@ public class PlayerController : MonoBehaviour {
             }
             else {
                 if (m_devToBeTossed == 'n') {
-                    if (Input.GetKeyDown(KeyCode.UpArrow)) {
+                    if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Mouse0)) {
                         m_base.playerDevice.startTimer();
                         m_devToBeTossed = 'r';
                     }
-                    else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+                    else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.Mouse1)) {
                         m_base.playerDevice.startTimer();
                         m_devToBeTossed = 'e';
                     }
                 }
 
-                if (Input.GetKeyUp(KeyCode.UpArrow) && m_devToBeTossed == 'r') {
+                if ((Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Mouse0)) && m_devToBeTossed == 'r') {
                     m_base.playerDevice.throwDevice(-10f);
                     m_devToBeTossed = 'n';
                 }
 
-                if (Input.GetKeyUp(KeyCode.DownArrow) && m_devToBeTossed == 'e') {
+                if ((Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.Mouse1)) && m_devToBeTossed == 'e') {
                     m_base.playerDevice.throwDevice(10f);
                     m_devToBeTossed = 'n';
                 }
