@@ -1,20 +1,36 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class LevelManager : MonoBehaviour {
 
 
-	// Use this for initialization
+    public Vector3 m_startSpawn;
+    public string playerPrefab = "Ellie";
+    
+    void Awake() {
+        Instantiate((GameObject)Resources.Load(playerPrefab),
+            m_startSpawn, Quaternion.identity);
+    }
 	void Start () {
-        //SpawnNubbie();
+        
 	}
 	
-	// Update is called once per frame
+	
 	void Update () {
 	
 	}
 
-    private void SpawnNubbie() {
-        GameObject Nubbie = (GameObject)Instantiate(Resources.Load("Nubbie") as GameObject);
+    public void restartLevel() {
+        SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex));
+    }
+
+    public void levelCompleted() {
+        float timeCompleted = FindObjectOfType<UITimer>().getTime();
+        FindObjectOfType<GlobalManager>().SaveTimeCompleted(timeCompleted);
+        Debug.Log(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(
+            (SceneManager.GetActiveScene().buildIndex + 1)
+            % (SceneManager.sceneCountInBuildSettings));
     }
 }
