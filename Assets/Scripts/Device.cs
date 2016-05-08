@@ -21,11 +21,18 @@ public class Device : MonoBehaviour {
     void Update () {
         if(Time.time > spawnTime + lifeSpan) {
             Destroy(gameObject);
+
+
         }
     }
 
     void OnCollisionEnter2D(Collision2D a) {
+        if (a.gameObject.tag == "Device") { Destroy(gameObject); Debug.Log("Hello"); }
+
+
         if (a.gameObject.tag != "Player") {
+
+
             m_rigidBody.isKinematic = true;
             normal = a.contacts[0].normal;
             transform.up = normal;
@@ -36,8 +43,8 @@ public class Device : MonoBehaviour {
             }
             else {
                 m_particlesNeg.GetComponent<ParticleSystem>().Play();
-            }
+            } 
             
-        }
+        }else Debug.Log("hello");
     }
 }
