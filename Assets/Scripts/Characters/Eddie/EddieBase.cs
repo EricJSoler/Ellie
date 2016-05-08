@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerBase : MonoBehaviour {
+public class EddieBase : MonoBehaviour {
 
     #region PlayerComponents
     PlayerAnim m_anim;
@@ -53,21 +53,21 @@ public class PlayerBase : MonoBehaviour {
         m_controller = GetComponent<PlayerController>();
         m_forces = GetComponent<PlayerForces>();
         m_dev = GetComponent<PlayerDevToss>();
-        m_stats = new PlayerStats(m_startHealth);       
+        m_stats = new PlayerStats(m_startHealth);
     }
 
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    void Start() {
+
+    }
+
+    // Update is called once per frame
+    void Update() {
         if (m_repositioningPlayer) {
             this.GetComponent<Collider2D>().enabled = false;
             this.GetComponent<Rigidbody2D>().Sleep();
             movePlayerTowards(m_newPlayerPosition);
         }
-	}
+    }
 
     public void movePlayerTowards(Vector2 destination) {
         if (Vector2.Distance(transform.position, destination)
@@ -76,8 +76,7 @@ public class PlayerBase : MonoBehaviour {
             this.GetComponent<Rigidbody2D>().WakeUp();
             m_repositioningPlayer = false;
             playerController.unlockControls();
-        }
-        else {
+        } else {
             Vector2 direction = new Vector2(
                 destination.x - transform.position.x,
                 destination.y - transform.position.y);
