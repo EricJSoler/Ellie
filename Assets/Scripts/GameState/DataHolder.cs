@@ -20,6 +20,9 @@ public class DataHolder : MonoBehaviour
     DataToSave myData;
     // Use this for initialization
     void Start() {
+        myData.level1Time = 9999;
+        myData.level2Time = 9999;
+
         if (dataHolderInstance == null) {
             dataHolderInstance = this;
         }
@@ -38,10 +41,12 @@ public class DataHolder : MonoBehaviour
         int scene = SceneManager.GetActiveScene().buildIndex;
         switch (scene) {
             case 1:
-                myData.level1Time = time;
+                if (myData.level1Time > time)
+                    myData.level1Time = time;
                 break;
             case 2:
-                myData.level2Time = time;
+                if (myData.level1Time > time)
+                    myData.level2Time = time;
                 break;
         }
 
@@ -62,6 +67,18 @@ public class DataHolder : MonoBehaviour
             myData = (DataToSave)bf.Deserialize(file);
             file.Close();
             return myData.lastScene;
+        }
+        return 0;
+    }
+
+    public float getBestTime(int level) {
+        switch (level) {
+            case 1:
+                Debug.Log("case 1 " + myData.level1Time);
+                return myData.level1Time;
+            case 2:
+                Debug.Log("case 2 " + myData.level1Time);
+                return myData.level2Time;
         }
         return 0;
     }
