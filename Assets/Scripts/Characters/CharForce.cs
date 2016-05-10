@@ -2,11 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class EddieForces : MonoBehaviour {
+public class CharForce : MonoBehaviour {
 
     PlayerBase m_base;
     Rigidbody2D m_rigidBody;
-
     //Detecting Ground 
     #region DetectingGround
     public Transform m_groundCheck;
@@ -19,18 +18,15 @@ public class EddieForces : MonoBehaviour {
         }
     }
     #endregion
-
     //Detecting Magnetic Fields
     #region DetectingMagneticFields
     public LayerMask worldGround;
     public LayerMask jumpAbleSurface;
     #endregion
-
     #region MovementSettings
     float m_horVel = 5f;
     float m_airBorneSlow = .5f;
     #endregion
-
     int m_lastMovedDirection = 1;
 
     Stack<Vector2> m_checkPoints = new Stack<Vector2>();
@@ -40,19 +36,18 @@ public class EddieForces : MonoBehaviour {
             return m_checkPoints.Peek();
         }
     }
-
     void Start() {
         m_rigidBody = this.GetComponent<Rigidbody2D>();
         m_base = this.GetComponent<PlayerBase>();
     }
 
     void Update() {
+
     }
 
     void FixedUpdate() {
         checkIfOnJumpableSurface();
         checkWorldFieldPull();
-        Debug.DrawRay(transform.position, new Vector3(absHor, 0f), Color.red);
     }
 
     public void storeCurrentCheckPoint() {
@@ -92,19 +87,17 @@ public class EddieForces : MonoBehaviour {
         }
     }
 
-    //will be replaced
-    public void jump() {
+    public void run(int _direction) {
+        Vector2 newVel;
+        m_lastMovedDirection = _direction;
         if (grounded) {
-            if (absUp < 0) {
-                m_rigidBody.velocity = new Vector2(
-                    m_rigidBody.velocity.x, -10f);
-
-
-            } else {
-                m_rigidBody.velocity = new Vector2(
-                    m_rigidBody.velocity.x, 10f);
-            }
+            newVel = new Vector2(m_horVel * _direction,
+                m_rigidBody.velocity.y);
+        } else {
+            newVel = new Vector2(m_airBorneSlow * m_horVel
+                * _direction, m_rigidBody.velocity.y);
         }
+        m_rigidBody.velocity = newVel;
     }
 
     public int absUp {

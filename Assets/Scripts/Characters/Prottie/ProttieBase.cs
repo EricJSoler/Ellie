@@ -4,11 +4,11 @@ using System.Collections;
 public class ProttieBase : MonoBehaviour {
 
     #region PlayerComponents
-    EnemyAnim m_anim;
+    PlayerAnim m_anim;
     ProttieController m_controller;
-    ProttieForces m_forces;
+    PlayerForces m_forces;
 
-    public EnemyAnim enemyAnim {
+    public PlayerAnim playerAnim {
         get {
             return m_anim;
         }
@@ -20,7 +20,7 @@ public class ProttieBase : MonoBehaviour {
         }
     }
 
-    public ProttieForces prottieForces {
+    public PlayerForces playerForces {
         get {
             return m_forces;
         }
@@ -28,15 +28,14 @@ public class ProttieBase : MonoBehaviour {
     #endregion
 
     public int m_PlayerPolarity = 1;
-    public int m_startHealth = 3;
+    public int m_startHealth = 1;
     bool m_repositioningPlayer = false;
 
     Vector2 m_newPlayerPosition;
 
     void Awake() {
-        m_anim = GetComponent<EnemyAnim>();
+        m_anim = GetComponent<PlayerAnim>();
         m_controller = GetComponent<ProttieController>();
-        m_forces = GetComponent<ProttieForces>();
     }
 
     void Start() {
@@ -73,8 +72,7 @@ public class ProttieBase : MonoBehaviour {
 
     }
 
-    public void repositionPlayer(Vector2 destination) {
-        m_repositioningPlayer = true;
-        m_newPlayerPosition = destination;
+    public void loseHealthTrap() {
+        Destroy(this.gameObject);
     }
 }
