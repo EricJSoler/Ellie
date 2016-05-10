@@ -37,6 +37,10 @@ public class SmoothCamera : MonoBehaviour
         posY = Mathf.SmoothDamp(transform.position.y, newCameraLocation.y, ref velocity.y, smoothTimeY);
         transform.position = new Vector3(posX, posY, transform.position.z);
     }
+    void checkpoint()
+    {
+        transform.position = new Vector3(player.transform.position.x + 7, player.transform.position.y, transform.position.z);
+    }
     void TiedCamera()
     {
         float posX;
