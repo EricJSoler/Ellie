@@ -54,9 +54,6 @@ public class PlayerController : MonoBehaviour {
         else if (run < 0) {
             m_base.playerForces.run(-1);
         }
-        else{
-            m_base.playerForces.run(0);
-        }
     }
 
     void deviceThrowInput() {

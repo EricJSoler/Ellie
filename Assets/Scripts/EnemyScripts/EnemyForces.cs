@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
-public class PlayerForces : MonoBehaviour
-{
+public class EnemyForces : MonoBehaviour {
 
-    PlayerBase m_base;
+    EnemyBase m_base;
     Rigidbody2D m_rigidBody;
     //Detecting Ground 
     #region DetectingGround
@@ -30,32 +28,25 @@ public class PlayerForces : MonoBehaviour
     #endregion
     int m_lastMovedDirection = 1;
 
-    Stack<Vector2> m_checkPoints = new Stack<Vector2>();
-
-    public Vector2 lastCheckPoint {
-        get {
-            return m_checkPoints.Peek();
-        }
-    }
     void Start() {
         m_rigidBody = this.GetComponent<Rigidbody2D>();
-        m_base = this.GetComponent<PlayerBase>();
+        m_base = this.GetComponent<EnemyBase>();
     }
 
     void Update() {
-       
+
     }
 
     void FixedUpdate() {
-  //      if (!m_base.relocationPlayer) {
-            checkIfOnJumpableSurface();
-            checkWorldFieldPull();
-//        }
+        //      if (!m_base.relocationPlayer) {
+        checkIfOnJumpableSurface();
+        checkWorldFieldPull();
+        //        }
         Debug.DrawRay(transform.position, new Vector3(absHor, 0f), Color.red);
     }
 
     public void storeCurrentCheckPoint() {
-        m_checkPoints.Push(transform.position);
+       // m_checkPoints.Push(transform.position);
     }
     void checkIfOnJumpableSurface() {
         if (Physics2D.OverlapCircle(m_groundCheck.position,
