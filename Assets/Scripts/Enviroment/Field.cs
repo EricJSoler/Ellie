@@ -32,11 +32,19 @@ public class Field : MonoBehaviour {
     }
 
     void OnTriggerStay2D(Collider2D other) {
-        if (other.gameObject.tag == "Player" || other.gameObject.tag == "Eddie") {
+        if (other.gameObject.tag == "Player") {
             if (other.attachedRigidbody) {
                 other.attachedRigidbody.AddForce(
                     this.transform.up * m_fieldStrength
                     * other.GetComponent<PlayerBase>().m_PlayerPolarity, 
+                    ForceMode2D.Force);
+            }
+        }
+        if (other.gameObject.tag == "Eddie") {
+            if (other.attachedRigidbody) {
+                other.attachedRigidbody.AddForce(
+                    this.transform.up * m_fieldStrength
+                    * other.GetComponent<EddieBase>().m_PlayerPolarity,
                     ForceMode2D.Force);
             }
         }

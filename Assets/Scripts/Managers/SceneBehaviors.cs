@@ -15,4 +15,10 @@ public class SceneBehaviors : MonoBehaviour {
 
     public void Exit()
     { Application.Quit(); }
+
+    public void Load() {
+        GameObject globalManager = GameObject.FindGameObjectWithTag("GlobalManager");
+        GlobalManager gm = globalManager.GetComponent<GlobalManager>();
+        gm.Load();
+    }
 }
