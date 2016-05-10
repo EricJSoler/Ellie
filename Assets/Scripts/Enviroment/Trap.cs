@@ -29,5 +29,13 @@ public class Trap : MonoBehaviour {
                 pb.loseHealthTrap();
             }
         }
+
+        if (col.gameObject.tag == "Prottie") {
+            ProttieBase pb = col.gameObject.
+              GetComponent<ProttieBase>();
+            if (pb.m_PlayerPolarity * polarity < 0) {
+                pb.loseHealthTrap();
+            }
+        }
     }
 }

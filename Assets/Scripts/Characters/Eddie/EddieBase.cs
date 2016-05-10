@@ -5,7 +5,7 @@ public class EddieBase : MonoBehaviour {
 
     #region PlayerComponents
     PlayerAnim m_anim;
-    PlayerController m_controller;
+    EddieController m_controller;
     PlayerForces m_forces;
 
     public PlayerAnim playerAnim {
@@ -14,7 +14,7 @@ public class EddieBase : MonoBehaviour {
         }
     }
 
-    public PlayerController playerController {
+    public EddieController playerController {
         get {
             return m_controller;
         }
@@ -28,7 +28,7 @@ public class EddieBase : MonoBehaviour {
     #endregion
 
     public int m_PlayerPolarity = -1;
-    public int m_startHealth = 0;
+    public int m_startHealth = 3;
     bool m_repositioningPlayer = false;
     //returns true when the player is being 
     //moved by the game after being hit or whatever
@@ -42,7 +42,7 @@ public class EddieBase : MonoBehaviour {
 
     void Awake() {
         m_anim = GetComponent<PlayerAnim>();
-        m_controller = GetComponent<PlayerController>();
+        m_controller = GetComponent<EddieController>();
         m_forces = GetComponent<PlayerForces>();
     }
 
@@ -65,7 +65,6 @@ public class EddieBase : MonoBehaviour {
             this.GetComponent<Collider2D>().enabled = true;
             this.GetComponent<Rigidbody2D>().WakeUp();
             m_repositioningPlayer = false;
-            playerController.unlockControls();
         } else {
             Vector2 direction = new Vector2(
                 destination.x - transform.position.x,
@@ -80,8 +79,8 @@ public class EddieBase : MonoBehaviour {
         }
 
     }
-
     public void loseHealthTrap() {
         Destroy(this.gameObject);
     }
 }
+
