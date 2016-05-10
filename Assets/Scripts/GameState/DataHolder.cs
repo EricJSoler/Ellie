@@ -5,13 +5,11 @@ using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
-public class DataHolder : MonoBehaviour
-{
+public class DataHolder : MonoBehaviour {
     public static DataHolder dataHolderInstance;
-    
+
     [System.Serializable]
-    struct DataToSave
-    {
+    struct DataToSave {
         public float level1Time;
         public float level2Time;
         public int lastScene;
@@ -25,8 +23,7 @@ public class DataHolder : MonoBehaviour
 
         if (dataHolderInstance == null) {
             dataHolderInstance = this;
-        }
-        else
+        } else
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
@@ -43,16 +40,18 @@ public class DataHolder : MonoBehaviour
             case 1:
                 if (myData.level1Time > time)
                     myData.level1Time = time;
+                Debug.Log("case 11 " + myData.level1Time);
                 break;
             case 2:
                 if (myData.level1Time > time)
                     myData.level2Time = time;
+                Debug.Log("case 22 " + myData.level1Time);
                 break;
         }
 
         myData.lastScene = (SceneManager.GetActiveScene().buildIndex + 1)
             % SceneManager.sceneCountInBuildSettings;
-        
+
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/savedGames.gd");
         bf.Serialize(file, this.myData);
@@ -72,13 +71,18 @@ public class DataHolder : MonoBehaviour
     }
 
     public float getBestTime(int level) {
-        switch (level) {
-            case 1:
-                Debug.Log("case 1 " + myData.level1Time);
-                return myData.level1Time;
-            case 2:
-                Debug.Log("case 2 " + myData.level1Time);
-                return myData.level2Time;
+        if (File.Exists(Application.persistentDataPath + "/savedGames.gd")) {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/savedGames.gd", FileMode.Open);
+            DataToSave savedData = (DataToSave)bf.Deserialize(file);
+            file.Close();
+
+            switch (level) {
+                case 1:
+                    return savedData.level1Time;
+                case 2:
+                    return savedData.level2Time;
+            }
         }
         return 0;
     }

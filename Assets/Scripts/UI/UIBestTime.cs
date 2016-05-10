@@ -6,10 +6,9 @@ public class UIBestTime : MonoBehaviour {
 
     public Text bestTime;
     private float time;
-    public int level;
+    public int level = 1;
 
     void Start() {
-        level = 1;
         time = 0f;
         bestTime = GetComponent<Text>() as Text;
     }
@@ -18,6 +17,7 @@ public class UIBestTime : MonoBehaviour {
         time = FindObjectOfType<DataHolder>().getBestTime(level);
         float minutes = time / 60;
         float seconds = time % 60;
+        Debug.Log("Level " +  level);
         bestTime.text = minutes.ToString("00") + ":" + seconds.ToString("00");
     }
 }
