@@ -7,20 +7,32 @@ public class LevelManager : MonoBehaviour {
 
     public Vector3 m_startSpawn;
     public string playerPrefab = "Ellie";
-    
+
+    private GameObject MainMenuButton;
+    private GameObject ResumeButton;
+
+
     void Awake() {
         Instantiate((GameObject)Resources.Load(playerPrefab),
             m_startSpawn, Quaternion.identity);
     }
 	void Start () {
-        GameObject win = GameObject.Find("Win");
+        MainMenuButton = GameObject.Find("MainMenuButton");
+        MainMenuButton.SetActive(false);
+        ResumeButton = GameObject.Find("ResumeButton");
+        ResumeButton.SetActive(false);
 
     }
 
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            Debug.Log("escape!");
+            MainMenuButton.SetActive(true);
+            ResumeButton.SetActive(true);
+
+            // NEED TO PAUSE TIMER
+            // NEED TO DEACTIVATE ELLIE CONTROL
+            //FindObjectOfType<UITimer>().PauseTimer();
         }
     }
 
@@ -35,5 +47,12 @@ public class LevelManager : MonoBehaviour {
         SceneManager.LoadScene(
             (SceneManager.GetActiveScene().buildIndex + 1)
             % (SceneManager.sceneCountInBuildSettings));
+    }
+
+    public void resumeLevel() {
+        MainMenuButton.SetActive(false);
+        ResumeButton.SetActive(false);
+        // NEED TO RESTART TIMER
+        // NEED TO REACTIVATE ELLIE CONTROL
     }
 }
