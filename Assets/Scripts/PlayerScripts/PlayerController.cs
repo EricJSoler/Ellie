@@ -98,13 +98,13 @@ public class PlayerController : MonoBehaviour {
                 }
 
                 if ((Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.Mouse0)) && m_devToBeTossed == 'r') {
-                    m_base.playerDevice.throwDevice(-1f);
+                    m_base.playerDevice.throwDevice(-.25f);
                     m_devToBeTossed = 'n';
                     m_timeSinceLastThrow = Time.time;
                 }
 
                 if ((Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.Mouse1)) && m_devToBeTossed == 'e') {
-                    m_base.playerDevice.throwDevice(1f);
+                    m_base.playerDevice.throwDevice(.25f);
                     m_devToBeTossed = 'n';
                     m_timeSinceLastThrow = Time.time;
                 }

@@ -25,14 +25,23 @@ public class Field : MonoBehaviour
                 * other.GetComponent<PlayerBase>().m_PlayerPolarity;
             other.GetComponent<PlayerBase>().playerForces.addToDelta(addVel);
         }
+        if (other.gameObject.tag == "Enemy") {
+            Vector2 addVel = this.transform.up * m_fieldStrength
+                * other.GetComponent<EnemyBase>().m_PlayerPolarity;
+            other.GetComponent<EnemyBase>().playerForces.addToDelta(addVel);
+        }
     }
 
     void OnTriggerExit2D(Collider2D other) {
         if (other.gameObject.tag == "Player") {
             Vector2 addVel = this.transform.up * m_fieldStrength
     * other.GetComponent<PlayerBase>().m_PlayerPolarity;
-            other.GetComponent<PlayerBase>().playerForces.addToDelta(addVel *-1);
-            
+            other.GetComponent<PlayerBase>().playerForces.addToDelta(addVel *-1);            
+        }
+        else if (other.gameObject.tag == "Enemy") {
+            Vector2 addVel = this.transform.up * m_fieldStrength
+    * other.GetComponent<EnemyBase>().m_PlayerPolarity;
+            other.GetComponent<EnemyBase>().playerForces.addToDelta(addVel * -1);
         }
     }
 
@@ -51,16 +60,16 @@ public class Field : MonoBehaviour
         //        //    ForceMode2D.Force);
         //    }
         //}
-        if (other.gameObject.tag == "Enemy") {
-            if (other.attachedRigidbody) {
-                other.attachedRigidbody.AddForce(
-                    this.transform.up * m_fieldStrength
-                    * other.GetComponent<EnemyBase>().m_PlayerPolarity,
-                    ForceMode2D.Force);
+        //if (other.gameObject.tag == "Enemy") {
+        //    if (other.attachedRigidbody) {
+        //        other.attachedRigidbody.AddForce(
+        //            this.transform.up * m_fieldStrength
+        //            * other.GetComponent<EnemyBase>().m_PlayerPolarity,
+        //            ForceMode2D.Force);
 
-                //Debug.Log("here:");
-            }
-        }
+        //        //Debug.Log("here:");
+        //    }
+        //}
     }
 
     public int isPosOrNeg() {

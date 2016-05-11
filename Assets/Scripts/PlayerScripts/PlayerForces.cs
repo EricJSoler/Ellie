@@ -62,7 +62,7 @@ public class PlayerForces : MonoBehaviour
   //      if (!m_base.relocationPlayer) { //I FORGOT IF THIS IS SUPOOSSSED TO BE HERE OR NOT
             checkIfOnJumpableSurface();
             checkWorldFieldPull();
-        Debug.Log(m_rigidBody.velocity);       
+        //Debug.Log(m_rigidBody.velocity);       
         Debug.DrawRay(transform.position, new Vector3(absHor, 0f), Color.red);
         Debug.DrawRay(transform.position, new Vector3(ext_field.x, ext_field.y), Color.blue);
     }
