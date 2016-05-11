@@ -13,13 +13,16 @@ public class LevelManager : MonoBehaviour {
             m_startSpawn, Quaternion.identity);
     }
 	void Start () {
-        
-	}
-	
-	
-	void Update () {
-	
-	}
+        GameObject win = GameObject.Find("Win");
+
+    }
+
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Debug.Log("escape!");
+        }
+    }
 
     public void restartLevel() {
         SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex));

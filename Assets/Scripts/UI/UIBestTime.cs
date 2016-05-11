@@ -15,6 +15,9 @@ public class UIBestTime : MonoBehaviour {
 
     void Update() {
         time = FindObjectOfType<DataHolder>().getBestTime(level);
+        if (time >= 9999999) {
+            time = 0;
+        }
         float minutes = time / 60;
         float seconds = time % 60;
         Debug.Log("Level " +  level);
