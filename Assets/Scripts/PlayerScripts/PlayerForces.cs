@@ -10,7 +10,7 @@ public class PlayerForces : MonoBehaviour
     //Detecting Ground 
     #region DetectingGround
     public Transform m_groundCheck;
-    bool m_grounded;
+    public bool m_grounded;
     float m_groundCheckRadius = .1f;
 
     public bool grounded {

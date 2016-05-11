@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
-public class ProttieForces : MonoBehaviour {
+public class EnemyForces : MonoBehaviour {
 
-    ProttieBase m_base;
+    EnemyBase m_base;
     Rigidbody2D m_rigidBody;
-
     //Detecting Ground 
     #region DetectingGround
     public Transform m_groundCheck;
-    bool m_grounded;
+    public bool m_grounded;
     float m_groundCheckRadius = .1f;
 
     public bool grounded {
@@ -19,23 +17,20 @@ public class ProttieForces : MonoBehaviour {
         }
     }
     #endregion
-
     //Detecting Magnetic Fields
     #region DetectingMagneticFields
     public LayerMask worldGround;
     public LayerMask jumpAbleSurface;
     #endregion
-
     #region MovementSettings
     float m_horVel = 5f;
     float m_airBorneSlow = .5f;
     #endregion
     int m_lastMovedDirection = 1;
 
-
     void Start() {
         m_rigidBody = this.GetComponent<Rigidbody2D>();
-        m_base = this.GetComponent<ProttieBase>();
+        m_base = this.GetComponent<EnemyBase>();
     }
 
     void Update() {
@@ -43,19 +38,26 @@ public class ProttieForces : MonoBehaviour {
     }
 
     void FixedUpdate() {
+        //      if (!m_base.relocationPlayer) {
         checkIfOnJumpableSurface();
         checkWorldFieldPull();
+        //        }
         Debug.DrawRay(transform.position, new Vector3(absHor, 0f), Color.red);
     }
 
+    public void storeCurrentCheckPoint() {
+       // m_checkPoints.Push(transform.position);
+    }
     void checkIfOnJumpableSurface() {
         if (Physics2D.OverlapCircle(m_groundCheck.position,
                 m_groundCheckRadius, jumpAbleSurface)) {
             m_grounded = true;
-        } else if (Physics2D.OverlapCircle(m_groundCheck.position,
-                  m_groundCheckRadius, worldGround)) {
+        }
+        else if (Physics2D.OverlapCircle(m_groundCheck.position,
+                m_groundCheckRadius, worldGround)) {
             m_grounded = true;
-        } else {
+        }
+        else {
             m_grounded = false;
         }
     }
@@ -78,7 +80,7 @@ public class ProttieForces : MonoBehaviour {
 
         if (distanceToUp < distanceToDown) {
             m_rigidBody.gravityScale *= -1;
-            m_base.enemyAnim.rotatePlayer();
+            m_base.playerAnim.rotatePlayer();
         }
     }
 
@@ -90,9 +92,11 @@ public class ProttieForces : MonoBehaviour {
                     m_rigidBody.velocity.x, -10f);
 
 
-            } else {
+            }
+            else {
                 m_rigidBody.velocity = new Vector2(
                     m_rigidBody.velocity.x, 10f);
+                //m_rigidBody.AddForce(new Vector2(0f, 10f));
             }
         }
     }
@@ -103,7 +107,8 @@ public class ProttieForces : MonoBehaviour {
         if (grounded) {
             newVel = new Vector2(m_horVel * _direction,
                 m_rigidBody.velocity.y);
-        } else {
+        }
+        else {
             newVel = new Vector2(m_airBorneSlow * m_horVel
                 * _direction, m_rigidBody.velocity.y);
         }
@@ -114,7 +119,8 @@ public class ProttieForces : MonoBehaviour {
         get {
             if (transform.up.y < 0) {
                 return -1;
-            } else {
+            }
+            else {
                 return 1;
             }
         }

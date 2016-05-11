@@ -10,9 +10,20 @@ public class SceneBehaviors : MonoBehaviour {
 	// Update is called once per frame
 	void Update () { }
 
+    public void IgnoreClick () {
+        LevelManager levelMan = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        levelMan.resumeLevel();
+    }
+
     public void ButtonClicked(string sceneName)
     { SceneManager.LoadScene(sceneName); }
 
     public void Exit()
     { Application.Quit(); }
+
+    public void Load() {
+        GameObject globalManager = GameObject.FindGameObjectWithTag("GlobalManager");
+        GlobalManager gm = globalManager.GetComponent<GlobalManager>();
+        gm.Load();
+    }
 }
