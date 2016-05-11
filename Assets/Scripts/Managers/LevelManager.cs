@@ -29,10 +29,8 @@ public class LevelManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             MainMenuButton.SetActive(true);
             ResumeButton.SetActive(true);
-
-            // NEED TO PAUSE TIMER
-            // NEED TO DEACTIVATE ELLIE CONTROL
-            //FindObjectOfType<UITimer>().PauseTimer();
+            FindObjectOfType<UITimer>().pause();
+            FindObjectOfType<PlayerController>().disableControl();
         }
     }
 
@@ -52,7 +50,7 @@ public class LevelManager : MonoBehaviour {
     public void resumeLevel() {
         MainMenuButton.SetActive(false);
         ResumeButton.SetActive(false);
-        // NEED TO RESTART TIMER
-        // NEED TO REACTIVATE ELLIE CONTROL
+        FindObjectOfType<UITimer>().resume();
+        FindObjectOfType<PlayerController>().enableControl();
     }
 }

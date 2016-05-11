@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour {
     bool ericSettings = true;
 
     bool m_lockedControls = false;
+    bool m_disableControl = false;
 
     float m_timeControlsLocked;
     float m_TimeUntilUnlocked;
@@ -32,17 +33,18 @@ public class PlayerController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (!m_disableControl) {
 
-        //if (Input.GetKeyDown(KeyCode.Space) ) {
-        //   // m_base.playerForces.jump();
-        //}
-        if (!m_lockedControls) {
-            runningInput();
-            deviceThrowInput();
-        }
-        else {
-            if(Time.time > m_TimeUntilUnlocked)
-                m_lockedControls = false;
+            //if (Input.GetKeyDown(KeyCode.Space) ) {
+            //   // m_base.playerForces.jump();
+            //}
+            if (!m_lockedControls) {
+                runningInput();
+                deviceThrowInput();
+            } else {
+                if (Time.time > m_TimeUntilUnlocked)
+                    m_lockedControls = false;
+            }
         }
     }
 
@@ -118,5 +120,13 @@ public class PlayerController : MonoBehaviour {
 
     public void unlockControls() {
         m_lockedControls = false;
+    }
+
+    public void disableControl() {
+        m_disableControl = true;
+    }
+
+    public void enableControl() {
+        m_disableControl = false;
     }
 }
