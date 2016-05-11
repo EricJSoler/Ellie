@@ -54,6 +54,9 @@ public class PlayerController : MonoBehaviour {
         else if (run < 0) {
             m_base.playerForces.run(-1);
         }
+        else {
+            m_base.playerForces.run(0);
+        }
     }
 
     void deviceThrowInput() {
@@ -95,13 +98,13 @@ public class PlayerController : MonoBehaviour {
                 }
 
                 if ((Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.Mouse0)) && m_devToBeTossed == 'r') {
-                    m_base.playerDevice.throwDevice(-10f);
+                    m_base.playerDevice.throwDevice(-1f);
                     m_devToBeTossed = 'n';
                     m_timeSinceLastThrow = Time.time;
                 }
 
                 if ((Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.Mouse1)) && m_devToBeTossed == 'e') {
-                    m_base.playerDevice.throwDevice(10f);
+                    m_base.playerDevice.throwDevice(1f);
                     m_devToBeTossed = 'n';
                     m_timeSinceLastThrow = Time.time;
                 }

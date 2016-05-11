@@ -4,6 +4,15 @@ using System.Collections.Generic;
 
 public class PlayerForces : MonoBehaviour
 {
+    #region speedStuff
+    Vector2 ext_field;
+    #endregion
+
+    #region MovementSettings
+    float m_horVelMax = 5f;
+    float m_speedIncrement = 5f;
+    float m_airBorneSlow = .5f;
+    #endregion
 
     PlayerBase m_base;
     Rigidbody2D m_rigidBody;
@@ -24,10 +33,7 @@ public class PlayerForces : MonoBehaviour
     public LayerMask worldGround;
     public LayerMask jumpAbleSurface;
     #endregion
-    #region MovementSettings
-    float m_horVel = 5f;
-    float m_airBorneSlow = .5f;
-    #endregion
+    
     int m_lastMovedDirection = 1;
 
     Stack<Vector2> m_checkPoints = new Stack<Vector2>();
@@ -40,18 +46,25 @@ public class PlayerForces : MonoBehaviour
     void Start() {
         m_rigidBody = this.GetComponent<Rigidbody2D>();
         m_base = this.GetComponent<PlayerBase>();
+        ext_field = new Vector2(0f, 0f);
     }
 
     void Update() {
-       
+        checkYField();
+    }
+
+    private void checkYField() {
+        m_rigidBody.velocity = new Vector2(m_rigidBody.velocity.x,
+            m_rigidBody.velocity.y + ext_field.y);
     }
 
     void FixedUpdate() {
-  //      if (!m_base.relocationPlayer) {
+  //      if (!m_base.relocationPlayer) { //I FORGOT IF THIS IS SUPOOSSSED TO BE HERE OR NOT
             checkIfOnJumpableSurface();
             checkWorldFieldPull();
-//        }
+        Debug.Log(m_rigidBody.velocity);       
         Debug.DrawRay(transform.position, new Vector3(absHor, 0f), Color.red);
+        Debug.DrawRay(transform.position, new Vector3(ext_field.x, ext_field.y), Color.blue);
     }
 
     public void storeCurrentCheckPoint() {
@@ -105,23 +118,16 @@ public class PlayerForces : MonoBehaviour
             else {
                 m_rigidBody.velocity = new Vector2(
                     m_rigidBody.velocity.x, 10f);
-                //m_rigidBody.AddForce(new Vector2(0f, 10f));
             }
         }
     }
 
     public void run(int _direction) {
-        Vector2 newVel;
-        m_lastMovedDirection = _direction;
-        if (grounded) {
-            newVel = new Vector2(m_horVel * _direction,
-                m_rigidBody.velocity.y);
-        }
-        else {
-            newVel = new Vector2(m_airBorneSlow * m_horVel
-                * _direction, m_rigidBody.velocity.y);
-        }
-        m_rigidBody.velocity = newVel;
+        if(_direction != 0)
+            m_lastMovedDirection = _direction;
+            float newXVel = ext_field.x + m_rigidBody.velocity.x + m_speedIncrement * _direction;
+            newXVel = Mathf.Clamp(newXVel, -1 * m_horVelMax + ext_field.x, m_horVelMax + ext_field.x);
+            m_rigidBody.velocity = new Vector2(newXVel, m_rigidBody.velocity.y);
     }
 
     public int absUp {
@@ -139,5 +145,9 @@ public class PlayerForces : MonoBehaviour
         get {
             return m_lastMovedDirection;
         }
+    }
+
+    public void addToDelta(Vector2 amount) {
+        ext_field += amount;
     }
 }
