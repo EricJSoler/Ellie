@@ -40,22 +40,32 @@ public class Field : MonoBehaviour {
                     ForceMode2D.Force);
             }
         }
-        if (other.gameObject.tag == "Eddie") {
+        else if(other.gameObject.tag == "Enemy") {
             if (other.attachedRigidbody) {
                 other.attachedRigidbody.AddForce(
                     this.transform.up * m_fieldStrength
-                    * other.GetComponent<EddieBase>().m_PlayerPolarity,
+                    * other.GetComponent<EnemyBase>().m_PlayerPolarity,
                     ForceMode2D.Force);
+
+                Debug.Log("here:");
             }
         }
-        if (other.gameObject.tag == "Prottie") {
-            if (other.attachedRigidbody) {
-                other.attachedRigidbody.AddForce(
-                    -1 * this.transform.up * m_fieldStrength
-                    * other.GetComponent<PlayerBase>().m_PlayerPolarity,
-                    ForceMode2D.Force);
-            }
-        }
+        //if (other.gameObject.tag == "Eddie") {
+        //    if (other.attachedRigidbody) {
+        //        other.attachedRigidbody.AddForce(
+        //            this.transform.up * m_fieldStrength
+        //            * other.GetComponent<EnemyBase>().m_PlayerPolarity,
+        //            ForceMode2D.Force);
+        //    }
+        //}
+        //if (other.gameObject.tag == "Prottie") {
+        //    if (other.attachedRigidbody) {
+        //        other.attachedRigidbody.AddForce(
+        //            -1 * this.transform.up * m_fieldStrength
+        //            * other.GetComponent<PlayerBase>().m_PlayerPolarity,
+        //            ForceMode2D.Force);
+        //    }
+        //}
     }
 
     public int isPosOrNeg() {

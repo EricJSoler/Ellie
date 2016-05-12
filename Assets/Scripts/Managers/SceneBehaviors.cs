@@ -10,6 +10,11 @@ public class SceneBehaviors : MonoBehaviour {
 	// Update is called once per frame
 	void Update () { }
 
+    public void IgnoreClick () {
+        LevelManager levelMan = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        levelMan.resumeLevel();
+    }
+
     public void ButtonClicked(string sceneName)
     { SceneManager.LoadScene(sceneName); }
 
