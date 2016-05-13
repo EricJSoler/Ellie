@@ -44,6 +44,14 @@ public class CharField : MonoBehaviour {
                 updatedDelta.lastDelta = newDir * m_fieldStrength * player.m_PlayerPolarity;
                 temp.Add(updatedDelta);
             }
+            if (aplyingTo[i].obj.tag == "Enemy") {
+                EnemyBase player = aplyingTo[i].obj.GetComponent<EnemyBase>();
+                player.playerForces.addToDelta(aplyingTo[i].lastDelta * -1);
+                player.playerForces.addToDelta(newDir * m_fieldStrength * player.m_PlayerPolarity);
+                GODeltaTuple updatedDelta = aplyingTo[i];
+                updatedDelta.lastDelta = newDir * m_fieldStrength * player.m_PlayerPolarity;
+                temp.Add(updatedDelta);
+            }
         }
         aplyingTo = temp;
     }
@@ -54,6 +62,17 @@ public class CharField : MonoBehaviour {
                 - this.transform.position;
             newDir.Normalize();
             PlayerBase player = other.GetComponent<PlayerBase>();
+            player.playerForces.addToDelta(newDir * m_fieldStrength * player.m_PlayerPolarity);
+            GODeltaTuple tuple = new GODeltaTuple();
+            tuple.obj = other.gameObject;
+            tuple.lastDelta = newDir * m_fieldStrength * player.m_PlayerPolarity;
+            aplyingTo.Add(tuple);
+        }
+        else if (other.gameObject.tag == "Enemy") {
+            Vector2 newDir = other.transform.position
+                - this.transform.position;
+            newDir.Normalize();
+            EnemyBase player = other.GetComponent<EnemyBase>();
             player.playerForces.addToDelta(newDir * m_fieldStrength * player.m_PlayerPolarity);
             GODeltaTuple tuple = new GODeltaTuple();
             tuple.obj = other.gameObject;
@@ -77,8 +96,40 @@ public class CharField : MonoBehaviour {
                 other.GetComponent<PlayerBase>().playerForces.addToDelta(lastDelta * -1);
             }
         }
+        else if (other.gameObject.tag == "Enemy") {
+            //Debug.Log("WHATS GOOOOODD");
+            int remove = -1;
+            for (int i = 0; i < aplyingTo.Count; i++) {
+                if (aplyingTo[i].obj.GetInstanceID() == other.gameObject.GetInstanceID()) {
+                    remove = i;
+              //      Debug.Log("welllll");
+                    break;
+                }
+            }
+            if (remove != -1) {
+                Vector2 lastDelta = aplyingTo[remove].lastDelta;
+                aplyingTo.RemoveAt(remove);
+                other.GetComponent<EnemyBase>().playerForces.addToDelta(lastDelta * -1);
+                //Debug.Log("WtFFFF");
+            }
+        }
     }
 
     void OnTriggerStay2D(Collider2D other) {
+    }
+
+    void OnDestroy() {
+
+        //remove all the forces im currentlt applying
+        for (int i = 0; i < aplyingTo.Count; i++) {
+            if (aplyingTo[i].obj.tag == "Player") {
+                PlayerBase player = aplyingTo[i].obj.GetComponent<PlayerBase>();
+                player.playerForces.addToDelta(aplyingTo[i].lastDelta * -1);
+            }
+            else if (aplyingTo[i].obj.tag == "Enemy") {
+                EnemyBase player = aplyingTo[i].obj.GetComponent<EnemyBase>();
+                player.playerForces.addToDelta(aplyingTo[i].lastDelta * -1);
+            }
+        }
     }
 }

@@ -22,19 +22,13 @@ public class Trap : MonoBehaviour {
                 pb.loseHealthTrap();
             }
         }
-        if (col.gameObject.tag == "Eddie") {
-            EddieBase pb = col.gameObject.
-              GetComponent<EddieBase>();
-            if (pb.m_PlayerPolarity * polarity < 0) {
-                pb.loseHealthTrap();
-            }
-        }
-
-        if (col.gameObject.tag == "Prottie") {
-            ProttieBase pb = col.gameObject.
-              GetComponent<ProttieBase>();
-            if (pb.m_PlayerPolarity * polarity < 0) {
-                pb.loseHealthTrap();
+        else {
+            if(col.gameObject.tag == "Enemy") {
+                //kill the enemy
+                EnemyBase pb = col.gameObject.GetComponent<EnemyBase>();
+                if (pb.m_PlayerPolarity * polarity < 0) {
+                    pb.killme();
+                }
             }
         }
     }
