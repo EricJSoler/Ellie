@@ -23,12 +23,12 @@ public class EnemyController : MonoBehaviour {
             - base.transform.position.x )<= distanceBeforeTurning) {
             currentGoal = (currentGoal + 1) % checkpoints.Length;
         }
-        if (checkpoints[currentGoal].transform.position.x
+       /* if (checkpoints[currentGoal].transform.position.x
             < transform.position.x) {
             m_base.playerForces.run(-1);
         }
         else {
             m_base.playerForces.run(1);
-        }
+        }*/
 	}
 }

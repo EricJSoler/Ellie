@@ -1,21 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerDevToss : MonoBehaviour {
-
-    //Constants with arbitrary values used to set 'Look Good' limits on device velocity
-    private const float MIN_DIST = 15f;                 // <-- Min distance (or considered 'strength') of throwing device
-    private const float MAX_DIST = 20f;                 // <-- Max distance (or considered 'strength') of throwing device
+public class PlayerGuideToss : MonoBehaviour {
+    private const float MIN_DIST = 17f;                 // <-- Min distance (or considered 'strength') of throwing device
+    private const float MAX_DIST = 21f;                 // <-- Max distance (or considered 'strength') of throwing device
     private const float MAX_ANGL = Mathf.PI / 2;        // <-- Max angle player can throw upward and downward
     private const float GRAV_WEIGHT = 6f;               // <-- Weight against rigidbody2d gravity scale
 
-    private float additionalDist;
-
-    PlayerBase m_base;
-    Rigidbody2D m_body;
-    public string devicePrefab = "device";
-    GameObject m_device;
-    public GameObject player;
+    private PlayerBase m_base;
+    private Rigidbody2D m_body;
+    private GameObject m_guide;
+    private GameObject player;
 
     //Vectors to throw device in correct direction
     public Vector2 m_rightFacingSpawn;
@@ -34,26 +29,39 @@ public class PlayerDevToss : MonoBehaviour {
     public float m_upWeight;
     public float m_horWeight;
 
-	// Use this for initialization
-	void Start () {
-        m_base   = this.GetComponent<PlayerBase>();
-        m_device = Resources.Load(devicePrefab) as GameObject;
-        m_body   = this.GetComponent<Rigidbody2D>();
+    private bool isHoldingDown;
+    private float additionalDist;
 
-        //Intialize additional distance to be added to the throw distance
-        additionalDist = 0;
-        player = GameObject.FindGameObjectWithTag("Player");
-    }
+    // Use this for initialization
+    void Start () {
+        player  = GameObject.FindGameObjectWithTag("Player");
+        m_guide = Resources.Load("Guide") as GameObject;
+        m_body  = player.GetComponent<Rigidbody2D>();
+        m_base  = player.GetComponent<PlayerBase>();
+
+        isHoldingDown = false;
+        additionalDist = MIN_DIST;
+	}
 	
 	// Update is called once per frame
-	void Update () //MAY NEED TO CHANGE tempX & tempY CALCULATION
-    {
-
+	void Update () {
         float tempX, tempY;
         Vector3 cursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 pos = player.transform.position;
 
-        //Facing right case
+
+
+        if ((Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse1)) && !isHoldingDown)
+            isHoldingDown = true;
+
+        if ((Input.GetKeyUp(KeyCode.Mouse0) || Input.GetKeyUp(KeyCode.Mouse1)) && isHoldingDown)
+        { isHoldingDown = false; additionalDist = MIN_DIST; }
+
+        if (isHoldingDown)
+            additionalDist = MIN_DIST + additionalDist < MAX_DIST ? MIN_DIST + Time.deltaTime * MAX_DIST / 1.5f : MAX_DIST;
+
+
+
         if (m_base.playerForces.absHor > 0)
         {
             //Get mouse position relative to player's X and Y coordinates
@@ -67,7 +75,7 @@ public class PlayerDevToss : MonoBehaviour {
             tempX = pos.x - cursor.x >= 0 ? pos.x - cursor.x : 0;
             tempY = m_base.playerForces.absUp > 0 ? cursor.y - pos.y : pos.y - cursor.y;
         }
-        //Get angle between player and mouse pointer
+
         float theta = Mathf.Atan(tempY / tempX);
 
         //Set maximum and minimum angle for theta
@@ -75,29 +83,18 @@ public class PlayerDevToss : MonoBehaviour {
         if (theta < -1 * MAX_ANGL) theta = -1 * MAX_ANGL;
 
         //Set horVel and upVel to have magnitude of MAX_DIST based on theta
-        m_upVel = getDist() * Mathf.Sin(theta);
-        m_horVel = getDist() * Mathf.Cos(theta);
+        m_upVel  = additionalDist * Mathf.Sin(theta);
+        m_horVel = additionalDist * Mathf.Cos(theta);
 
         //Increment additional distance for velocity to where 2 second hold down gives max extra distance
-        additionalDist += Time.deltaTime * MAX_DIST / 1.5f;
     }
 
-    public void determineVelocity()
+    public void throwGuide(float _polarity)
     {
-
-    }
-
-    //Reset additionalDist back to 0 and prepare for key release
-    public void startTimer() { additionalDist = 0; }
-
-    //Determine additional velocity based on duration of key being held down
-    private float getDist() { return MIN_DIST + additionalDist < MAX_DIST ? MIN_DIST + additionalDist : MAX_DIST; }
-
-    //TODO: Make throw device less convoluted
-    public void throwDevice(float _polarity) {
         Vector3 spawn;
         Vector2 vel = new Vector2(m_horVel + m_body.velocity.x, m_upVel + m_body.velocity.y);
-        
+        //Vector2 vel = new Vector2(1, 1);
+
         if (m_base.playerForces.absHor == 1)
         { //facing right
             if (m_base.playerForces.absUp == 1)
@@ -143,16 +140,11 @@ public class PlayerDevToss : MonoBehaviour {
             }
         }
 
-        //vel = new Vector2(m_horVel + m_body.velocity.x, m_upVel + m_body.velocity.y);
-
-        GameObject dev = (GameObject)Instantiate(m_device,
-            spawn, transform.rotation);
-
-        Rigidbody2D rb = dev.GetComponent<Rigidbody2D>();
-        rb.velocity = vel;
-        rb.gravityScale = this.GetComponent<Rigidbody2D>().gravityScale * GRAV_WEIGHT;
-        //adding polarity to the instantiation of the field
-        dev.GetComponentInChildren<Field>().setPolarity(_polarity);
-
+        GameObject gid = (GameObject)Instantiate(m_guide, spawn, transform.rotation);
+        Rigidbody2D tempRB = gid.GetComponent<Rigidbody2D>();
+        tempRB.velocity = vel;
+        //tempRB.GetComponent<Collider2D>().enabled = false;
+        tempRB.gravityScale = GetComponent<Rigidbody2D>().gravityScale * GRAV_WEIGHT;
+        //tempRB.GetComponentInChildren<Guide>().//setPolarity(_polarity);
     }
 }

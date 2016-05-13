@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour {
     float m_lastThrow;
     //time between throws
     public float m_reloadTime = 5f;
+    public float m_guideWait = 0.1f;
+    public float m_prevGuide;
     float m_timeSinceLastThrow;
     //set to r if the device to be thrown is positive
     //set to e if the device to be throw is negative
@@ -17,6 +19,7 @@ public class PlayerController : MonoBehaviour {
     bool ericSettings = true;
 
     bool m_lockedControls = false;
+    bool m_disableControl = false;
 
     float m_timeControlsLocked;
     float m_TimeUntilUnlocked;
@@ -27,7 +30,7 @@ public class PlayerController : MonoBehaviour {
     void Start () {
         m_base = this.GetComponent<PlayerBase>();
         m_devToBeTossed = 'n';
-        m_timeSinceLastThrow = Time.time;
+        m_timeSinceLastThrow = m_prevGuide = Time.time;
     }
 	
 	// Update is called once per frame
@@ -39,6 +42,7 @@ public class PlayerController : MonoBehaviour {
         if (!m_lockedControls) {
             runningInput();
             deviceThrowInput();
+            if (Time.time >= m_prevGuide + m_guideWait) { m_base.playerGuide.throwGuide(10f); m_prevGuide = Time.time; }
         }
         else {
             if(Time.time > m_TimeUntilUnlocked)
@@ -60,6 +64,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void deviceThrowInput() {
+        
         if (Time.time > m_timeSinceLastThrow + m_reloadTime) {
             if (!ericSettings) {
                 if (m_devToBeTossed == 'n') {
@@ -121,5 +126,13 @@ public class PlayerController : MonoBehaviour {
 
     public void unlockControls() {
         m_lockedControls = false;
+    }
+
+    public void disableControl() {
+        m_disableControl = true;
+    }
+
+    public void enableControl() {
+        m_disableControl = false;
     }
 }

@@ -9,6 +9,7 @@ public class PlayerBase : MonoBehaviour {
     PlayerForces m_forces;
     PlayerDevToss m_dev;
     PlayerStats m_stats;
+    PlayerGuideToss m_guide;
 
     public PlayerAnim playerAnim {
         get {
@@ -33,6 +34,9 @@ public class PlayerBase : MonoBehaviour {
             return m_dev;
         }
     }
+
+    public PlayerGuideToss playerGuide { get { return m_guide; } }
+    
     #endregion
 
     public int m_PlayerPolarity = -1;
@@ -53,6 +57,7 @@ public class PlayerBase : MonoBehaviour {
         m_controller = GetComponent<PlayerController>();
         m_forces = GetComponent<PlayerForces>();
         m_dev = GetComponent<PlayerDevToss>();
+        m_guide = GetComponent<PlayerGuideToss>();
         m_stats = new PlayerStats(m_startHealth);       
     }
 
@@ -120,6 +125,12 @@ public class PlayerBase : MonoBehaviour {
 
     public void addHealth() {
         m_stats.addHealth();
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Guide")
+            Physics2D.IgnoreCollision(col.collider, this.GetComponent<CircleCollider2D>());
     }
 }
 

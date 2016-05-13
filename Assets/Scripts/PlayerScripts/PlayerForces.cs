@@ -147,7 +147,10 @@ public class PlayerForces : MonoBehaviour
         }
     }
 
+
     public void addToDelta(Vector2 amount) {
         ext_field += amount;
     }
+
+
 }

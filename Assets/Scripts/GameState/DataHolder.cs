@@ -18,8 +18,8 @@ public class DataHolder : MonoBehaviour {
     DataToSave myData;
     // Use this for initialization
     void Start() {
-        myData.level1Time = 9999;
-        myData.level2Time = 9999;
+        myData.level1Time = 9999999;
+        myData.level2Time = 9999999;
 
         if (dataHolderInstance == null) {
             dataHolderInstance = this;
@@ -56,7 +56,7 @@ public class DataHolder : MonoBehaviour {
         FileStream file = File.Create(Application.persistentDataPath + "/savedGames.gd");
         bf.Serialize(file, this.myData);
         file.Close();
-        Debug.Log("Save Complete");
+        Debug.Log("Save Complete " + (Application.persistentDataPath));
     }
 
     public int load() {
