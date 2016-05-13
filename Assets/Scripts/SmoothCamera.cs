@@ -47,11 +47,11 @@ public class SmoothCamera : MonoBehaviour
 
         if (facingDirection > 0)    //facing right
         {
-            if (transform.position.x > player.transform.position.x + 9)
+            if (transform.position.x > player.transform.position.x + 8)
             {
                 facingDirection = -facingDirection;
             }
-            else if(transform.position.x < player.transform.position.x + 7)
+            else if(transform.position.x < player.transform.position.x + 6)
             {
 
 
@@ -73,11 +73,11 @@ public class SmoothCamera : MonoBehaviour
         }
         else                        //facing left
         {
-            if (transform.position.x < player.transform.position.x - 9)
+            if (transform.position.x < player.transform.position.x - 8)
             {
                 facingDirection = -facingDirection;
             }
-            else if (transform.position.x > player.transform.position.x - 7)
+            else if (transform.position.x > player.transform.position.x - 6)
             {
 
 
@@ -92,10 +92,6 @@ public class SmoothCamera : MonoBehaviour
                     posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x - 7, ref velocity.x, .6f);
                     posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y, ref velocity.y, .6f);
                     transform.position = new Vector3(posX, posY, transform.position.z);
-                }
-                if (transform.position.x == player.transform.position.x - 10)
-                {
-                    facingDirection = -facingDirection;
                 }
             }
         }
