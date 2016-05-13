@@ -14,7 +14,7 @@ public class Guide : MonoBehaviour {
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
-        life = Time.time + 1.5f;
+        life = Time.time + 3f;
         all = new GameObject[0];
         allPerformed = false;
 

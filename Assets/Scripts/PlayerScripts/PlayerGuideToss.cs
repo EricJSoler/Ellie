@@ -2,10 +2,10 @@
 using System.Collections;
 
 public class PlayerGuideToss : MonoBehaviour {
-    private const float MIN_DIST = 17f;                 // <-- Min distance (or considered 'strength') of throwing device
-    private const float MAX_DIST = 21f;                 // <-- Max distance (or considered 'strength') of throwing device
+    private const float MIN_DIST = 12.4f;                 // <-- Min distance (or considered 'strength') of throwing device
+    private const float MAX_DIST = 15f;                 // <-- Max distance (or considered 'strength') of throwing device
     private const float MAX_ANGL = Mathf.PI / 2;        // <-- Max angle player can throw upward and downward
-    private const float GRAV_WEIGHT = 6f;               // <-- Weight against rigidbody2d gravity scale
+    private const float GRAV_WEIGHT = 3f;               // <-- Weight against rigidbody2d gravity scale
 
     private PlayerBase m_base;
     private Rigidbody2D m_body;
@@ -44,7 +44,7 @@ public class PlayerGuideToss : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         float tempX, tempY;
         Vector3 cursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 pos = player.transform.position;
