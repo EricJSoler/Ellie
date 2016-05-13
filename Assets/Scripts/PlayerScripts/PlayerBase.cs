@@ -68,7 +68,7 @@ public class PlayerBase : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (m_repositioningPlayer) {
-            this.GetComponent<Collider2D>().enabled = false;
+           // this.GetComponent<Collider2D>().enabled = false;
             this.GetComponent<Rigidbody2D>().Sleep();
             movePlayerTowards(m_newPlayerPosition);
         }
