@@ -44,8 +44,10 @@ public class PlayerController : MonoBehaviour {
             runningInput();
             deviceThrowInput();
             //guideInput();
-            //if (Input.GetKeyDown(KeyCode.G)) hideGuide = !hideGuide;
-            if ((Time.time >= m_prevGuide + m_guideWait))
+            if (Input.GetKeyDown(KeyCode.G))
+                hideGuide = !hideGuide;
+
+            if ((Time.time >= m_prevGuide + m_guideWait)) //&& !hideGuide)
             {
                 m_base.playerGuide.throwGuide(10f);
                 m_prevGuide = Time.time;

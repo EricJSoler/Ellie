@@ -31,6 +31,7 @@ public class PlayerGuideToss : MonoBehaviour {
 
     private bool isHoldingDown;
     private float additionalDist;
+    private bool hideGuide;
 
     // Use this for initialization
     void Start () {
@@ -41,13 +42,22 @@ public class PlayerGuideToss : MonoBehaviour {
 
         isHoldingDown = false;
         additionalDist = MIN_DIST;
+        hideGuide = true;
 	}
+
+    void changeVisibility()
+    {
+        m_guide.GetComponent<Renderer>().enabled = !m_guide.GetComponent<Renderer>().enabled;
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {
         float tempX, tempY;
         Vector3 cursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 pos = player.transform.position;
+
+        if (Input.GetKey(KeyCode.G))
+            changeVisibility();
 
         //if ((Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse1)) && !isHoldingDown)
         if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && !isHoldingDown)
