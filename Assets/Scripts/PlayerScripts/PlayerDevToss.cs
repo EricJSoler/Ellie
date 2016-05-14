@@ -152,7 +152,7 @@ public class PlayerDevToss : MonoBehaviour {
         rb.velocity = vel;
         rb.gravityScale = this.GetComponent<Rigidbody2D>().gravityScale * GRAV_WEIGHT;
         //adding polarity to the instantiation of the field
-        dev.GetComponentInChildren<Field>().setPolarity(_polarity);
+        dev.GetComponent<Device>().setPolarity(_polarity);
 
     }
 }

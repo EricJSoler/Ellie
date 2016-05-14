@@ -22,7 +22,6 @@ public class Trap : MonoBehaviour {
                 pb.loseHealthTrap();
             }
         }
-
         if (col.gameObject.tag == "Enemy") {
             EnemyBase pb = col.gameObject.
               GetComponent<EnemyBase>();

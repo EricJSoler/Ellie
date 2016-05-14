@@ -33,7 +33,7 @@ public class PlayerForces : MonoBehaviour
     public LayerMask worldGround;
     public LayerMask jumpAbleSurface;
     #endregion
-    
+
     int m_lastMovedDirection = 1;
 
     Stack<Vector2> m_checkPoints = new Stack<Vector2>();
@@ -50,7 +50,6 @@ public class PlayerForces : MonoBehaviour
     }
 
     void Update() {
-        checkYField();
     }
 
     private void checkYField() {
@@ -59,17 +58,20 @@ public class PlayerForces : MonoBehaviour
     }
 
     void FixedUpdate() {
-  //      if (!m_base.relocationPlayer) { //I FORGOT IF THIS IS SUPOOSSSED TO BE HERE OR NOT
-            checkIfOnJumpableSurface();
-            checkWorldFieldPull();
+        //      if (!m_base.relocationPlayer) { //I FORGOT IF THIS IS SUPOOSSSED TO BE HERE OR NOT
+        checkIfOnJumpableSurface();
+        checkWorldFieldPull();
+        checkYField();
         //Debug.Log(m_rigidBody.velocity);       
-        Debug.DrawRay(transform.position, new Vector3(absHor, 0f), Color.red);
+
+     //   Debug.DrawRay(transform.position, new Vector3(absHor, 0f), Color.red);
         Debug.DrawRay(transform.position, new Vector3(ext_field.x, ext_field.y), Color.blue);
     }
 
     public void storeCurrentCheckPoint() {
         m_checkPoints.Push(transform.position);
     }
+
     void checkIfOnJumpableSurface() {
         if (Physics2D.OverlapCircle(m_groundCheck.position,
                 m_groundCheckRadius, jumpAbleSurface)) {
@@ -123,11 +125,11 @@ public class PlayerForces : MonoBehaviour
     }
 
     public void run(int _direction) {
-        if(_direction != 0)
+        if (_direction != 0)
             m_lastMovedDirection = _direction;
-            float newXVel = ext_field.x + m_rigidBody.velocity.x + m_speedIncrement * _direction;
-            newXVel = Mathf.Clamp(newXVel, -1 * m_horVelMax + ext_field.x, m_horVelMax + ext_field.x);
-            m_rigidBody.velocity = new Vector2(newXVel, m_rigidBody.velocity.y);
+        float newXVel = m_rigidBody.velocity.x + ext_field.x + m_speedIncrement * _direction;
+        newXVel = Mathf.Clamp(newXVel, -1 * m_horVelMax + ext_field.x, m_horVelMax + ext_field.x);
+        m_rigidBody.velocity = new Vector2(newXVel, m_rigidBody.velocity.y);
     }
 
     public int absUp {
