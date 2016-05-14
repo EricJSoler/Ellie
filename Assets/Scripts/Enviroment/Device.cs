@@ -29,13 +29,14 @@ public class Device : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D other) {
-
+        Debug.Log(other.gameObject.tag);
         // Ignore collision with Nubbie, Prottie, and Eddie
-        if (other.gameObject.tag == "Nubbie" || other.gameObject.tag == "Prottie" || other.gameObject.tag == "Eddie" || other.gameObject.tag == "Guide")
+        if (other.gameObject.tag == "Nubbie" || other.gameObject.tag == "Prottie" 
+            || other.gameObject.tag == "Eddie" || other.gameObject.tag == "Guide"
+            || other.gameObject.tag == "Enemy")
         {
             Physics2D.IgnoreCollision(other.collider, this.GetComponent<Collider2D>());
         }
-
         else if (other.gameObject.tag != "Player")
         {
 
