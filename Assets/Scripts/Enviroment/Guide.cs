@@ -7,6 +7,7 @@ public class Guide : MonoBehaviour {
     private GameObject[] all;
     private bool allPerformed;
     private float life;
+    private bool hideGuide;
 
 
 
@@ -14,9 +15,10 @@ public class Guide : MonoBehaviour {
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player");
-        life = Time.time + 1.5f;
+        life = Time.time + 3f;
         all = new GameObject[0];
         allPerformed = false;
+        hideGuide = true;
 
         transform.position = player.transform.position;
         gameObject.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
@@ -37,6 +39,11 @@ public class Guide : MonoBehaviour {
         //}
         //if (GetComponent<Collider2D>().IsTouching(player.gameObject.GetComponent<Collider2D>()))
         //    Destroy(gameObject);//Physics2D.IgnoreCollision(GetComponent<Collider2D>(), player.gameObject.GetComponent<Collider2D>());
+        //if (Input.GetKeyDown(KeyCode.G))
+        //    hideGuide = !hideGuide;
+
+        //if (hideGuide)
+        //    GetComponent<Renderer>().enabled = !GetComponent<Renderer>().enabled;
 
         if (Time.time >= life)
             Destroy(gameObject);

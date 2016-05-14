@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour {
 
     bool m_lockedControls = false;
     bool m_disableControl = false;
+    bool hideGuide = true;
 
     float m_timeControlsLocked;
     float m_TimeUntilUnlocked;
@@ -42,12 +43,25 @@ public class PlayerController : MonoBehaviour {
         if (!m_lockedControls) {
             runningInput();
             deviceThrowInput();
-            if (Time.time >= m_prevGuide + m_guideWait) { m_base.playerGuide.throwGuide(10f); m_prevGuide = Time.time; }
+            //guideInput();
+            if (Input.GetKeyDown(KeyCode.G))
+                hideGuide = !hideGuide;
+
+            if ((Time.time >= m_prevGuide + m_guideWait)) //&& !hideGuide)
+            {
+                m_base.playerGuide.throwGuide(10f);
+                m_prevGuide = Time.time;
+            }
         }
         else {
             if(Time.time > m_TimeUntilUnlocked)
                 m_lockedControls = false;
         }
+    }
+
+    void guideInput()
+    {
+        
     }
 
     void runningInput() {
