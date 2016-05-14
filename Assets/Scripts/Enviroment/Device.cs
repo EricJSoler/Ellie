@@ -9,6 +9,9 @@ public class Device : MonoBehaviour {
 
     public GameObject m_particlesPos;
     public GameObject m_particlesNeg;
+    public GameObject field;
+
+    private float m_polarity;
 
     public float lifeSpan = 60f;
     private float spawnTime;
@@ -28,6 +31,10 @@ public class Device : MonoBehaviour {
         }
     }
 
+    public void setPolarity(float _pol) {
+        m_polarity = _pol;
+    }
+
     void OnCollisionEnter2D(Collision2D other) {
         Debug.Log(other.gameObject.tag);
         // Ignore collision with Nubbie, Prottie, and Eddie
@@ -45,7 +52,9 @@ public class Device : MonoBehaviour {
             normal = other.contacts[0].normal;
             transform.up = normal;
             this.GetComponent<Collider2D>().enabled = false;
+            field.SetActive(true);
             Field myField = this.GetComponentInChildren<Field>();
+            myField.setPolarity(m_polarity);
 
             // Play Particle System
             if (myField.isPosOrNeg() == 1)

@@ -64,7 +64,7 @@ public class PlayerForces : MonoBehaviour
         checkYField();
         //Debug.Log(m_rigidBody.velocity);       
 
-        Debug.DrawRay(transform.position, new Vector3(absHor, 0f), Color.red);
+     //   Debug.DrawRay(transform.position, new Vector3(absHor, 0f), Color.red);
         Debug.DrawRay(transform.position, new Vector3(ext_field.x, ext_field.y), Color.blue);
     }
 

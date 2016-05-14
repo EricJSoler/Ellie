@@ -9,8 +9,8 @@ public class EnemyForces : MonoBehaviour
     #endregion
 
     #region MovementSettings
-    float m_horVelMax = 5f;
-    float m_speedIncrement = 5f;
+    public float m_horVelMax = 5f;
+    public float m_speedIncrement = 5f;
     float m_airBorneSlow = .5f;
     #endregion
 

@@ -102,6 +102,7 @@ public class PlayerBase : MonoBehaviour {
             if (m_stats.takeHit()) { //player dead
                 FindObjectOfType<LevelManager>().restartLevel();
             }
+            m_anim.hit = true;
             repositionPlayer(playerForces.lastCheckPoint);
         }
     }
@@ -110,6 +111,7 @@ public class PlayerBase : MonoBehaviour {
         playerController.lockControls(Mathf.Infinity); //lock the controller from taking input for 5 seconds
         m_repositioningPlayer = true;
         m_newPlayerPosition = destination;
+        transform.position = destination;
     }
 
     IEnumerator repositionPlayerAfterHit() {
