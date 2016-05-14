@@ -16,11 +16,11 @@ public class UIBestTime : MonoBehaviour {
     void Update() {
         time = FindObjectOfType<DataHolder>().getBestTime(level);
         if (time >= 9999999) {
-            time = 0;
+            bestTime.text = "-- : -- ";
+        } else {
+            float minutes = time / 60;
+            float seconds = time % 60;
+            bestTime.text = minutes.ToString("00") + " : " + seconds.ToString("00");
         }
-        float minutes = time / 60;
-        float seconds = time % 60;
-        Debug.Log("Level " +  level);
-        bestTime.text = minutes.ToString("00") + ":" + seconds.ToString("00");
     }
 }
