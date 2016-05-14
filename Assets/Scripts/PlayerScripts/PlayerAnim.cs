@@ -5,13 +5,17 @@ public class PlayerAnim : MonoBehaviour {
 
     public GameObject body;
     public GameObject player;
-    int facingDirection,grounded;
+    private Animator animator;
+    public int facingDirection,grounded;
+    public bool hit;
         // Use this for initialization
     PlayerBase m_base;
 	void Start () {
         m_base = GetComponent<PlayerBase>();
         player = GameObject.FindGameObjectWithTag("Player");
         grounded = 1;
+        animator = GetComponent<Animator>();
+        hit = false;
     }
 	
 	// Update is called once per frame
@@ -26,6 +30,9 @@ public class PlayerAnim : MonoBehaviour {
         }
 	}
 
+    public void hurtPlayer() {
+        animator.SetTrigger("Hit");
+    }
     public void rotatePlayer() {
         transform.Rotate(transform.forward, 180f); //make this apretty lerp 
         transform.localScale = new Vector3(-transform.localScale.x, 1, 1);
