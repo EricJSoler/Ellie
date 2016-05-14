@@ -23,6 +23,7 @@ public class Trap : MonoBehaviour {
             }
         }
         if (col.gameObject.tag == "Enemy") {
+            Debug.Log("EnemyCollisionCalled HHERERERE");
             EnemyBase pb = col.gameObject.
               GetComponent<EnemyBase>();
             if (pb.m_PlayerPolarity * polarity < 0) {
