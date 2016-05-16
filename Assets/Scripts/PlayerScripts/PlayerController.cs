@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour
+{
 
     PlayerBase m_base;
     //last recorded time a device was thrown
@@ -28,20 +29,23 @@ public class PlayerController : MonoBehaviour {
 
 
 
-    void Start () {
+    void Start() {
         m_base = this.GetComponent<PlayerBase>();
         m_devToBeTossed = 'n';
         m_timeSinceLastThrow = m_prevGuide = Time.time;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    void FixedUpdate() {
+        runningInput();
+    }
+
+    void Update() {
 
         //if (Input.GetKeyDown(KeyCode.Space) ) {
         //   // m_base.playerForces.jump();
         //}
         if (!m_lockedControls) {
-            runningInput();
+            
             deviceThrowInput();
             //guideInput();
             if (Input.GetKeyDown(KeyCode.G))
@@ -54,31 +58,22 @@ public class PlayerController : MonoBehaviour {
             }
         }
         else {
-            if(Time.time > m_TimeUntilUnlocked)
+            if (Time.time > m_TimeUntilUnlocked)
                 m_lockedControls = false;
         }
     }
 
-    void guideInput()
-    {
-        
+    void guideInput() {
+
     }
 
     void runningInput() {
         float run = Input.GetAxis("Horizontal");
-        if (run > 0) {
-            m_base.playerForces.run(1);
-        }
-        else if (run < 0) {
-            m_base.playerForces.run(-1);
-        }
-        else {
-            m_base.playerForces.run(0);
-        }
+        m_base.playerForces.run(run);
     }
 
     void deviceThrowInput() {
-        
+
         if (Time.time > m_timeSinceLastThrow + m_reloadTime) {
             if (!ericSettings) {
                 if (m_devToBeTossed == 'n') {

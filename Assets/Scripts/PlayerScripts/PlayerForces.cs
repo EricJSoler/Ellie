@@ -10,7 +10,7 @@ public class PlayerForces : MonoBehaviour
 
     #region MovementSettings
     float m_horVelMax = 5f;
-    float m_speedIncrement = 5f;
+    float m_speedIncrement = 2f;
     float m_airBorneSlow = .5f;
     #endregion
 
@@ -64,7 +64,7 @@ public class PlayerForces : MonoBehaviour
         checkYField();
         //Debug.Log(m_rigidBody.velocity);       
 
-     //   Debug.DrawRay(transform.position, new Vector3(absHor, 0f), Color.red);
+        //   Debug.DrawRay(transform.position, new Vector3(absHor, 0f), Color.red);
         Debug.DrawRay(transform.position, new Vector3(ext_field.x, ext_field.y), Color.blue);
     }
 
@@ -124,12 +124,42 @@ public class PlayerForces : MonoBehaviour
         }
     }
 
-    public void run(int _direction) {
-        if (_direction != 0)
+    public void run(float _input) {
+
+        int _direction = 0;
+        if (_input > 0) {
+            _direction = 1;
+        }
+        else if (_input < 0) {
+            _direction = -1;
+        }
+
+        if (_direction != 0) //{
             m_lastMovedDirection = _direction;
-        float newXVel = m_rigidBody.velocity.x + ext_field.x + m_speedIncrement * _direction;
+        float newXVel = m_rigidBody.velocity.x + ext_field.x + m_speedIncrement * _input;
+        Debug.Log(newXVel);
         newXVel = Mathf.Clamp(newXVel, -1 * m_horVelMax + ext_field.x, m_horVelMax + ext_field.x);
         m_rigidBody.velocity = new Vector2(newXVel, m_rigidBody.velocity.y);
+        //}
+        //else {
+        //    float m_speedDecrement = .5f;
+        //    if (m_rigidBody.velocity.x < 0) {
+        //        float newXVel = m_rigidBody.velocity.x + ext_field.x + m_speedDecrement;
+        //        newXVel = Mathf.Clamp(newXVel, m_rigidBody.velocity.x, ext_field.x);
+        //        m_rigidBody.velocity = new Vector2(newXVel, m_rigidBody.velocity.y);
+        //        Debug.Log(newXVel);
+        //    }
+        //    else {
+        //        float newXVel = m_rigidBody.velocity.x + ext_field.x - m_speedDecrement;
+        //        newXVel = Mathf.Clamp(newXVel, ext_field.x,  m_rigidBody.velocity.x);
+        //        m_rigidBody.velocity = new Vector2(newXVel, m_rigidBody.velocity.y);
+        //        Debug.Log(newXVel);
+        //    }
+
+
+
+
+
     }
 
     public int absUp {
