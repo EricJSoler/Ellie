@@ -21,7 +21,7 @@ public class Guide : MonoBehaviour {
         hideGuide = true;
 
         transform.position = player.transform.position;
-        gameObject.GetComponent<Renderer>().material.color = new Color(1f, 1f, 1f, 0.5f);
+        gameObject.GetComponent<Renderer>().material.color = new Color(1f, 0.5f, 1f, 0.5f);
         //all = GameObject.FindObjectsOfType<GameObject>();
     }
 
