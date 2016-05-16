@@ -42,7 +42,7 @@ public class PlayerGuideToss : MonoBehaviour {
 
         isHoldingDown = false;
         additionalDist = MIN_DIST;
-        hideGuide = true;
+        //hideGuide = true;
 	}
 
     void changeVisibility()
@@ -56,8 +56,8 @@ public class PlayerGuideToss : MonoBehaviour {
         Vector3 cursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 pos = player.transform.position;
 
-        if (Input.GetKeyDown(KeyCode.G))
-            changeVisibility();
+        //if (Input.GetKeyDown(KeyCode.G))
+        //    changeVisibility();
 
         //if ((Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse1)) && !isHoldingDown)
         if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && !isHoldingDown)

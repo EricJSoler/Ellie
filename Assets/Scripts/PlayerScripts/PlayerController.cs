@@ -45,17 +45,9 @@ public class PlayerController : MonoBehaviour
         //   // m_base.playerForces.jump();
         //}
         if (!m_lockedControls) {
-            
             deviceThrowInput();
-            //guideInput();
-            if (Input.GetKeyDown(KeyCode.G))
-                hideGuide = !hideGuide;
-
-            if ((Time.time >= m_prevGuide + m_guideWait)) //&& !hideGuide)
-            {
-                m_base.playerGuide.throwGuide(10f);
-                m_prevGuide = Time.time;
-            }
+            runningInput();
+            guideInput();
         }
         else {
             if (Time.time > m_TimeUntilUnlocked)
@@ -64,7 +56,14 @@ public class PlayerController : MonoBehaviour
     }
 
     void guideInput() {
+        if (Input.GetKeyDown(KeyCode.G))
+            hideGuide = !hideGuide;
 
+        if ((Time.time >= m_prevGuide + m_guideWait) && !hideGuide)
+        {
+            m_base.playerGuide.throwGuide(10f);
+            m_prevGuide = Time.time;
+        }
     }
 
     void runningInput() {
