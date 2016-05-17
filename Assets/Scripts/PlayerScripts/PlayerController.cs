@@ -36,22 +36,24 @@ public class PlayerController : MonoBehaviour
     }
 
     void FixedUpdate() {
-        runningInput();
+        if (!m_disableControl) {
+            runningInput();
+        }
     }
 
     void Update() {
-
-        //if (Input.GetKeyDown(KeyCode.Space) ) {
-        //   // m_base.playerForces.jump();
-        //}
-        if (!m_lockedControls) {
-            deviceThrowInput();
-            runningInput();
-            guideInput();
-        }
-        else {
-            if (Time.time > m_TimeUntilUnlocked)
-                m_lockedControls = false;
+        if (!m_disableControl) {
+            //if (Input.GetKeyDown(KeyCode.Space) ) {
+            //   // m_base.playerForces.jump();
+            //}
+            if (!m_lockedControls) {
+                deviceThrowInput();
+                runningInput();
+                guideInput();
+            } else {
+                if (Time.time > m_TimeUntilUnlocked)
+                    m_lockedControls = false;
+            }
         }
     }
 
