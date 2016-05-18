@@ -12,7 +12,7 @@ public class PlayerAnim : MonoBehaviour {
     PlayerBase m_base;
 	void Start () {
         m_base = GetComponent<PlayerBase>();
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = gameObject;
         grounded = 1;
         animator = GetComponent<Animator>();
         hit = false;
@@ -22,7 +22,7 @@ public class PlayerAnim : MonoBehaviour {
 	void Update () {
 
         facingDirection = player.GetComponent<PlayerForces>().absHor;
-        if (grounded*facingDirection > 0) {
+        if (player.GetComponent<PlayerForces>().absUp * facingDirection > 0) {
             transform.localScale = new Vector3(1, 1, 1);
         }
         else {
@@ -36,7 +36,7 @@ public class PlayerAnim : MonoBehaviour {
     public void rotatePlayer() {
         transform.Rotate(transform.forward, 180f); //make this apretty lerp 
         transform.localScale = new Vector3(-transform.localScale.x, 1, 1);
-        grounded = -grounded;
+        //grounded = -grounded;
 
 
     }
