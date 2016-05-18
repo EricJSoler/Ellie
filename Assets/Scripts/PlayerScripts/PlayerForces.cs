@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PlayerForces : MonoBehaviour
+public class PlayerForces : Photon.MonoBehaviour
 {
     #region speedStuff
     Vector2 ext_field;
@@ -22,6 +22,9 @@ public class PlayerForces : MonoBehaviour
     public bool m_grounded;
     float m_groundCheckRadius = .1f;
 
+    public Rigidbody2D myRigidBody {
+        get { return m_rigidBody; }
+    }
     public bool grounded {
         get {
             return m_grounded;
@@ -59,9 +62,11 @@ public class PlayerForces : MonoBehaviour
 
     void FixedUpdate() {
         //      if (!m_base.relocationPlayer) { //I FORGOT IF THIS IS SUPOOSSSED TO BE HERE OR NOT
-        checkIfOnJumpableSurface();
-        checkWorldFieldPull();
-        checkYField();
+        if (photonView.isMine || !PhotonNetwork.connected) {
+            checkIfOnJumpableSurface();
+            checkWorldFieldPull();
+            checkYField();
+        }
         //Debug.Log(m_rigidBody.velocity);       
 
         //   Debug.DrawRay(transform.position, new Vector3(absHor, 0f), Color.red);
@@ -137,7 +142,7 @@ public class PlayerForces : MonoBehaviour
         if (_direction != 0) //{
             m_lastMovedDirection = _direction;
         float newXVel = m_rigidBody.velocity.x + ext_field.x + m_speedIncrement * _input;
-        Debug.Log(newXVel);
+     //   Debug.Log(newXVel);
         newXVel = Mathf.Clamp(newXVel, -1 * m_horVelMax + ext_field.x, m_horVelMax + ext_field.x);
         m_rigidBody.velocity = new Vector2(newXVel, m_rigidBody.velocity.y);
         //}
@@ -184,5 +189,17 @@ public class PlayerForces : MonoBehaviour
         ext_field += amount;
     }
 
+    public void setGravity(float amount) {
+        if (!photonView.isMine) {
+            m_rigidBody.gravityScale = amount;
+        }
+    }
+
+    public void setAbsHor(int amount) {
+        if (!photonView.isMine) {
+            m_lastMovedDirection = amount;
+        }
+
+    }
 
 }

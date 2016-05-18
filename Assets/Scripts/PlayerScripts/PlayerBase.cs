@@ -64,8 +64,23 @@ public class PlayerBase : MonoBehaviour {
 	void Start () {
 	
 	}
-	
-	// Update is called once per frame
+
+    // Update is called once per frame
+
+    void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.isWriting) {
+            stream.SendNext(playerForces.absHor);
+          //  stream.SendNext(playerForces.myRigidBody.gravityScale);
+        }
+        else if (stream.isReading) {
+            int currentDirection = (int)stream.ReceiveNext();
+           // int currentGravity = (int)stream.ReceiveNext();
+            playerForces.setAbsHor(currentDirection);
+        //    playerForces.setGravity(currentGravity);
+        }
+        
+    }
+
 	void Update () {
         if (m_repositioningPlayer) {
            // this.GetComponent<Collider2D>().enabled = false;

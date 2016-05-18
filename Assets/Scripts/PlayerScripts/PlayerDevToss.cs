@@ -13,8 +13,10 @@ public class PlayerDevToss : MonoBehaviour {
 
     PlayerBase m_base;
     Rigidbody2D m_body;
-    public string devicePrefab = "device";
-    GameObject m_device;
+    public string posDev = "devPos";
+    public string negDev = "devNeg";
+    GameObject m_devicePos;
+    GameObject m_deviceNeg;
     public GameObject player;
 
     //Vectors to throw device in correct direction
@@ -37,12 +39,14 @@ public class PlayerDevToss : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         m_base   = this.GetComponent<PlayerBase>();
-        m_device = Resources.Load(devicePrefab) as GameObject;
+       // m_device = Resources.Load(devicePrefab) as GameObject;
         m_body   = this.GetComponent<Rigidbody2D>();
 
         //Intialize additional distance to be added to the throw distance
         additionalDist = 0;
         player = GameObject.FindGameObjectWithTag("Player");
+        m_devicePos = Resources.Load(posDev) as GameObject;
+        m_deviceNeg = Resources.Load(negDev) as GameObject;
     }
 	
 	// Update is called once per frame
@@ -144,15 +148,33 @@ public class PlayerDevToss : MonoBehaviour {
         }
 
         //vel = new Vector2(m_horVel + m_body.velocity.x, m_upVel + m_body.velocity.y);
+        GameObject dev;
 
-        GameObject dev = (GameObject)Instantiate(m_device,
-            spawn, transform.rotation);
-
+        if (PhotonNetwork.connected) {
+            if (_polarity > 0) {
+                dev = (GameObject)PhotonNetwork.Instantiate(posDev,
+                    spawn, transform.rotation, 0);
+            }
+            else {
+                dev = (GameObject)PhotonNetwork.Instantiate(negDev,
+                    spawn, transform.rotation, 0);
+            }
+        }
+        else {
+            if (_polarity > 0) {
+                dev = (GameObject) Instantiate(m_devicePos,
+                    spawn, transform.rotation);
+            }
+            else {
+                dev = (GameObject) Instantiate(m_deviceNeg,
+                    spawn, transform.rotation);
+            }
+        }
         Rigidbody2D rb = dev.GetComponent<Rigidbody2D>();
         rb.velocity = vel;
         rb.gravityScale = this.GetComponent<Rigidbody2D>().gravityScale * GRAV_WEIGHT;
         //adding polarity to the instantiation of the field
-        dev.GetComponent<Device>().setPolarity(_polarity);
+        //dev.GetComponent<Device>().setPolarity(_polarity);
 
     }
 }

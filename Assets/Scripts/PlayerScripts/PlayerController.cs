@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Photon.MonoBehaviour
 {
 
     PlayerBase m_base;
@@ -36,23 +36,28 @@ public class PlayerController : MonoBehaviour
     }
 
     void FixedUpdate() {
-        if (!m_disableControl) {
-            runningInput();
+        if (photonView.isMine || !PhotonNetwork.connected) {
+            if (!m_disableControl) {
+                runningInput();
+            }
         }
     }
 
     void Update() {
-        if (!m_disableControl) {
-            //if (Input.GetKeyDown(KeyCode.Space) ) {
-            //   // m_base.playerForces.jump();
-            //}
-            if (!m_lockedControls) {
-                deviceThrowInput();
-                runningInput();
-                guideInput();
-            } else {
-                if (Time.time > m_TimeUntilUnlocked)
-                    m_lockedControls = false;
+        if (photonView.isMine || !PhotonNetwork.connected) {
+            if (!m_disableControl) {
+                //if (Input.GetKeyDown(KeyCode.Space) ) {
+                //   // m_base.playerForces.jump();
+                //}
+                if (!m_lockedControls) {
+                    deviceThrowInput();
+                    runningInput();
+                    guideInput();
+                }
+                else {
+                    if (Time.time > m_TimeUntilUnlocked)
+                        m_lockedControls = false;
+                }
             }
         }
     }

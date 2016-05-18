@@ -1,18 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerAnim : MonoBehaviour {
+public class PlayerAnim : Photon.MonoBehaviour {
 
     public GameObject body;
     public GameObject player;
     private Animator animator;
     public int facingDirection,grounded;
+    public PlayerForces playerForces;
     public bool hit;
         // Use this for initialization
     PlayerBase m_base;
-	void Start () {
+
+    void Awake() {
         m_base = GetComponent<PlayerBase>();
-        player = GameObject.FindGameObjectWithTag("Player");
+    }
+	void Start () {
+        //m_base = GetComponent<PlayerBase>();
+        //player = GameObject.FindGameObjectWithTag("Player");
         grounded = 1;
         animator = GetComponent<Animator>();
         hit = false;
@@ -21,7 +26,7 @@ public class PlayerAnim : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        facingDirection = player.GetComponent<PlayerForces>().absHor;
+        facingDirection = m_base.playerForces.absHor;
         if (grounded*facingDirection > 0) {
             transform.localScale = new Vector3(1, 1, 1);
         }

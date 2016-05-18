@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Device : MonoBehaviour {
+public class Device : MonoBehaviour
+{
 
 
     Rigidbody2D m_rigidBody;
     Vector2 normal;
 
-    public GameObject m_particlesPos;
-    public GameObject m_particlesNeg;
+    //public GameObject m_particlesPos;
+    public GameObject m_particles;
     public GameObject field;
 
     private float m_polarity;
@@ -36,16 +37,14 @@ public class Device : MonoBehaviour {
     }
 
     void OnCollisionEnter2D(Collision2D other) {
-        Debug.Log(other.gameObject.tag);
+        //Debug.Log(other.gameObject.tag);
         // Ignore collision with Nubbie, Prottie, and Eddie
-        if (other.gameObject.tag == "Nubbie" || other.gameObject.tag == "Prottie" 
+        if (other.gameObject.tag == "Nubbie" || other.gameObject.tag == "Prottie"
             || other.gameObject.tag == "Eddie" || other.gameObject.tag == "Guide"
-            || other.gameObject.tag == "Enemy")
-        {
+            || other.gameObject.tag == "Enemy") {
             Physics2D.IgnoreCollision(other.collider, this.GetComponent<Collider2D>());
         }
-        else if (other.gameObject.tag != "Player")
-        {
+        else if (other.gameObject.tag != "Player") {
 
             // Device Landing
             m_rigidBody.isKinematic = true;
@@ -54,17 +53,11 @@ public class Device : MonoBehaviour {
             this.GetComponent<Collider2D>().enabled = false;
             field.SetActive(true);
             Field myField = this.GetComponentInChildren<Field>();
-            myField.setPolarity(m_polarity);
+            //myField.setPolarity(m_polarity);
 
             // Play Particle System
-            if (myField.isPosOrNeg() == 1)
-            {
-                m_particlesPos.GetComponent<ParticleSystem>().Play();
-            }
-            else
-            {
-                m_particlesNeg.GetComponent<ParticleSystem>().Play();
-            }
+
+            m_particles.GetComponent<ParticleSystem>().Play();
         }
     }
 }
