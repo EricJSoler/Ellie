@@ -31,7 +31,7 @@ public class PlayerAnim : MonoBehaviour {
 	}
 
     public void hurtPlayer() {
-        animator.SetTrigger("Hit");
+        animator.SetTrigger("Hurt");
     }
     public void rotatePlayer() {
         transform.Rotate(transform.forward, 180f); //make this apretty lerp 
