@@ -117,7 +117,7 @@ public class PlayerBase : MonoBehaviour {
             if (m_stats.takeHit()) { //player dead
                 FindObjectOfType<LevelManager>().restartLevel();
             }
-            m_anim.hit = true;
+            m_anim.hurtPlayer();
             repositionPlayer(playerForces.lastCheckPoint);
         }
     }
