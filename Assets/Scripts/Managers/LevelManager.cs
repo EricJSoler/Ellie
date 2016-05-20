@@ -57,7 +57,10 @@ public class LevelManager : MonoBehaviour {
 
         float timeCompleted = FindObjectOfType<UITimer>().getTime();
         FindObjectOfType<GlobalManager>().SaveTimeCompleted(timeCompleted);
-        Debug.Log(SceneManager.GetActiveScene().buildIndex + 1);
+        Invoke("loadScene", 1f);
+    }
+
+    private void loadScene () {
         SceneManager.LoadScene(
             (SceneManager.GetActiveScene().buildIndex + 1)
             % (SceneManager.sceneCountInBuildSettings));
