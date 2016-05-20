@@ -1,0 +1,121 @@
+fileFormatVersion: 2
+guid: dd651aa578724e84c8a38317577bd9b3
+timeCreated: 1463781799
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Blocks_0
+    21300002: Blocks_1
+    21300004: Blocks_2
+    21300006: Blocks_3
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 1024
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 200
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Blocks_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1028
+        width: 1022
+        height: 1020
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -255.5, y: 255}
+        - {x: -255.5, y: -255}
+        - {x: 255.5, y: -255}
+        - {x: 255.5, y: 255}
+    - name: Blocks_1
+      rect:
+        serializedVersion: 2
+        x: 1022
+        y: 1028
+        width: 1022
+        height: 1020
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -255.5, y: 255}
+        - {x: -255.5, y: -255}
+        - {x: 255.5, y: -255}
+        - {x: 255.5, y: 255}
+    - name: Blocks_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8
+        width: 1022
+        height: 1020
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -255.5, y: 255}
+        - {x: -255.5, y: -255}
+        - {x: 255.5, y: -255}
+        - {x: 255.5, y: 255}
+    - name: Blocks_3
+      rect:
+        serializedVersion: 2
+        x: 1022
+        y: 8
+        width: 1022
+        height: 1020
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -255.5, y: 255}
+        - {x: -255.5, y: -255}
+        - {x: 255.5, y: -255}
+        - {x: 255.5, y: 255}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

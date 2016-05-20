@@ -1,0 +1,182 @@
+fileFormatVersion: 2
+guid: 43f296cc4811bb840bfe0b44861f3e0e
+timeCreated: 1463781361
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: ELLIE_Traps_Alternate_0
+    21300002: ELLIE_Traps_Alternate_1
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: ELLIE_Traps_Alternate_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 424
+        width: 1022
+        height: 200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 511, y: -43}
+        - {x: 484, y: 11}
+        - {x: 439, y: 39}
+        - {x: 417, y: 48}
+        - {x: 404, y: 59}
+        - {x: 386, y: 59}
+        - {x: 370, y: 44}
+        - {x: 371, y: 38}
+        - {x: 263, y: 38}
+        - {x: 267, y: 41}
+        - {x: 253, y: 59}
+        - {x: 230, y: 59}
+        - {x: 216, y: 53}
+        - {x: 213, y: 38}
+        - {x: 106, y: 38}
+        - {x: 108, y: 43}
+        - {x: 92, y: 59}
+        - {x: 74, y: 59}
+        - {x: 61, y: 50}
+        - {x: 55, y: 38}
+        - {x: -52, y: 38}
+        - {x: -56, y: 49}
+        - {x: -68, y: 59}
+        - {x: -85, y: 59}
+        - {x: -96, y: 50}
+        - {x: -102, y: 40}
+        - {x: -208, y: 39}
+        - {x: -213, y: 48}
+        - {x: -219, y: 58}
+        - {x: -226, y: 59}
+        - {x: -245, y: 59}
+        - {x: -249, y: 55}
+        - {x: -259, y: 39}
+        - {x: -354, y: 40}
+        - {x: -383, y: 59}
+        - {x: -402, y: 59}
+        - {x: -418, y: 43}
+        - {x: -441, y: 39}
+        - {x: -461, y: 15}
+        - {x: -479, y: 11}
+        - {x: -510, y: -52}
+        - {x: -510, y: -59}
+        - {x: -486, y: -65}
+        - {x: -467, y: -79}
+        - {x: -460, y: -83}
+        - {x: 465, y: -83}
+        - {x: 470, y: -78}
+        - {x: 490, y: -68}
+        - {x: 511, y: -61}
+    - name: ELLIE_Traps_Alternate_1
+      rect:
+        serializedVersion: 2
+        x: 1022
+        y: 424
+        width: 1022
+        height: 200
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 511, y: -69}
+        - {x: 511, y: -56}
+        - {x: 504, y: -40}
+        - {x: 497, y: -26}
+        - {x: 471, y: -4}
+        - {x: 464, y: 8}
+        - {x: 457, y: 26}
+        - {x: 461, y: 27}
+        - {x: 458, y: 37}
+        - {x: 428, y: 38}
+        - {x: 408, y: 58}
+        - {x: 403, y: 59}
+        - {x: 235, y: 59}
+        - {x: 217, y: 37}
+        - {x: 113, y: 37}
+        - {x: 94, y: 58}
+        - {x: 89, y: 59}
+        - {x: -82, y: 59}
+        - {x: -100, y: 37}
+        - {x: -204, y: 37}
+        - {x: -223, y: 58}
+        - {x: -228, y: 59}
+        - {x: -390, y: 59}
+        - {x: -396, y: 58}
+        - {x: -417, y: 37}
+        - {x: -442, y: 36}
+        - {x: -444, y: 32}
+        - {x: -451, y: 7}
+        - {x: -457, y: -4}
+        - {x: -475, y: -20}
+        - {x: -477, y: -22}
+        - {x: -485, y: -27}
+        - {x: -491, y: -40}
+        - {x: -501, y: -63}
+        - {x: -501, y: -66}
+        - {x: -498, y: -69}
+        - {x: -459, y: -69}
+        - {x: -459, y: -76}
+        - {x: -452, y: -82}
+        - {x: -430, y: -82}
+        - {x: -396, y: -81}
+        - {x: -395, y: -82}
+        - {x: 423, y: -82}
+        - {x: 462, y: -81}
+        - {x: 466, y: -77}
+        - {x: 469, y: -69}
+      - - {x: -511, y: -58}
+        - {x: -510, y: -59}
+        - {x: -507, y: -58}
+        - {x: -507, y: -52}
+        - {x: -510, y: -49}
+        - {x: -511, y: -49}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
