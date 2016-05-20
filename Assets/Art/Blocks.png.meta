@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: dd651aa578724e84c8a38317577bd9b3
-timeCreated: 1463781799
+timeCreated: 1463786062
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -62,7 +62,7 @@ TextureImporter:
         width: 1022
         height: 1020
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -255.5, y: 255}
@@ -74,16 +74,16 @@ TextureImporter:
         serializedVersion: 2
         x: 1022
         y: 1028
-        width: 1022
-        height: 1020
+        width: 1026
+        height: 1007
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -255.5, y: 255}
-        - {x: -255.5, y: -255}
-        - {x: 255.5, y: -255}
-        - {x: 255.5, y: 255}
+      - - {x: -256.5, y: 252}
+        - {x: -256.5, y: -252}
+        - {x: 256.5, y: -252}
+        - {x: 256.5, y: 252}
     - name: Blocks_2
       rect:
         serializedVersion: 2
@@ -92,7 +92,7 @@ TextureImporter:
         width: 1022
         height: 1020
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
       - - {x: -255.5, y: 255}
@@ -102,18 +102,18 @@ TextureImporter:
     - name: Blocks_3
       rect:
         serializedVersion: 2
-        x: 1022
-        y: 8
-        width: 1022
-        height: 1020
+        x: 1024
+        y: 10
+        width: 1024
+        height: 1000
       alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 2}
       outline:
-      - - {x: -255.5, y: 255}
-        - {x: -255.5, y: -255}
-        - {x: 255.5, y: -255}
-        - {x: 255.5, y: 255}
+      - - {x: -256, y: 250}
+        - {x: -256, y: -250}
+        - {x: 256, y: -250}
+        - {x: 256, y: 250}
     outline: []
   spritePackingTag: 
   userData: 
