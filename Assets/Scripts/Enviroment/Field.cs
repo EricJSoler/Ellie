@@ -32,6 +32,12 @@ public class Field : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Player") {
+            if (other.GetComponent<PlayerBase>().m_PlayerPolarity * m_fieldStrength > 0) {
+                GameObject.Find("LevelManager").GetComponent<LevelManager>().playPull(); // SFX
+            } else {
+                GameObject.Find("LevelManager").GetComponent<LevelManager>().playPush(); // SFX
+            }
+
             Vector2 addVel = this.transform.up * m_fieldStrength
                 * other.GetComponent<PlayerBase>().m_PlayerPolarity;
             other.GetComponent<PlayerBase>().playerForces.addToDelta(addVel);

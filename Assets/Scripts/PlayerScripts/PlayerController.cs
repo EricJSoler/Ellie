@@ -79,7 +79,7 @@ public class PlayerController : Photon.MonoBehaviour
     }
 
     void deviceThrowInput() {
-
+    
         if (Time.time > m_timeSinceLastThrow + m_reloadTime) {
             if (!ericSettings) {
                 if (m_devToBeTossed == 'n') {

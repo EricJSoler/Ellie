@@ -52,6 +52,7 @@ public class EnemyBase : MonoBehaviour {
 	}
 
     public void killme() {
+        GameObject.Find("LevelManager").GetComponent<LevelManager>().playEnemySounds(); // SFX
         Destroy(gameObject);
     }
 }

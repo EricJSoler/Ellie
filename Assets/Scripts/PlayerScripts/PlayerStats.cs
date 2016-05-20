@@ -14,6 +14,7 @@ public class PlayerStats {
     }
     //returns true if player is out of health
     public bool takeHit() {
+        GameObject.Find("LevelManager").GetComponent<LevelManager>().playHurt(); // SFX
         m_health--;
         if (m_health == 0)
             return true;

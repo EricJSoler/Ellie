@@ -99,6 +99,9 @@ public class PlayerDevToss : MonoBehaviour {
 
     //TODO: Make throw device less convoluted
     public void throwDevice(float _polarity) {
+
+        GameObject.Find("LevelManager").GetComponent<LevelManager>().playThrow(); // SFX
+
         Vector3 spawn;
         Vector2 vel = new Vector2(m_horVel + m_body.velocity.x, m_upVel + m_body.velocity.y);
         
