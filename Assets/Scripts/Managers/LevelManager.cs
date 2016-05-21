@@ -50,6 +50,11 @@ public class LevelManager : MonoBehaviour {
     public void restartLevel() {
         bkMusic.PlayOneShot(spawnSound, 100f); // SFX
         SceneManager.LoadScene((SceneManager.GetActiveScene().buildIndex));
+        Checkpoint[] checkpoints = GetComponents<Checkpoint>();
+        foreach (Checkpoint checkpt in checkpoints) {
+            checkpt.lightBulbOff();
+
+        }
     }
 
     public void levelCompleted() {
