@@ -3,7 +3,6 @@ using System.Collections;
 
 public class PlayerAnim : MonoBehaviour {
 
-    public GameObject body;
     public GameObject player;
     private Animator animator;
     public int facingDirection,grounded;
@@ -20,7 +19,6 @@ public class PlayerAnim : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
         facingDirection = player.GetComponent<PlayerForces>().absHor;
         if (player.GetComponent<PlayerForces>().absUp * facingDirection > 0) {
             transform.localScale = new Vector3(1, 1, 1);
@@ -33,15 +31,14 @@ public class PlayerAnim : MonoBehaviour {
     public void hurtPlayer() {
         animator.SetTrigger("Hurt");
     }
+
     public void killPlayer()
     {
         animator.SetTrigger("Death");
     }
+
     public void rotatePlayer() {
         transform.Rotate(transform.forward, 180f); //make this apretty lerp 
         transform.localScale = new Vector3(-transform.localScale.x, 1, 1);
-        //grounded = -grounded;
-
-
     }
 }

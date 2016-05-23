@@ -41,7 +41,7 @@ public class Device : MonoBehaviour
         // Ignore collision with Nubbie, Prottie, and Eddie
         if (other.gameObject.tag == "Nubbie" || other.gameObject.tag == "Prottie"
             || other.gameObject.tag == "Eddie" || other.gameObject.tag == "Guide"
-            || other.gameObject.tag == "Enemy") {
+            || other.gameObject.tag == "Enemy" || other.gameObject.tag == "Player") {
             Physics2D.IgnoreCollision(other.collider, this.GetComponent<Collider2D>());
         }
         else if (other.gameObject.tag != "Player") {
@@ -49,6 +49,7 @@ public class Device : MonoBehaviour
             // Device Landing
             m_rigidBody.isKinematic = true;
             normal = other.contacts[0].normal;
+            this.transform.position = other.contacts[0].point;
             transform.up = normal;
             this.GetComponent<Collider2D>().enabled = false;
             field.SetActive(true);

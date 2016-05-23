@@ -90,7 +90,6 @@ public class PlayerBase : MonoBehaviour
 
     void Update() {
         if (m_repositioningPlayer) {
-            // this.GetComponent<Collider2D>().enabled = false;
             this.GetComponent<Rigidbody2D>().Sleep();
             movePlayerTowards(m_newPlayerPosition);
         }
@@ -112,19 +111,17 @@ public class PlayerBase : MonoBehaviour
         }
         else {
             if (Time.time > m_animationTime + m_timeAnimStarted) {
-                //Vector2 direction = new Vector2(
-                //    destination.x - transform.position.x,
-                //    destination.y - transform.position.y);
-                //direction.Normalize();
-                //float speed = Vector2.Distance(transform.position, destination);
-                //Vector3 newposition = new Vector3(
-                //    transform.position.x + (direction * speed * Time.deltaTime).x,
-                //    transform.position.y + (direction * speed * Time.deltaTime).y,
-                //    0f);
                 transform.position = destination;
             }
         }
 
+    }
+
+    public void repositionPlayer(Vector2 destination) {
+        playerController.lockControls(Mathf.Infinity); //lock the controller from taking input
+        m_repositioningPlayer = true;
+        m_doneReposition = false;
+        m_newPlayerPosition = destination;
     }
 
     public void loseHealthTrap() {
@@ -137,13 +134,6 @@ public class PlayerBase : MonoBehaviour
             m_anim.hurtPlayer();
             repositionPlayer(playerForces.lastCheckPoint);
         }
-    }
-
-    public void repositionPlayer(Vector2 destination) {
-        playerController.lockControls(Mathf.Infinity); //lock the controller from taking input
-        m_repositioningPlayer = true;
-        m_doneReposition = false;
-        m_newPlayerPosition = destination;
     }
 
     public int Health() {

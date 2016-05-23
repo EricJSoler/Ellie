@@ -46,32 +46,30 @@ public class PlayerForces : Photon.MonoBehaviour
             return m_checkPoints.Peek();
         }
     }
+
+
     void Start() {
         m_rigidBody = this.GetComponent<Rigidbody2D>();
         m_base = this.GetComponent<PlayerBase>();
         ext_field = new Vector2(0f, 0f);
     }
 
-    void Update() {
+    void FixedUpdate() {
+        if (!m_base.relocationPlayer) { //I FORGOT IF THIS IS SUPOOSSSED TO BE HERE OR NOT
+            if (photonView.isMine || !PhotonNetwork.connected) {
+                checkIfOnJumpableSurface();
+                checkWorldFieldPull();
+                checkYField();
+            }
+        }
+        //   Debug.DrawRay(transform.position, new Vector3(absHor, 0f), Color.red);
+        //Debug.DrawRay(transform.position, new Vector3(ext_field.x, ext_field.y), Color.blue);
+        Debug.DrawRay(transform.position, new Vector3(m_rigidBody.velocity.x, m_rigidBody.velocity.y), Color.blue);
     }
 
     private void checkYField() {
         m_rigidBody.velocity = new Vector2(m_rigidBody.velocity.x,
             m_rigidBody.velocity.y + ext_field.y);
-    }
-
-    void FixedUpdate() {
-        //      if (!m_base.relocationPlayer) { //I FORGOT IF THIS IS SUPOOSSSED TO BE HERE OR NOT
-        if (photonView.isMine || !PhotonNetwork.connected) {
-            checkIfOnJumpableSurface();
-            checkWorldFieldPull();
-            checkYField();
-        }
-        //Debug.Log(m_rigidBody.velocity);       
-
-        //   Debug.DrawRay(transform.position, new Vector3(absHor, 0f), Color.red);
-        //Debug.DrawRay(transform.position, new Vector3(ext_field.x, ext_field.y), Color.blue);
-        Debug.DrawRay(transform.position, new Vector3(m_rigidBody.velocity.x, m_rigidBody.velocity.y), Color.blue);
     }
 
     public void storeCurrentCheckPoint() {
@@ -114,22 +112,6 @@ public class PlayerForces : Photon.MonoBehaviour
         }
     }
 
-    //will be replaced
-    public void jump() {
-        if (grounded) {
-            if (absUp < 0) {
-                m_rigidBody.velocity = new Vector2(
-                    m_rigidBody.velocity.x, -10f);
-
-
-            }
-            else {
-                m_rigidBody.velocity = new Vector2(
-                    m_rigidBody.velocity.x, 10f);
-            }
-        }
-    }
-
     public void run(float _input) {
 
         int _direction = 0;
@@ -143,29 +125,8 @@ public class PlayerForces : Photon.MonoBehaviour
         if (_direction != 0) //{
             m_lastMovedDirection = _direction;
         float newXVel = m_rigidBody.velocity.x + ext_field.x + m_speedIncrement * _input;
-     //   Debug.Log(newXVel);
         newXVel = Mathf.Clamp(newXVel, -1 * m_horVelMax + ext_field.x, m_horVelMax + ext_field.x);
         m_rigidBody.velocity = new Vector2(newXVel, m_rigidBody.velocity.y);
-        //}
-        //else {
-        //    float m_speedDecrement = .5f;
-        //    if (m_rigidBody.velocity.x < 0) {
-        //        float newXVel = m_rigidBody.velocity.x + ext_field.x + m_speedDecrement;
-        //        newXVel = Mathf.Clamp(newXVel, m_rigidBody.velocity.x, ext_field.x);
-        //        m_rigidBody.velocity = new Vector2(newXVel, m_rigidBody.velocity.y);
-        //        Debug.Log(newXVel);
-        //    }
-        //    else {
-        //        float newXVel = m_rigidBody.velocity.x + ext_field.x - m_speedDecrement;
-        //        newXVel = Mathf.Clamp(newXVel, ext_field.x,  m_rigidBody.velocity.x);
-        //        m_rigidBody.velocity = new Vector2(newXVel, m_rigidBody.velocity.y);
-        //        Debug.Log(newXVel);
-        //    }
-
-
-
-
-
     }
 
     public int absUp {
