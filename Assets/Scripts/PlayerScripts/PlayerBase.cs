@@ -54,7 +54,10 @@ public class PlayerBase : MonoBehaviour
     Vector2 m_newPlayerPosition;
     private bool m_doneReposition = false;
     private float m_timeRepostiiongComplete;
-    private float m_timetoReleaseAfterReposition = 2f;
+    private float m_timetoReleaseAfterReposition = .5f;
+
+    private float m_animationTime = 2f;
+    private float m_timeAnimStarted;
 
     void Awake() {
         m_anim = GetComponent<PlayerAnim>();
@@ -108,16 +111,18 @@ public class PlayerBase : MonoBehaviour
             }
         }
         else {
-            Vector2 direction = new Vector2(
-                destination.x - transform.position.x,
-                destination.y - transform.position.y);
-            direction.Normalize();
-            float speed = Vector2.Distance(transform.position, destination);
-            Vector3 newposition = new Vector3(
-                transform.position.x + (direction * speed * Time.deltaTime).x,
-                transform.position.y + (direction * speed * Time.deltaTime).y,
-                0f);
-            this.transform.position = newposition;
+            if (Time.time > m_animationTime + m_timeAnimStarted) {
+                //Vector2 direction = new Vector2(
+                //    destination.x - transform.position.x,
+                //    destination.y - transform.position.y);
+                //direction.Normalize();
+                //float speed = Vector2.Distance(transform.position, destination);
+                //Vector3 newposition = new Vector3(
+                //    transform.position.x + (direction * speed * Time.deltaTime).x,
+                //    transform.position.y + (direction * speed * Time.deltaTime).y,
+                //    0f);
+                transform.position = destination;
+            }
         }
 
     }
@@ -128,17 +133,17 @@ public class PlayerBase : MonoBehaviour
                 m_anim.killPlayer();
                 FindObjectOfType<LevelManager>().restartLevel();
             }
+            m_timeAnimStarted = Time.time;
             m_anim.hurtPlayer();
             repositionPlayer(playerForces.lastCheckPoint);
         }
     }
 
     public void repositionPlayer(Vector2 destination) {
-        playerController.lockControls(Mathf.Infinity); //lock the controller from taking input for 5 seconds
+        playerController.lockControls(Mathf.Infinity); //lock the controller from taking input
         m_repositioningPlayer = true;
         m_doneReposition = false;
         m_newPlayerPosition = destination;
-        transform.position = destination;
     }
 
     public int Health() {
