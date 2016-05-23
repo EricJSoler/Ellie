@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class LevelManager : MonoBehaviour {
+
+    #region Sound Effects
     public AudioClip spawnSound;
     public AudioClip finalSound;
     public AudioClip pushSound;
@@ -12,6 +14,7 @@ public class LevelManager : MonoBehaviour {
     public AudioClip throwSound;
     public AudioClip enemySound;
     public AudioClip checkptSound;
+    #endregion
 
     public float sfxVolume= 7f;
     private AudioSource bkMusic;
@@ -21,6 +24,7 @@ public class LevelManager : MonoBehaviour {
 
     private GameObject MainMenuButton;
     private GameObject ResumeButton;
+    private GameObject EndPanel;
 
 
     void Awake() {
@@ -36,6 +40,8 @@ public class LevelManager : MonoBehaviour {
         MainMenuButton.SetActive(false);
         ResumeButton = GameObject.Find("ResumeButton");
         ResumeButton.SetActive(false);
+        EndPanel = GameObject.Find("LevelComplete");
+        EndPanel.SetActive(false);
     }
 
 
@@ -43,8 +49,7 @@ public class LevelManager : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             MainMenuButton.SetActive(true);
             ResumeButton.SetActive(true);
-            FindObjectOfType<UITimer>().pause();
-            FindObjectOfType<PlayerController>().disableControl();
+            pauseLevel();
         }
     }
 
@@ -59,17 +64,24 @@ public class LevelManager : MonoBehaviour {
     }
 
     public void levelCompleted() {
-        bkMusic.PlayOneShot(finalSound, sfxVolume);
+        bkMusic.PlayOneShot(finalSound, sfxVolume); // SFX
+        pauseLevel();
 
         float timeCompleted = FindObjectOfType<UITimer>().getTime();
         FindObjectOfType<GlobalManager>().SaveTimeCompleted(timeCompleted);
-        Invoke("loadScene", 1f);
+        EndPanel.SetActive(true);
+        Invoke("loadScene", 5f);
     }
 
     private void loadScene () {
         SceneManager.LoadScene(
             (SceneManager.GetActiveScene().buildIndex + 1)
             % (SceneManager.sceneCountInBuildSettings));
+    }
+
+    public void pauseLevel() {
+        FindObjectOfType<UITimer>().pause();
+        FindObjectOfType<PlayerController>().disableControl();
     }
 
     public void resumeLevel() {
@@ -79,6 +91,7 @@ public class LevelManager : MonoBehaviour {
         FindObjectOfType<PlayerController>().enableControl();
     }
 
+    #region Sound Effects
     public void playThrow() {
         bkMusic.PlayOneShot(throwSound, sfxVolume);
     }
@@ -106,4 +119,5 @@ public class LevelManager : MonoBehaviour {
     public void playCheckPoint() {
         bkMusic.PlayOneShot(checkptSound, sfxVolume);
     }
+    #endregion
 }
