@@ -38,9 +38,9 @@ public class SmoothCamera : MonoBehaviour
         posY = Mathf.SmoothDamp(transform.position.y, newCameraLocation.y, ref velocity.y, smoothTimeY);
         transform.position = new Vector3(posX, posY, transform.position.z);
     }
-    void checkpoint()
+    public void checkpoint()
     {
-        transform.position = new Vector3(player.transform.position.x + 7, player.transform.position.y, transform.position.z);
+        transform.position = new Vector3(player.transform.position.x + 6, player.transform.position.y+2, transform.position.z);
     }
     void TiedCamera()
     {
@@ -65,13 +65,13 @@ public class SmoothCamera : MonoBehaviour
                     if (upright < 1)
                     {
                         posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x + 6, ref velocity.x, smoothTimeX);
-                        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y - 4, ref velocity.y, smoothTimeY);
+                        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y - 2, ref velocity.y, 1f);
                         transform.position = new Vector3(posX, posY, transform.position.z);
                     }
                     else
                     {
                         posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x + 6, ref velocity.x, smoothTimeX);
-                        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + 4, ref velocity.y, smoothTimeY);
+                        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + 2, ref velocity.y, 1f);
                         transform.position = new Vector3(posX, posY, transform.position.z);
                     }
                 }
@@ -81,18 +81,29 @@ public class SmoothCamera : MonoBehaviour
                     if (upright < 1)
                     {
                         posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x + 6, ref velocity.x, .6f);
-                        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y - 4, ref velocity.y, .6f);
+                        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y - 2, ref velocity.y, 1f);
                         transform.position = new Vector3(posX, posY, transform.position.z);
                     }
                     else
                     {
                         posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x + 6, ref velocity.x, .6f);
-                        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + 4, ref velocity.y, .6f);
+                        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + 2, ref velocity.y, 1f);
                         transform.position = new Vector3(posX, posY, transform.position.z);
                     }
                 }
             }
-            
+            if (upright < 1)
+            {
+
+                posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y - 2, ref velocity.y, 1f);
+                transform.position = new Vector3(transform.position.x, posY, transform.position.z);
+            }
+            else
+            {
+                posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + 2, ref velocity.y, 1f);
+                transform.position = new Vector3(transform.position.x, posY, transform.position.z);
+            }
+
         }
         else                        //facing left
         {
@@ -109,13 +120,13 @@ public class SmoothCamera : MonoBehaviour
                     if(upright < 1)
                     {
                         posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x - 6, ref velocity.x, smoothTimeX);
-                        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y - 4, ref velocity.y, smoothTimeY);
+                        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y - 2, ref velocity.y, 1f);
                         transform.position = new Vector3(posX, posY, transform.position.z);
                     }
                     else
                     {
                         posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x - 6, ref velocity.x, smoothTimeX);
-                        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + 4, ref velocity.y, smoothTimeY);
+                        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + 2, ref velocity.y, 1f);
                         transform.position = new Vector3(posX, posY, transform.position.z);
                     }
                 }
@@ -124,16 +135,27 @@ public class SmoothCamera : MonoBehaviour
                     if (upright < 1)
                     {
                         posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x - 6, ref velocity.x, .6f);
-                        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y - 4, ref velocity.y, .6f);
+                        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y - 2, ref velocity.y, 1f);
                         transform.position = new Vector3(posX, posY, transform.position.z);
                     }
                     else
                     {
                         posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x - 6, ref velocity.x, .6f);
-                        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + 4, ref velocity.y, .6f);
+                        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + 2, ref velocity.y, 1f);
                         transform.position = new Vector3(posX, posY, transform.position.z);
                     }
                 }
+            }
+            if (upright < 1)
+            {
+
+                posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y - 2, ref velocity.y, 1f);
+                transform.position = new Vector3(transform.position.x, posY, transform.position.z);
+            }
+            else
+            {
+                posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + 2, ref velocity.y, 1f);
+                transform.position = new Vector3(transform.position.x, posY, transform.position.z);
             }
         }
        

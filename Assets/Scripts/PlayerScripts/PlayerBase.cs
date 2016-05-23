@@ -10,6 +10,7 @@ public class PlayerBase : MonoBehaviour {
     PlayerDevToss m_dev;
     PlayerStats m_stats;
     PlayerGuideToss m_guide;
+    SmoothCamera m_camera;
 
     public PlayerAnim playerAnim {
         get {
@@ -58,7 +59,8 @@ public class PlayerBase : MonoBehaviour {
         m_forces = GetComponent<PlayerForces>();
         m_dev = GetComponent<PlayerDevToss>();
         m_guide = GetComponent<PlayerGuideToss>();
-        m_stats = new PlayerStats(m_startHealth);       
+        m_stats = new PlayerStats(m_startHealth);
+        m_camera = GetComponent<SmoothCamera>();
     }
 
 	void Start () {
@@ -135,6 +137,7 @@ public class PlayerBase : MonoBehaviour {
         yield return new WaitForSeconds(2f);
         m_repositioningPlayer = false;
         playerController.unlockControls();
+        m_camera.checkpoint();
     }
 
     public int Health() {
