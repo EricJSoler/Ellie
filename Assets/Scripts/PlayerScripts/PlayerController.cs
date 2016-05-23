@@ -26,8 +26,13 @@ public class PlayerController : Photon.MonoBehaviour
     float m_timeControlsLocked;
     float m_TimeUntilUnlocked;
 
+    bool m_freeLook = false;
 
-
+    public bool freeLook {
+        get {
+            return m_freeLook;
+        }
+    }
 
     void Start() {
         m_base = this.GetComponent<PlayerBase>();
@@ -51,8 +56,11 @@ public class PlayerController : Photon.MonoBehaviour
                 //}
                 if (!m_lockedControls) {
                     deviceThrowInput();
-                    runningInput();
+                    //runningInput();
                     guideInput();
+                    if (Input.GetKeyDown(KeyCode.Space)) {
+                        m_freeLook = !m_freeLook;
+                    }
                 }
                 else {
                     if (Time.time > m_TimeUntilUnlocked)

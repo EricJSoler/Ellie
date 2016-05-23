@@ -70,7 +70,8 @@ public class PlayerForces : Photon.MonoBehaviour
         //Debug.Log(m_rigidBody.velocity);       
 
         //   Debug.DrawRay(transform.position, new Vector3(absHor, 0f), Color.red);
-        Debug.DrawRay(transform.position, new Vector3(ext_field.x, ext_field.y), Color.blue);
+        //Debug.DrawRay(transform.position, new Vector3(ext_field.x, ext_field.y), Color.blue);
+        Debug.DrawRay(transform.position, new Vector3(m_rigidBody.velocity.x, m_rigidBody.velocity.y), Color.blue);
     }
 
     public void storeCurrentCheckPoint() {

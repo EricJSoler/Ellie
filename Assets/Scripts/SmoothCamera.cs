@@ -10,8 +10,7 @@ public class SmoothCamera : MonoBehaviour
     private float prevPlayerX;
     public GameObject player;
 
-    void Start()
-    {
+    void Start() {
         player = GameObject.FindGameObjectWithTag("Player");
         facingDirection = player.GetComponent<PlayerForces>().absHor;
         upright = player.GetComponent<PlayerForces>().absUp;
@@ -19,12 +18,16 @@ public class SmoothCamera : MonoBehaviour
         prevPlayerX = player.transform.position.x;
     }
 
-    void FixedUpdate()
-    {
-        TiedCamera();
+    void FixedUpdate() {
+        if (player.GetComponent<PlayerController>().freeLook) {
+            MouseCamera();
+        }
+        else {
+            TiedCamera();
+        }
+        
     }
-    void MouseCamera()
-    {
+    void MouseCamera() {
         float posX;
         float posY;
 
@@ -38,97 +41,89 @@ public class SmoothCamera : MonoBehaviour
         posY = Mathf.SmoothDamp(transform.position.y, newCameraLocation.y, ref velocity.y, smoothTimeY);
         transform.position = new Vector3(posX, posY, transform.position.z);
     }
-    void checkpoint()
-    {
+    void checkpoint() {
         transform.position = new Vector3(player.transform.position.x + 7, player.transform.position.y, transform.position.z);
     }
-    void TiedCamera()
-    {
+    void TiedCamera() {
         float posX;
         float posY;
 
+        //if (upright != player.GetComponent<PlayerForces>().absUp && player.GetComponent<PlayerForces>().grounded) {
+        //    upright = player.GetComponent<PlayerForces>().absUp;
+        //}
 
+        float yVel = player.GetComponent<Rigidbody2D>().velocity.y;
+        if(yVel > 2 && !player.GetComponent<PlayerForces>().grounded) {
+            upright = 1;
+        }
+        else if(yVel < 2 && !player.GetComponent<PlayerForces>().grounded) {
+            upright = -1;
+        }
+        else {
+            upright = player.GetComponent<PlayerForces>().absUp;
+        }
 
-        upright = player.GetComponent<PlayerForces>().absUp;
         if (facingDirection > 0)    //facing right
         {
-            if (transform.position.x > player.transform.position.x + 8)
-            {
+            if (transform.position.x > player.transform.position.x + 8) {
                 facingDirection = -facingDirection;
             }
-            else if(transform.position.x < player.transform.position.x + 6)
-            {
-
-
-                if (prevFacingDirection == facingDirection)
-                {
-                    if (upright < 1)
-                    {
+            else if (transform.position.x < player.transform.position.x + 6) {
+                if (prevFacingDirection == facingDirection) {
+                    if (upright < 1) {
                         posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x + 6, ref velocity.x, smoothTimeX);
                         posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y - 4, ref velocity.y, smoothTimeY);
                         transform.position = new Vector3(posX, posY, transform.position.z);
                     }
-                    else
-                    {
+                    else {
                         posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x + 6, ref velocity.x, smoothTimeX);
                         posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + 4, ref velocity.y, smoothTimeY);
                         transform.position = new Vector3(posX, posY, transform.position.z);
                     }
                 }
-                else
-                {
+                else {
 
-                    if (upright < 1)
-                    {
+                    if (upright < 1) {
                         posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x + 6, ref velocity.x, .6f);
                         posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y - 4, ref velocity.y, .6f);
                         transform.position = new Vector3(posX, posY, transform.position.z);
                     }
-                    else
-                    {
+                    else {
                         posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x + 6, ref velocity.x, .6f);
                         posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + 4, ref velocity.y, .6f);
                         transform.position = new Vector3(posX, posY, transform.position.z);
                     }
                 }
             }
-            
+
         }
         else                        //facing left
         {
-            if (transform.position.x < player.transform.position.x - 8)
-            {
+            if (transform.position.x < player.transform.position.x - 8) {
                 facingDirection = -facingDirection;
             }
-            else if (transform.position.x > player.transform.position.x - 6)
-            {
+            else if (transform.position.x > player.transform.position.x - 6) {
 
 
-                if (facingDirection == prevFacingDirection)
-                {
-                    if(upright < 1)
-                    {
+                if (facingDirection == prevFacingDirection) {
+                    if (upright < 1) {
                         posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x - 6, ref velocity.x, smoothTimeX);
                         posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y - 4, ref velocity.y, smoothTimeY);
                         transform.position = new Vector3(posX, posY, transform.position.z);
                     }
-                    else
-                    {
+                    else {
                         posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x - 6, ref velocity.x, smoothTimeX);
                         posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + 4, ref velocity.y, smoothTimeY);
                         transform.position = new Vector3(posX, posY, transform.position.z);
                     }
                 }
-                else
-                {
-                    if (upright < 1)
-                    {
+                else {
+                    if (upright < 1) {
                         posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x - 6, ref velocity.x, .6f);
                         posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y - 4, ref velocity.y, .6f);
                         transform.position = new Vector3(posX, posY, transform.position.z);
                     }
-                    else
-                    {
+                    else {
                         posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x - 6, ref velocity.x, .6f);
                         posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + 4, ref velocity.y, .6f);
                         transform.position = new Vector3(posX, posY, transform.position.z);
@@ -136,12 +131,11 @@ public class SmoothCamera : MonoBehaviour
                 }
             }
         }
-       
 
 
 
-        if (transform.position == player.transform.position)
-        {
+
+        if (transform.position == player.transform.position) {
             prevFacingDirection = facingDirection;
         }
     }
