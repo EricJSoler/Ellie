@@ -28,7 +28,8 @@ public class EnemyController : MonoBehaviour {
             m_base.playerForces.run(-1);
         }
         else {
-            m_base.playerForces.run(1);
+            m_base.playerForces.run(1); // right
+        
         }
     }
 }
