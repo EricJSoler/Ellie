@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: dd651aa578724e84c8a38317577bd9b3
-timeCreated: 1463786249
+timeCreated: 1463966296
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -57,33 +57,33 @@ TextureImporter:
     - name: Blocks_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 0
         y: 1028
-        width: 1021
+        width: 1022
         height: 1020
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 3, y: 0, z: 0, w: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -255, y: 255}
-        - {x: -255, y: -255}
-        - {x: 256, y: -255}
-        - {x: 256, y: 255}
+      - - {x: -255.5, y: 255}
+        - {x: -255.5, y: -255}
+        - {x: 255.5, y: -255}
+        - {x: 255.5, y: 255}
     - name: Blocks_1
       rect:
         serializedVersion: 2
-        x: 1022
+        x: 1026
         y: 1028
-        width: 1026
+        width: 1022
         height: 1007
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -256.5, y: 252}
-        - {x: -256.5, y: -252}
-        - {x: 256.5, y: -252}
-        - {x: 256.5, y: 252}
+      - - {x: -255.5, y: 252}
+        - {x: -255.5, y: -252}
+        - {x: 255.5, y: -252}
+        - {x: 255.5, y: 252}
     - name: Blocks_2
       rect:
         serializedVersion: 2

@@ -19,8 +19,10 @@ public class LightBulb : MonoBehaviour {
 
 
     public void On() {
+        if (!halo.enabled)
+            GameObject.Find("LevelManager").GetComponent<LevelManager>().playCheckPoint();
         halo.enabled = true;
-        sprite.color = new Color(255, 233, 0);
+        sprite.color = new Color(174, 159, 0);
     }
 
     public void Off() {

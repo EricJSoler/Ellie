@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour {
     public AudioClip hurtSound;
     public AudioClip throwSound;
     public AudioClip enemySound;
+    public AudioClip checkptSound;
 
     public float sfxVolume= 7f;
     private AudioSource bkMusic;
@@ -79,26 +80,30 @@ public class LevelManager : MonoBehaviour {
     }
 
     public void playThrow() {
-        bkMusic.PlayOneShot(throwSound, sfxVolume - 2);
+        bkMusic.PlayOneShot(throwSound, sfxVolume);
     }
 
     public void playPush() {
-        bkMusic.PlayOneShot(pushSound, sfxVolume - 2);
+        bkMusic.PlayOneShot(pushSound, sfxVolume);
     }
 
     public void playPull() {
-        bkMusic.PlayOneShot(pullSound, sfxVolume - 2);
+        bkMusic.PlayOneShot(pullSound, sfxVolume);
     }
 
     public void playHurt() {
-        bkMusic.PlayOneShot(hurtSound, sfxVolume - 2);
+        bkMusic.PlayOneShot(hurtSound, sfxVolume);
     }
 
     public void playExtraHealth() {
-        bkMusic.PlayOneShot(healthSound, sfxVolume - 2);
+        bkMusic.PlayOneShot(healthSound, sfxVolume);
     }
 
     public void playEnemySounds() {
-        bkMusic.PlayOneShot(enemySound, sfxVolume - 2);
+        bkMusic.PlayOneShot(enemySound, sfxVolume);
+    }
+
+    public void playCheckPoint() {
+        bkMusic.PlayOneShot(checkptSound, sfxVolume);
     }
 }
