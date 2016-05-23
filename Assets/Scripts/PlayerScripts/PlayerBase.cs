@@ -115,6 +115,7 @@ public class PlayerBase : MonoBehaviour {
     public void loseHealthTrap() {
         if (!relocationPlayer) {
             if (m_stats.takeHit()) { //player dead
+                m_anim.killPlayer();
                 FindObjectOfType<LevelManager>().restartLevel();
             }
             m_anim.hurtPlayer();

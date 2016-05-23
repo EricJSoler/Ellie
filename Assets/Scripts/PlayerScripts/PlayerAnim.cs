@@ -33,6 +33,10 @@ public class PlayerAnim : MonoBehaviour {
     public void hurtPlayer() {
         animator.SetTrigger("Hurt");
     }
+    public void killPlayer()
+    {
+        animator.SetTrigger("Death");
+    }
     public void rotatePlayer() {
         transform.Rotate(transform.forward, 180f); //make this apretty lerp 
         transform.localScale = new Vector3(-transform.localScale.x, 1, 1);
