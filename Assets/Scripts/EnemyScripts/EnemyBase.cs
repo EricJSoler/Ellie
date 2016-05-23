@@ -4,13 +4,13 @@ using System.Collections;
 public class EnemyBase : MonoBehaviour {
 
     #region PlayerComponents
-    PlayerAnim m_anim;
+    EnemyAnim m_anim;
     EnemyController m_controller;
     EnemyForces m_forces;
     PlayerDevToss m_dev;
     PlayerStats m_stats;
 
-    public PlayerAnim playerAnim {
+    public EnemyAnim playerAnim {
         get {
             return m_anim;
         }
@@ -40,7 +40,7 @@ public class EnemyBase : MonoBehaviour {
     
     
     void Start () {
-        m_anim = GetComponent<PlayerAnim>();
+        m_anim = GetComponent<EnemyAnim>();
         m_controller = GetComponent<EnemyController>();
         m_forces = GetComponent<EnemyForces>();
         m_dev = GetComponent<PlayerDevToss>();
