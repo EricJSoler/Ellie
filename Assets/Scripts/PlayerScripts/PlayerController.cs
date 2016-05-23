@@ -42,8 +42,9 @@ public class PlayerController : Photon.MonoBehaviour
 
     void FixedUpdate() {
         if (photonView.isMine || !PhotonNetwork.connected) {
-            if (!m_disableControl) {
+            if (!m_lockedControls) {
                 runningInput();
+                
             }
         }
     }
@@ -51,20 +52,17 @@ public class PlayerController : Photon.MonoBehaviour
     void Update() {
         if (photonView.isMine || !PhotonNetwork.connected) {
             if (!m_disableControl) {
-                //if (Input.GetKeyDown(KeyCode.Space) ) {
-                //   // m_base.playerForces.jump();
-                //}
                 if (!m_lockedControls) {
                     deviceThrowInput();
-                    //runningInput();
                     guideInput();
                     if (Input.GetKeyDown(KeyCode.Space)) {
                         m_freeLook = !m_freeLook;
                     }
                 }
                 else {
-                    if (Time.time > m_TimeUntilUnlocked)
+                    if (Time.time > m_TimeUntilUnlocked) {
                         m_lockedControls = false;
+                    }
                 }
             }
         }
@@ -141,10 +139,10 @@ public class PlayerController : Photon.MonoBehaviour
     }
 
     //locks the controls for the time
-    public void lockControls(float time) {
+    public void lockControls(float _time) {
         m_lockedControls = true;
         m_timeControlsLocked = Time.time;
-        m_TimeUntilUnlocked = m_timeControlsLocked + time;
+        m_TimeUntilUnlocked = m_timeControlsLocked + _time;
     }
 
     public void unlockControls() {

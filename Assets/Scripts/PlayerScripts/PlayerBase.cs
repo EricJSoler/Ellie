@@ -1,7 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerBase : MonoBehaviour {
+public class PlayerBase : MonoBehaviour
+{
 
     #region PlayerComponents
     PlayerAnim m_anim;
@@ -36,7 +37,7 @@ public class PlayerBase : MonoBehaviour {
     }
 
     public PlayerGuideToss playerGuide { get { return m_guide; } }
-    
+
     #endregion
 
     public int m_PlayerPolarity = -1;
@@ -51,6 +52,9 @@ public class PlayerBase : MonoBehaviour {
     }
 
     Vector2 m_newPlayerPosition;
+    private bool m_doneReposition = false;
+    private float m_timeRepostiiongComplete;
+    private float m_timetoReleaseAfterReposition = 2f;
 
     void Awake() {
         m_anim = GetComponent<PlayerAnim>();
@@ -58,44 +62,50 @@ public class PlayerBase : MonoBehaviour {
         m_forces = GetComponent<PlayerForces>();
         m_dev = GetComponent<PlayerDevToss>();
         m_guide = GetComponent<PlayerGuideToss>();
-        m_stats = new PlayerStats(m_startHealth);       
+        m_stats = new PlayerStats(m_startHealth);
     }
 
-	void Start () {
-	
-	}
+    void Start() {
+
+    }
 
     // Update is called once per frame
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.isWriting) {
             stream.SendNext(playerForces.absHor);
-          //  stream.SendNext(playerForces.myRigidBody.gravityScale);
+            //  stream.SendNext(playerForces.myRigidBody.gravityScale);
         }
         else if (stream.isReading) {
             int currentDirection = (int)stream.ReceiveNext();
-           // int currentGravity = (int)stream.ReceiveNext();
+            // int currentGravity = (int)stream.ReceiveNext();
             playerForces.setAbsHor(currentDirection);
-        //    playerForces.setGravity(currentGravity);
+            //    playerForces.setGravity(currentGravity);
         }
-        
+
     }
 
-	void Update () {
+    void Update() {
         if (m_repositioningPlayer) {
-           // this.GetComponent<Collider2D>().enabled = false;
+            // this.GetComponent<Collider2D>().enabled = false;
             this.GetComponent<Rigidbody2D>().Sleep();
             movePlayerTowards(m_newPlayerPosition);
         }
-	}
+    }
 
     public void movePlayerTowards(Vector2 destination) {
         if (Vector2.Distance(transform.position, destination)
             < 1f) {
-            this.GetComponent<Collider2D>().enabled = true;
-            this.GetComponent<Rigidbody2D>().WakeUp();
-            m_repositioningPlayer = false;
-            playerController.unlockControls();
+            if (!m_doneReposition) {
+                m_doneReposition = true;
+                m_timeRepostiiongComplete = Time.time;
+            }
+            if (Time.time > m_timeRepostiiongComplete + m_timetoReleaseAfterReposition) {
+                this.GetComponent<Collider2D>().enabled = true;
+                this.GetComponent<Rigidbody2D>().WakeUp();
+                m_repositioningPlayer = false;
+                playerController.unlockControls();
+            }
         }
         else {
             Vector2 direction = new Vector2(
@@ -126,15 +136,9 @@ public class PlayerBase : MonoBehaviour {
     public void repositionPlayer(Vector2 destination) {
         playerController.lockControls(Mathf.Infinity); //lock the controller from taking input for 5 seconds
         m_repositioningPlayer = true;
+        m_doneReposition = false;
         m_newPlayerPosition = destination;
         transform.position = destination;
-    }
-
-    IEnumerator repositionPlayerAfterHit() {
-        transform.position = playerForces.lastCheckPoint;
-        yield return new WaitForSeconds(2f);
-        m_repositioningPlayer = false;
-        playerController.unlockControls();
     }
 
     public int Health() {
@@ -145,8 +149,7 @@ public class PlayerBase : MonoBehaviour {
         m_stats.addHealth();
     }
 
-    void OnCollisionEnter2D(Collision2D col)
-    {
+    void OnCollisionEnter2D(Collision2D col) {
         if (col.gameObject.tag == "Guide")
             Physics2D.IgnoreCollision(col.collider, this.GetComponent<CircleCollider2D>());
     }
