@@ -42,9 +42,11 @@ public class PlayerController : Photon.MonoBehaviour
 
     void FixedUpdate() {
         if (photonView.isMine || !PhotonNetwork.connected) {
-            if (!m_lockedControls) {
-                runningInput();
-                
+            if (!m_disableControl) {
+                if (!m_lockedControls) {
+                    runningInput();
+
+                }
             }
         }
     }
