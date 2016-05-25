@@ -14,7 +14,8 @@ public class PlayerGuideToss : MonoBehaviour {
     private GameObject   guide;
     private GameObject   guide1;
     private GameObject   guide2;
-    private LineRenderer line;
+    public LineRenderer  line;
+    private Material     line_mat;
     private Vector2      pos1;
     private Vector2      pos2;
     private Vector3      glb_vect1;
@@ -25,7 +26,7 @@ public class PlayerGuideToss : MonoBehaviour {
     private bool         canDelete;
     private float        offset_hor;
     private float        offset_vert;
-    public Color        lineColor;
+    public Color         lineColor;
     private float        lineA;
     private bool         shouldMute;
 
@@ -34,10 +35,11 @@ public class PlayerGuideToss : MonoBehaviour {
     void Start()
     {
         player         = GameObject.FindGameObjectWithTag("Player");
+        line_mat       = Resources.Load("line_mat") as Material;
         m_base         = player.GetComponent<PlayerBase>();
         guide          = Resources.Load("Guide") as GameObject;
-        line           = gameObject.AddComponent<LineRenderer>();
-        additionalDist = prev_additionalDist = curr_additionalDist = 0f;
+        line           = player.gameObject.AddComponent<LineRenderer>();
+        additionalDist = 0f;
         pos1 = pos2    = new Vector2();
         canDelete      = false;
         shouldMute     = false;
@@ -47,6 +49,7 @@ public class PlayerGuideToss : MonoBehaviour {
         glb_vect2      = new Vector3();
         lineA          = 0.7f;
         //lineColor = new Color(254, 153, 0);
+        Debug.Log("Your Debug: " + line_mat.ToString());
     }
 
 
@@ -62,6 +65,7 @@ public class PlayerGuideToss : MonoBehaviour {
             determineAdditionalDist();
             getAngle();
         }
+
         else hideGuide();
     }
 
@@ -72,14 +76,6 @@ public class PlayerGuideToss : MonoBehaviour {
         float tempX, tempY;
         Vector3 cursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 pos = player.transform.position;
-        curr_additionalDist = additionalDist;
-
-        //if (canDelete)
-        //{
-        //    Destroy(guide1.gameObject);
-        //    Destroy(guide2.gameObject);
-        //}
-        //else canDelete = true;
 
         //Calculate cursor based on facing direction
         if (m_base.playerForces.absHor > 0)
@@ -104,30 +100,6 @@ public class PlayerGuideToss : MonoBehaviour {
         pos2.x = Mathf.Cos(theta);
         pos2.y = Mathf.Sin(theta);
 
-        //Horizontal direction check
-        //if (m_base.playerForces.absHor < 0)
-        //{
-        //    pos2.x      = -Mathf.Abs(pos2.x);
-        //    offset_hor  = -Mathf.Abs(offset_hor);
-        //}
-        //else if (m_base.playerForces.absHor > 0 && offset_hor < 0)
-        //{
-        //    pos2.x      = Mathf.Abs(pos2.x);
-        //    offset_hor  = Mathf.Abs(offset_hor);
-        //}
-
-        ////Verticle direction check
-        //if (m_base.playerForces.absUp < 0 && offset_vert > 0)
-        //{
-        //    pos2.y      = -Mathf.Abs(pos2.y);
-        //    offset_vert = -Mathf.Abs(offset_vert);
-        //}
-        //else if (m_base.playerForces.absUp > 0 && offset_vert < 0)
-        //{
-        //    pos2.y      = Mathf.Abs(pos2.y);
-        //    offset_vert = Mathf.Abs(offset_vert);
-        //}
-
         if (m_base.playerForces.absHor > 0)
         {
             if (m_base.playerForces.absUp > 0)
@@ -190,20 +162,6 @@ public class PlayerGuideToss : MonoBehaviour {
                 );
             }
         }
-
-        ////Global vector for first point
-        //glb_vect1 = new Vector3 (
-        //    player.transform.position.x + offset_hor, 
-        //    player.transform.position.y + offset_vert, 
-        //    0f
-        //);
-
-        ////Global vector for second point
-        //glb_vect2 = new Vector3 (
-        //    player.transform.position.x + pos2.x * MAGNITUDE_SCALE, 
-        //    player.transform.position.y + pos2.y * MAGNITUDE_SCALE, 
-        //    0f
-        //);
 
         line.SetVertexCount(2);
         line.material.color = new Color(lineColor.r, lineColor.g, lineColor.b);
@@ -234,7 +192,7 @@ public class PlayerGuideToss : MonoBehaviour {
     }
 
 
-
+    #region Change Guide Visibility
     private void hideGuide()
     {
         line.SetVertexCount(0);
@@ -246,166 +204,167 @@ public class PlayerGuideToss : MonoBehaviour {
     {
         line.SetVertexCount(2);
     }
+    #endregion
 
 
 
+    #region Old Throw Code
+    //   private const float MIN_DIST = 12.4f;               // <-- Min distance (or considered 'strength') of throwing device
+    //   private const float MAX_DIST = 15f;                 // <-- Max distance (or considered 'strength') of throwing device
+    //   private const float MAX_ANGL = Mathf.PI / 2;        // <-- Max angle player can throw upward and downward
+    //   private const float GRAV_WEIGHT = 3f;               // <-- Weight against rigidbody2d gravity scale
+
+    //   private PlayerBase m_base;
+    //   private Rigidbody2D m_body;
+    //   private GameObject m_guide;
+    //   private GameObject player;
+
+    //   //Vectors to throw device in correct direction
+    //   public Vector2 m_rightFacingSpawn;
+    //   public Vector2 m_leftFacingSpawn;
+
+    //   //Never initialized?
+    //   public float m_centerOffset;
+
+    //   //Horizontal velocity
+    //   public float m_horVel = 10f;
+
+    //   //Upward velocity
+    //   public float m_upVel = 2f;
+
+    //   //Weight to velocities dependent on cursor location
+    //   public float m_upWeight;
+    //   public float m_horWeight;
+
+    //   private bool isHoldingDown;
+    //   private float additionalDist;
+    //   private bool hideGuide;
+
+    //   // Use this for initialization
+    //   void Start () {
+    //       player  = GameObject.FindGameObjectWithTag("Player");
+    //       m_guide = Resources.Load("Guide") as GameObject;
+    //       m_body  = player.GetComponent<Rigidbody2D>();
+    //       m_base  = player.GetComponent<PlayerBase>();
+
+    //       isHoldingDown = false;
+    //       additionalDist = MIN_DIST;
+    //       //hideGuide = true;
+    //}
+
+    //   void changeVisibility()
+    //   {
+    //       m_guide.GetComponent<Renderer>().enabled = !m_guide.GetComponent<Renderer>().enabled;
+    //   }
+
+    //// Update is called once per frame
+    //void FixedUpdate () {
+    //       float tempX, tempY;
+    //       Vector3 cursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //       Vector3 pos = player.transform.position;
+
+    //       //if (Input.GetKeyDown(KeyCode.G))
+    //       //    changeVisibility();
+
+    //       //if ((Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse1)) && !isHoldingDown)
+    //       if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && !isHoldingDown)
+    //       { isHoldingDown = true; }
+    //       //else isHoldingDown = false;
+
+    //       //if ((Input.GetKeyUp(KeyCode.Mouse0) || Input.GetKeyUp(KeyCode.Mouse1)) && isHoldingDown)
+    //       if ((Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1)) && isHoldingDown)
+    //       { isHoldingDown = false; additionalDist = MIN_DIST; }
+
+    //       if (isHoldingDown)
+    //           additionalDist = MIN_DIST + additionalDist < MAX_DIST ? 
+    //               MIN_DIST + Time.deltaTime * MAX_DIST / 1.5f : MAX_DIST;
 
 
- //   private const float MIN_DIST = 12.4f;               // <-- Min distance (or considered 'strength') of throwing device
- //   private const float MAX_DIST = 15f;                 // <-- Max distance (or considered 'strength') of throwing device
- //   private const float MAX_ANGL = Mathf.PI / 2;        // <-- Max angle player can throw upward and downward
- //   private const float GRAV_WEIGHT = 3f;               // <-- Weight against rigidbody2d gravity scale
 
- //   private PlayerBase m_base;
- //   private Rigidbody2D m_body;
- //   private GameObject m_guide;
- //   private GameObject player;
+    //       if (m_base.playerForces.absHor > 0)
+    //       {
+    //           //Get mouse position relative to player's X and Y coordinates
+    //           tempX = cursor.x - pos.x >= 0 ? cursor.x - pos.x : 0;
+    //           tempY = m_base.playerForces.absUp > 0 ? cursor.y - pos.y : pos.y - cursor.y;
+    //       }
+    //       //Facing left cause
+    //       else
+    //       {
+    //           //Get mouse position relative to player's X and Y coordinate
+    //           tempX = pos.x - cursor.x >= 0 ? pos.x - cursor.x : 0;
+    //           tempY = m_base.playerForces.absUp > 0 ? cursor.y - pos.y : pos.y - cursor.y;
+    //       }
 
- //   //Vectors to throw device in correct direction
- //   public Vector2 m_rightFacingSpawn;
- //   public Vector2 m_leftFacingSpawn;
+    //       float theta = Mathf.Atan(tempY / tempX);
 
- //   //Never initialized?
- //   public float m_centerOffset;
+    //       //Set maximum and minimum angle for theta
+    //       if (theta > MAX_ANGL) theta = MAX_ANGL;
+    //       if (theta < -1 * MAX_ANGL) theta = -1 * MAX_ANGL;
 
- //   //Horizontal velocity
- //   public float m_horVel = 10f;
+    //       //Set horVel and upVel to have magnitude of MAX_DIST based on theta
+    //       m_upVel  = additionalDist * Mathf.Sin(theta);
+    //       m_horVel = additionalDist * Mathf.Cos(theta);
 
- //   //Upward velocity
- //   public float m_upVel = 2f;
+    //       //Increment additional distance for velocity to where 2 second hold down gives max extra distance
+    //   }
 
- //   //Weight to velocities dependent on cursor location
- //   public float m_upWeight;
- //   public float m_horWeight;
+    //   public void throwGuide(float _polarity)
+    //   {
+    //       Vector3 spawn;
+    //       Vector2 vel = new Vector2(m_horVel + m_body.velocity.x, m_upVel + m_body.velocity.y);
+    //       //Vector2 vel = new Vector2(1, 1);
 
- //   private bool isHoldingDown;
- //   private float additionalDist;
- //   private bool hideGuide;
+    //       if (m_base.playerForces.absHor == 1)
+    //       { //facing right
+    //           if (m_base.playerForces.absUp == 1)
+    //           {
+    //               spawn = new Vector3(
+    //                   this.transform.position.x + m_rightFacingSpawn.x,
+    //                   this.transform.position.y + m_centerOffset, 0f);
 
- //   // Use this for initialization
- //   void Start () {
- //       player  = GameObject.FindGameObjectWithTag("Player");
- //       m_guide = Resources.Load("Guide") as GameObject;
- //       m_body  = player.GetComponent<Rigidbody2D>();
- //       m_base  = player.GetComponent<PlayerBase>();
+    //               //Move forward * forward weight, Move up * upward weight
+    //               vel = new Vector2(m_horVel + m_body.velocity.x, m_upVel + m_body.velocity.y);
+    //               //Debug.Log("throwing from normal up and right");
+    //           }
+    //           else
+    //           {
+    //               spawn = new Vector3(
+    //                   this.transform.position.x + m_rightFacingSpawn.x,
+    //                   this.transform.position.y - m_centerOffset, 0f);
 
- //       isHoldingDown = false;
- //       additionalDist = MIN_DIST;
- //       //hideGuide = true;
-	//}
+    //               //Move forward * forward weight, Move up * upward weight
+    //               vel = new Vector2(m_horVel + m_body.velocity.x, -1 * m_upVel + m_body.velocity.y);
+    //               //Debug.Log("throwing from normal down and right");
+    //           }
+    //       }
+    //       else
+    //       { //facing left
+    //           if (m_base.playerForces.absUp == 1)
+    //           {
+    //               spawn = new Vector3(
+    //                   this.transform.position.x + m_leftFacingSpawn.x,
+    //                   this.transform.position.y + m_centerOffset, 0f);
 
- //   void changeVisibility()
- //   {
- //       m_guide.GetComponent<Renderer>().enabled = !m_guide.GetComponent<Renderer>().enabled;
- //   }
-	
-	//// Update is called once per frame
-	//void FixedUpdate () {
- //       float tempX, tempY;
- //       Vector3 cursor = Camera.main.ScreenToWorldPoint(Input.mousePosition);
- //       Vector3 pos = player.transform.position;
+    //               //Move forward * forward weight, Move up * upward weight
+    //               vel = new Vector2(m_horVel * -1 + m_body.velocity.x, m_upVel + m_body.velocity.y);
+    //           }
+    //           else
+    //           {
+    //               spawn = new Vector3(
+    //                   this.transform.position.x + m_leftFacingSpawn.x,
+    //                   this.transform.position.y - m_centerOffset, 0f);
 
- //       //if (Input.GetKeyDown(KeyCode.G))
- //       //    changeVisibility();
+    //               //Move forward * forward weight, Move up * upward weight
+    //               vel = new Vector2(m_horVel * -1 + m_body.velocity.x, m_upVel * -1 + m_body.velocity.y);
+    //           }
+    //       }
 
- //       //if ((Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Mouse1)) && !isHoldingDown)
- //       if ((Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1)) && !isHoldingDown)
- //       { isHoldingDown = true; }
- //       //else isHoldingDown = false;
-
- //       //if ((Input.GetKeyUp(KeyCode.Mouse0) || Input.GetKeyUp(KeyCode.Mouse1)) && isHoldingDown)
- //       if ((Input.GetMouseButtonUp(0) || Input.GetMouseButtonUp(1)) && isHoldingDown)
- //       { isHoldingDown = false; additionalDist = MIN_DIST; }
-
- //       if (isHoldingDown)
- //           additionalDist = MIN_DIST + additionalDist < MAX_DIST ? 
- //               MIN_DIST + Time.deltaTime * MAX_DIST / 1.5f : MAX_DIST;
-
-
-
- //       if (m_base.playerForces.absHor > 0)
- //       {
- //           //Get mouse position relative to player's X and Y coordinates
- //           tempX = cursor.x - pos.x >= 0 ? cursor.x - pos.x : 0;
- //           tempY = m_base.playerForces.absUp > 0 ? cursor.y - pos.y : pos.y - cursor.y;
- //       }
- //       //Facing left cause
- //       else
- //       {
- //           //Get mouse position relative to player's X and Y coordinate
- //           tempX = pos.x - cursor.x >= 0 ? pos.x - cursor.x : 0;
- //           tempY = m_base.playerForces.absUp > 0 ? cursor.y - pos.y : pos.y - cursor.y;
- //       }
-
- //       float theta = Mathf.Atan(tempY / tempX);
-
- //       //Set maximum and minimum angle for theta
- //       if (theta > MAX_ANGL) theta = MAX_ANGL;
- //       if (theta < -1 * MAX_ANGL) theta = -1 * MAX_ANGL;
-
- //       //Set horVel and upVel to have magnitude of MAX_DIST based on theta
- //       m_upVel  = additionalDist * Mathf.Sin(theta);
- //       m_horVel = additionalDist * Mathf.Cos(theta);
-
- //       //Increment additional distance for velocity to where 2 second hold down gives max extra distance
- //   }
-
- //   public void throwGuide(float _polarity)
- //   {
- //       Vector3 spawn;
- //       Vector2 vel = new Vector2(m_horVel + m_body.velocity.x, m_upVel + m_body.velocity.y);
- //       //Vector2 vel = new Vector2(1, 1);
-
- //       if (m_base.playerForces.absHor == 1)
- //       { //facing right
- //           if (m_base.playerForces.absUp == 1)
- //           {
- //               spawn = new Vector3(
- //                   this.transform.position.x + m_rightFacingSpawn.x,
- //                   this.transform.position.y + m_centerOffset, 0f);
-
- //               //Move forward * forward weight, Move up * upward weight
- //               vel = new Vector2(m_horVel + m_body.velocity.x, m_upVel + m_body.velocity.y);
- //               //Debug.Log("throwing from normal up and right");
- //           }
- //           else
- //           {
- //               spawn = new Vector3(
- //                   this.transform.position.x + m_rightFacingSpawn.x,
- //                   this.transform.position.y - m_centerOffset, 0f);
-
- //               //Move forward * forward weight, Move up * upward weight
- //               vel = new Vector2(m_horVel + m_body.velocity.x, -1 * m_upVel + m_body.velocity.y);
- //               //Debug.Log("throwing from normal down and right");
- //           }
- //       }
- //       else
- //       { //facing left
- //           if (m_base.playerForces.absUp == 1)
- //           {
- //               spawn = new Vector3(
- //                   this.transform.position.x + m_leftFacingSpawn.x,
- //                   this.transform.position.y + m_centerOffset, 0f);
-
- //               //Move forward * forward weight, Move up * upward weight
- //               vel = new Vector2(m_horVel * -1 + m_body.velocity.x, m_upVel + m_body.velocity.y);
- //           }
- //           else
- //           {
- //               spawn = new Vector3(
- //                   this.transform.position.x + m_leftFacingSpawn.x,
- //                   this.transform.position.y - m_centerOffset, 0f);
-
- //               //Move forward * forward weight, Move up * upward weight
- //               vel = new Vector2(m_horVel * -1 + m_body.velocity.x, m_upVel * -1 + m_body.velocity.y);
- //           }
- //       }
-
- //       GameObject gid = (GameObject)Instantiate(m_guide, spawn, transform.rotation);
- //       Rigidbody2D tempRB = gid.GetComponent<Rigidbody2D>();
- //       tempRB.velocity = vel;
- //       //tempRB.GetComponent<Collider2D>().enabled = false;
- //       tempRB.gravityScale = GetComponent<Rigidbody2D>().gravityScale * GRAV_WEIGHT;
- //       //tempRB.GetComponentInChildren<Guide>().//setPolarity(_polarity);
- //   }
+    //       GameObject gid = (GameObject)Instantiate(m_guide, spawn, transform.rotation);
+    //       Rigidbody2D tempRB = gid.GetComponent<Rigidbody2D>();
+    //       tempRB.velocity = vel;
+    //       //tempRB.GetComponent<Collider2D>().enabled = false;
+    //       tempRB.gravityScale = GetComponent<Rigidbody2D>().gravityScale * GRAV_WEIGHT;
+    //       //tempRB.GetComponentInChildren<Guide>().//setPolarity(_polarity);
+    //   }
+    #endregion
 }
