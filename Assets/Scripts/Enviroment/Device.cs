@@ -50,6 +50,7 @@ public class Device : MonoBehaviour
             m_rigidBody.isKinematic = true;
             normal = other.contacts[0].normal;
             this.transform.position = other.contacts[0].point;
+            this.transform.parent = other.transform;
             transform.up = normal;
             this.GetComponent<Collider2D>().enabled = false;
             field.SetActive(true);
