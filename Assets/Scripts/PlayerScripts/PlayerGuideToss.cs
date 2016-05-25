@@ -38,7 +38,7 @@ public class PlayerGuideToss : MonoBehaviour {
         line_mat       = Resources.Load("line_mat") as Material;
         m_base         = player.GetComponent<PlayerBase>();
         guide          = Resources.Load("Guide") as GameObject;
-        line           = player.gameObject.AddComponent<LineRenderer>();
+        line           = player.GetComponent<LineRenderer>();
         additionalDist = 0f;
         pos1 = pos2    = new Vector2();
         canDelete      = false;
