@@ -1,0 +1,166 @@
+fileFormatVersion: 2
+guid: 73702bb8e4b72e342866a9d1e6e6175d
+timeCreated: 1464147768
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Trap_Blue_0
+    21300002: Trap_Blue_1
+    21300004: Trap_Blue_2
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 370
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Trap_Blue_0
+      rect:
+        serializedVersion: 2
+        x: 941
+        y: 595
+        width: 60
+        height: 370
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -20.166626, y: -39.333313}
+        - {x: -15.166626, y: -58.333313}
+        - {x: 20.833374, y: -58.333313}
+        - {x: 20.833374, y: 101.66669}
+        - {x: 2.833374, y: 101.66669}
+        - {x: -20.166626, y: 96.66669}
+    - name: Trap_Blue_1
+      rect:
+        serializedVersion: 2
+        x: 1103
+        y: 595
+        width: 1028
+        height: 370
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -170.66663, y: -123.33331}
+        - {x: -166.66663, y: -123.33331}
+        - {x: -166.66663, y: -120.33331}
+        - {x: -169.66663, y: -119.33331}
+        - {x: -171.66663, y: -121.33331}
+      - - {x: 171.33337, y: -123.33331}
+        - {x: 175.33337, y: -123.33331}
+        - {x: 175.33337, y: -120.33331}
+        - {x: 172.33337, y: -119.33331}
+        - {x: 170.33337, y: -121.33331}
+      - - {x: 81.333374, y: -123.33331}
+        - {x: 154.33337, y: -123.33331}
+        - {x: 157.33337, y: -122.33331}
+        - {x: 161.33337, y: -113.33331}
+        - {x: 166.33337, y: -98.33331}
+        - {x: 176.33337, y: -75.33331}
+        - {x: 184.33337, y: -57.333313}
+        - {x: 194.33337, y: -58.333313}
+        - {x: 195.33337, y: -57.333313}
+        - {x: 342.33337, y: -57.333313}
+        - {x: 343.33337, y: -56.333313}
+        - {x: 343.33337, y: 103.66669}
+        - {x: 342.33337, y: 104.66669}
+        - {x: 307.33337, y: 104.66669}
+        - {x: 296.33337, y: 115.66669}
+        - {x: 292.33337, y: 122.66669}
+        - {x: 290.33337, y: 124.66669}
+        - {x: 160.33337, y: 124.66669}
+        - {x: 150.33337, y: 110.66669}
+        - {x: 144.33337, y: 104.66669}
+        - {x: 81.333374, y: 104.66669}
+        - {x: 72.333374, y: 113.66669}
+        - {x: 68.333374, y: 119.66669}
+        - {x: 64.333374, y: 124.66669}
+        - {x: -62.666626, y: 124.66669}
+        - {x: -67.666626, y: 119.66669}
+        - {x: -80.666626, y: 104.66669}
+        - {x: -143.66663, y: 104.66669}
+        - {x: -149.66663, y: 109.66669}
+        - {x: -157.66663, y: 122.66669}
+        - {x: -159.66663, y: 124.66669}
+        - {x: -286.66663, y: 124.66669}
+        - {x: -289.66663, y: 121.66669}
+        - {x: -293.66663, y: 115.66669}
+        - {x: -303.66663, y: 104.66669}
+        - {x: -341.66663, y: 104.66669}
+        - {x: -342.66663, y: 103.66669}
+        - {x: -342.66663, y: -54.333313}
+        - {x: -340.66663, y: -56.333313}
+        - {x: -180.66663, y: -56.333313}
+        - {x: -178.66663, y: -62.333313}
+        - {x: -163.66663, y: -96.33331}
+        - {x: -159.66663, y: -105.33331}
+        - {x: -155.66663, y: -116.33331}
+        - {x: -153.66663, y: -120.33331}
+        - {x: -150.66663, y: -123.33331}
+        - {x: -91.666626, y: -123.33331}
+        - {x: -89.666626, y: -122.33331}
+        - {x: 81.333374, y: -122.33331}
+    - name: Trap_Blue_2
+      rect:
+        serializedVersion: 2
+        x: 2219
+        y: 595
+        width: 62
+        height: 370
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -19.666626, y: 105.66669}
+        - {x: -20.666626, y: 104.66669}
+        - {x: -20.666626, y: -53.333313}
+        - {x: -19.666626, y: -54.333313}
+        - {x: -14.666626, y: -54.333313}
+        - {x: 21.333374, y: -23.333313}
+        - {x: 21.333374, y: 79.66669}
+        - {x: -4.666626, y: 105.66669}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

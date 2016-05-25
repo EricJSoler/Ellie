@@ -1,0 +1,170 @@
+fileFormatVersion: 2
+guid: 4f66845b2aeb97a4c88845a867d32f07
+timeCreated: 1464147864
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Trap_Red_0
+    21300002: Trap_Red_1
+    21300004: Trap_Red_2
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 454
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Trap_Red_0
+      rect:
+        serializedVersion: 2
+        x: 931
+        y: 454
+        width: 60
+        height: 361
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 4.166687, y: 104.66669}
+        - {x: -19.833313, y: 76.66669}
+        - {x: -19.833313, y: -26.333313}
+        - {x: 17.166687, y: -57.333313}
+        - {x: 20.166687, y: -57.333313}
+        - {x: 21.166687, y: -56.333313}
+        - {x: 21.166687, y: 104.66669}
+    - name: Trap_Red_1
+      rect:
+        serializedVersion: 2
+        x: 1022
+        y: 454
+        width: 1031
+        height: 361
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -170.66663, y: -119.33331}
+        - {x: -169.66663, y: -120.33331}
+        - {x: -165.66663, y: -120.33331}
+        - {x: -165.66663, y: -117.33331}
+        - {x: -167.66663, y: -115.33331}
+        - {x: -170.66663, y: -116.33331}
+      - - {x: 183.33337, y: -59.333313}
+        - {x: 195.33337, y: -55.333313}
+        - {x: 196.33337, y: -54.333313}
+        - {x: 343.33337, y: -54.333313}
+        - {x: 344.33337, y: -53.333313}
+        - {x: 344.33337, y: 107.66669}
+        - {x: 343.33337, y: 108.66669}
+        - {x: 292.33337, y: 109.66669}
+        - {x: 285.33337, y: 120.66669}
+        - {x: 279.33337, y: 121.66669}
+        - {x: 265.33337, y: 121.66669}
+        - {x: 262.33337, y: 118.66669}
+        - {x: 254.33337, y: 108.66669}
+        - {x: 186.33337, y: 109.66669}
+        - {x: 177.33337, y: 121.66669}
+        - {x: 160.33337, y: 121.66669}
+        - {x: 155.33337, y: 118.66669}
+        - {x: 146.33337, y: 109.66669}
+        - {x: 73.333374, y: 108.66669}
+        - {x: 71.333374, y: 113.66669}
+        - {x: 67.333374, y: 121.66669}
+        - {x: 45.333374, y: 121.66669}
+        - {x: 38.333374, y: 109.66669}
+        - {x: -36.666626, y: 108.66669}
+        - {x: -37.666626, y: 110.66669}
+        - {x: -44.666626, y: 118.66669}
+        - {x: -57.666626, y: 121.66669}
+        - {x: -58.666626, y: 121.66669}
+        - {x: -64.666626, y: 118.66669}
+        - {x: -73.666626, y: 109.66669}
+        - {x: -143.66663, y: 108.66669}
+        - {x: -143.66663, y: 110.66669}
+        - {x: -155.66663, y: 121.66669}
+        - {x: -169.66663, y: 121.66669}
+        - {x: -183.66663, y: 109.66669}
+        - {x: -252.66663, y: 108.66669}
+        - {x: -255.66663, y: 115.66669}
+        - {x: -263.66663, y: 121.66669}
+        - {x: -280.66663, y: 121.66669}
+        - {x: -289.66663, y: 114.66669}
+        - {x: -291.66663, y: 108.66669}
+        - {x: -340.66663, y: 109.66669}
+        - {x: -343.66663, y: 103.66669}
+        - {x: -343.66663, y: 98.66669}
+        - {x: -341.66663, y: 98.66669}
+        - {x: -341.66663, y: -51.333313}
+        - {x: -339.66663, y: -53.333313}
+        - {x: -179.66663, y: -53.333313}
+        - {x: -152.66663, y: -118.33331}
+        - {x: -149.66663, y: -120.33331}
+        - {x: 154.33337, y: -120.33331}
+        - {x: 157.33337, y: -118.33331}
+      - - {x: 173.33337, y: -120.33331}
+        - {x: 176.33337, y: -119.33331}
+        - {x: 176.33337, y: -116.33331}
+        - {x: 173.33337, y: -115.33331}
+        - {x: 171.33337, y: -117.33331}
+    - name: Trap_Red_2
+      rect:
+        serializedVersion: 2
+        x: 2087
+        y: 454
+        width: 62
+        height: 361
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -5.666626, y: 104.66669}
+        - {x: -19.666626, y: 104.66669}
+        - {x: -20.666626, y: 103.66669}
+        - {x: -20.666626, y: -56.333313}
+        - {x: 8.333374, y: -56.333313}
+        - {x: 21.333374, y: -26.333313}
+        - {x: 21.333374, y: 77.66669}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
