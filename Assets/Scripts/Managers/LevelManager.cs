@@ -70,7 +70,7 @@ public class LevelManager : MonoBehaviour {
         float timeCompleted = FindObjectOfType<UITimer>().getTime();
         FindObjectOfType<GlobalManager>().SaveTimeCompleted(timeCompleted);
         EndPanel.SetActive(true);
-        Invoke("loadScene", 5f);
+        Invoke("loadScene", 4f);
     }
 
     private void loadScene () {
