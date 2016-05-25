@@ -4,10 +4,10 @@ using System.Collections;
 public class PlayerDevToss : MonoBehaviour {
 
     //Constants with arbitrary values used to set 'Look Good' limits on device velocity
-    private const float MIN_DIST = 15f;                 // <-- Min distance (or considered 'strength') of throwing device
-    private const float MAX_DIST = 20f;                 // <-- Max distance (or considered 'strength') of throwing device
-    private const float MAX_ANGL = Mathf.PI / 2;        // <-- Max angle player can throw upward and downward
-    private const float GRAV_WEIGHT = 6f;               // <-- Weight against rigidbody2d gravity scale
+    public const float MIN_DIST = 2.5f;                // <-- Min distance (or considered 'strength') of throwing device
+    public const float MAX_DIST = 20f;                 // <-- Max distance (or considered 'strength') of throwing device
+    public const float MAX_ANGL = Mathf.PI / 2;        // <-- Max angle player can throw upward and downward
+    public const float GRAV_WEIGHT = 6f;               // <-- Weight against rigidbody2d gravity scale
 
     private float additionalDist;
 
@@ -83,7 +83,7 @@ public class PlayerDevToss : MonoBehaviour {
         m_horVel = getDist() * Mathf.Cos(theta);
 
         //Increment additional distance for velocity to where 2 second hold down gives max extra distance
-        additionalDist += Time.deltaTime * MAX_DIST / 1.5f;
+        additionalDist += Time.fixedDeltaTime * MAX_DIST / 1.5f;
     }
 
     public void determineVelocity()

@@ -9,8 +9,8 @@ public class PlayerController : Photon.MonoBehaviour
     float m_lastThrow;
     //time between throws
     public float m_reloadTime = 5f;
-    public float m_guideWait = 0.1f;
-    public float m_prevGuide;
+    //public float m_guideWait = 0.1f;
+    //public float m_prevGuide;
     float m_timeSinceLastThrow;
     //set to r if the device to be thrown is positive
     //set to e if the device to be throw is negative
@@ -21,7 +21,7 @@ public class PlayerController : Photon.MonoBehaviour
 
     bool m_lockedControls = false;
     bool m_disableControl = false;
-    bool hideGuide = true;
+    //bool hideGuide = true;
 
     float m_timeControlsLocked;
     float m_TimeUntilUnlocked;
@@ -37,7 +37,7 @@ public class PlayerController : Photon.MonoBehaviour
     void Start() {
         m_base = this.GetComponent<PlayerBase>();
         m_devToBeTossed = 'n';
-        m_timeSinceLastThrow = m_prevGuide = Time.time;
+        m_timeSinceLastThrow = Time.time;
     }
 
     void FixedUpdate() {
@@ -54,7 +54,7 @@ public class PlayerController : Photon.MonoBehaviour
             if (!m_disableControl) {
                 if (!m_lockedControls) {
                     deviceThrowInput();
-                    guideInput();
+                    //guideInput();
                     if (Input.GetKeyDown(KeyCode.Space)) {
                         m_freeLook = !m_freeLook;
                     }
@@ -68,16 +68,16 @@ public class PlayerController : Photon.MonoBehaviour
         }
     }
 
-    void guideInput() {
-        if (Input.GetKeyDown(KeyCode.G))
-            hideGuide = !hideGuide;
+    //void guideInput() {
+    //    if (Input.GetKeyDown(KeyCode.G))
+    //        hideGuide = !hideGuide;
 
-        if ((Time.time >= m_prevGuide + m_guideWait) && !hideGuide)
-        {
-            m_base.playerGuide.throwGuide(10f);
-            m_prevGuide = Time.time;
-        }
-    }
+    //    if ((Time.time >= m_prevGuide + m_guideWait) && !hideGuide)
+    //    {
+    //        m_base.playerGuide.throwGuide(10f);
+    //        m_prevGuide = Time.time;
+    //    }
+    //}
 
     void runningInput() {
         float run = Input.GetAxis("Horizontal");
