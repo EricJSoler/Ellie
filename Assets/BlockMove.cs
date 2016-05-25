@@ -5,7 +5,7 @@ public class BlockMove : MonoBehaviour {
 
     
     public Vector2[] checkpoints;
-    public int moveSpeed;
+    public float moveSpeed;
 
     int currentGoal;
 
