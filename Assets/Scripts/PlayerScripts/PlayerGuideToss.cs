@@ -25,7 +25,7 @@ public class PlayerGuideToss : MonoBehaviour {
     private bool         canDelete;
     private float        offset_hor;
     private float        offset_vert;
-    private Color        lineColor;
+    public Color        lineColor;
     private float        lineA;
     private bool         shouldMute;
 
@@ -46,12 +46,7 @@ public class PlayerGuideToss : MonoBehaviour {
         glb_vect1      = new Vector3();
         glb_vect2      = new Vector3();
         lineA          = 0.7f;
-        lineColor      = new Color (
-                            Color.magenta.r, 
-                            Color.magenta.g, 
-                            Color.magenta.b, 
-                            0.7f
-                         );
+        //lineColor = new Color(254, 153, 0);
     }
 
 
@@ -211,7 +206,7 @@ public class PlayerGuideToss : MonoBehaviour {
         //);
 
         line.SetVertexCount(2);
-        line.material.color = new Color(lineColor.r, lineColor.g, lineColor.b, 1f);
+        line.material.color = new Color(lineColor.r, lineColor.g, lineColor.b);
         line.SetPosition(0, glb_vect1);
         line.SetPosition(1, glb_vect2);
         line.SetWidth(0.05f * getDist(), 0.05f);
