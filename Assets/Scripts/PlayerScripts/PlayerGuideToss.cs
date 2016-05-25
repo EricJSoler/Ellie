@@ -27,6 +27,7 @@ public class PlayerGuideToss : MonoBehaviour {
     private float        offset_vert;
     private Color        lineColor;
     private float        lineA;
+    private bool         shouldMute;
 
 
 
@@ -39,6 +40,7 @@ public class PlayerGuideToss : MonoBehaviour {
         additionalDist = prev_additionalDist = curr_additionalDist = 0f;
         pos1 = pos2    = new Vector2();
         canDelete      = false;
+        shouldMute     = false;
         offset_hor     = 0.4f;
         offset_vert    = 0.5f;
         glb_vect1      = new Vector3();
@@ -56,8 +58,16 @@ public class PlayerGuideToss : MonoBehaviour {
 
     void FixedUpdate()
     {
-        determineAdditionalDist();
-        getAngle();
+        if (Input.GetKeyDown(KeyCode.G))
+            shouldMute = !shouldMute;
+
+        if (!shouldMute)
+        {
+            unhideGuide();
+            determineAdditionalDist();
+            getAngle();
+        }
+        else hideGuide();
     }
 
 
@@ -226,6 +236,20 @@ public class PlayerGuideToss : MonoBehaviour {
         else
             additionalDist = additionalDist - 0.5f > 0 ? 
                              additionalDist - 0.5f : 0 ;
+    }
+
+
+
+    private void hideGuide()
+    {
+        line.SetVertexCount(0);
+    }
+
+
+
+    private void unhideGuide()
+    {
+        line.SetVertexCount(2);
     }
 
 
