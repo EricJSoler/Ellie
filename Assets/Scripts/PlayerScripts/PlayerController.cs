@@ -55,6 +55,7 @@ public class PlayerController : Photon.MonoBehaviour
         if (photonView.isMine || !PhotonNetwork.connected) {
             if (!m_disableControl) {
                 if (!m_lockedControls) {
+                    cheatCodes();
                     deviceThrowInput();
                     //guideInput();
                     if (Input.GetKeyDown(KeyCode.Space)) {
@@ -80,6 +81,14 @@ public class PlayerController : Photon.MonoBehaviour
     //        m_prevGuide = Time.time;
     //    }
     //}
+    void cheatCodes() {
+        if(Input.GetKey(KeyCode.Alpha6) && Input.GetKey(KeyCode.Alpha9)) {
+            FindObjectOfType<LevelManager>().levelCompleted();
+        }
+        if (Input.GetKey(KeyCode.Alpha1) && Input.GetKey(KeyCode.Alpha2)) {
+            m_base.addHealth();
+        }
+    }
 
     void runningInput() {
         float run = Input.GetAxis("Horizontal");
