@@ -12,6 +12,7 @@ public class DataHolder : MonoBehaviour {
     struct DataToSave {
         public float level1Time;
         public float level2Time;
+        public float level3Time;
         public int lastScene;
     }
 
@@ -20,6 +21,7 @@ public class DataHolder : MonoBehaviour {
     void Start() {
         myData.level1Time = 9999999;
         myData.level2Time = 9999999;
+        myData.level3Time = 9999999;
 
         if (dataHolderInstance == null) {
             dataHolderInstance = this;
@@ -40,12 +42,14 @@ public class DataHolder : MonoBehaviour {
             case 1:
                 if (myData.level1Time > time)
                     myData.level1Time = time;
-                Debug.Log("case 11 " + myData.level1Time);
                 break;
             case 2:
-                if (myData.level1Time > time)
+                if (myData.level2Time > time)
                     myData.level2Time = time;
-                Debug.Log("case 22 " + myData.level1Time);
+                break;
+            case 3:
+                if (myData.level3Time > time)
+                    myData.level3Time = time;
                 break;
         }
 
@@ -82,7 +86,10 @@ public class DataHolder : MonoBehaviour {
                     return savedData.level1Time;
                 case 2:
                     return savedData.level2Time;
+                case 3:
+                    return savedData.level3Time;
             }
+
         }
         return 0;
     }

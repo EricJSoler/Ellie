@@ -125,9 +125,10 @@ public class EnemyForces : MonoBehaviour
     public void run(int _direction) {
         if (_direction != 0)
             m_lastMovedDirection = _direction;
+
         float newXVel = ext_field.x + m_rigidBody.velocity.x + m_speedIncrement * _direction;
         newXVel = Mathf.Clamp(newXVel, -1 * m_horVelMax + ext_field.x, m_horVelMax + ext_field.x);
-        m_rigidBody.velocity = new Vector2(newXVel, m_rigidBody.velocity.y);
+        m_rigidBody.velocity = new Vector2(newXVel, m_rigidBody.velocity.y); 
     }
 
     public int absUp {
