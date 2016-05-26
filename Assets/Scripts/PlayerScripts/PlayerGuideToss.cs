@@ -48,8 +48,6 @@ public class PlayerGuideToss : MonoBehaviour {
         glb_vect1      = new Vector3();
         glb_vect2      = new Vector3();
         lineA          = 0.7f;
-        //lineColor = new Color(254, 153, 0);
-        Debug.Log("Your Debug: " + line_mat.ToString());
     }
 
 
