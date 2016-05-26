@@ -138,6 +138,9 @@ public class PlayerController : Photon.MonoBehaviour
                 }
             }
         }
+        if(Input.GetKeyDown(KeyCode.RightControl) || Input.GetKeyDown(KeyCode.R)) {
+            m_base.playerDevice.turnOffLastDev();
+        }
     }
 
     //locks the controls for the time

@@ -92,11 +92,13 @@ public class Field : MonoBehaviour
 
     void OnDestroy() {
         foreach(GODeltaTuple ele in aplyingTo) {
-            if (ele.obj.tag == "Player") {
-                ele.obj.GetComponent<PlayerBase>().playerForces.addToDelta(ele.lastDelta * -1);
-            }
-            else if(ele.obj.tag == "Enemy") {
-                ele.obj.GetComponent<EnemyBase>().playerForces.addToDelta(ele.lastDelta * -1);
+            if (ele.obj != null) {
+                if (ele.obj.tag == "Player") {
+                    ele.obj.GetComponent<PlayerBase>().playerForces.addToDelta(ele.lastDelta * -1);
+                }
+                else if (ele.obj.tag == "Enemy") {
+                    ele.obj.GetComponent<EnemyBase>().playerForces.addToDelta(ele.lastDelta * -1);
+                }
             }
         }
     }

@@ -53,10 +53,10 @@ public class SmoothCamera : MonoBehaviour
         //}
 
         float yVel = player.GetComponent<Rigidbody2D>().velocity.y;
-        if(yVel > 2 && !player.GetComponent<PlayerForces>().grounded) {
+        if(yVel > 0 && !player.GetComponent<PlayerForces>().grounded) {
             upright = 1;
         }
-        else if(yVel < 2 && !player.GetComponent<PlayerForces>().grounded) {
+        else if(yVel < 0 && !player.GetComponent<PlayerForces>().grounded) {
             upright = -1;
         }
         else {

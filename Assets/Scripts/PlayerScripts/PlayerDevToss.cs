@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerDevToss : MonoBehaviour {
 
@@ -35,6 +36,9 @@ public class PlayerDevToss : MonoBehaviour {
     //Weight to velocities dependent on cursor location
     public float m_upWeight;
     public float m_horWeight;
+
+    //Stack to keep track of the devices that have been thrown
+    Stack<GameObject> m_thrownDevs = new Stack<GameObject>();
 
 	// Use this for initialization
 	void Start () {
@@ -173,11 +177,21 @@ public class PlayerDevToss : MonoBehaviour {
                     spawn, transform.rotation);
             }
         }
+        m_thrownDevs.Push(dev);
         Rigidbody2D rb = dev.GetComponent<Rigidbody2D>();
         rb.velocity = vel;
         rb.gravityScale = this.GetComponent<Rigidbody2D>().gravityScale * GRAV_WEIGHT;
         //adding polarity to the instantiation of the field
         //dev.GetComponent<Device>().setPolarity(_polarity);
 
+    }
+
+    public void turnOffLastDev() {
+        if (m_thrownDevs.Count > 0) {
+            GameObject popped = m_thrownDevs.Pop();
+            if (popped != null) {
+                Destroy(popped);
+            }
+        }
     }
 }
