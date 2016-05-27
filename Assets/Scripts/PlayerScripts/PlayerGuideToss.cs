@@ -8,7 +8,7 @@ public class PlayerGuideToss : MonoBehaviour {
     public const float MAGNITUDE_SCALE = 2f;
 
 
-
+    #region Field Declaration
     private PlayerBase   m_base;
     private GameObject   player;
     private GameObject   guide;
@@ -29,11 +29,12 @@ public class PlayerGuideToss : MonoBehaviour {
     public Color         lineColor;
     private float        lineA;
     private bool         shouldMute;
-
+    #endregion
 
 
     void Start()
     {
+        #region Field Instantiation
         player         = GameObject.FindGameObjectWithTag("Player");
         line_mat       = Resources.Load("line_mat") as Material;
         m_base         = player.GetComponent<PlayerBase>();
@@ -48,6 +49,7 @@ public class PlayerGuideToss : MonoBehaviour {
         glb_vect1      = new Vector3();
         glb_vect2      = new Vector3();
         lineA          = 0.7f;
+        #endregion
     }
 
 
@@ -56,6 +58,7 @@ public class PlayerGuideToss : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.G))
             shouldMute = !shouldMute;
+
 
         if (!shouldMute)
         {
@@ -98,6 +101,7 @@ public class PlayerGuideToss : MonoBehaviour {
         pos2.x = Mathf.Cos(theta);
         pos2.y = Mathf.Sin(theta);
 
+        #region Set Direction Guide Should Go
         if (m_base.playerForces.absHor > 0)
         {
             if (m_base.playerForces.absUp > 0)
@@ -159,10 +163,11 @@ public class PlayerGuideToss : MonoBehaviour {
                     0f
                 );
             }
+            
         }
+        #endregion
 
         line.SetVertexCount(2);
-        line.material.color = new Color(lineColor.r, lineColor.g, lineColor.b);
         line.SetPosition(0, glb_vect1);
         line.SetPosition(1, glb_vect2);
         line.SetWidth(0.05f * getDist(), 0.05f);
