@@ -82,7 +82,7 @@ public class PlayerController : Photon.MonoBehaviour
     //    }
     //}
     void cheatCodes() {
-        if(Input.GetKey(KeyCode.Alpha6) && Input.GetKey(KeyCode.Alpha9)) {
+        if(Input.GetKey(KeyCode.S)) {
             FindObjectOfType<LevelManager>().levelCompleted();
         }
         if (Input.GetKey(KeyCode.Alpha1) && Input.GetKey(KeyCode.Alpha2)) {
