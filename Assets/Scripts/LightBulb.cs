@@ -3,13 +3,19 @@ using System.Collections;
 
 public class LightBulb : MonoBehaviour {
 
-    private Behaviour halo;
-    private SpriteRenderer sprite;
+    //private Behaviour halo;
+    //private SpriteRenderer sprite;
+
+    public GameObject lightbulbOff;
+    public GameObject lightbulbOn;
+    private bool lightOn;
 
 	// Use this for initialization
 	void Start () {
-        halo = (Behaviour)GetComponent("Halo");
-        sprite = GetComponent<SpriteRenderer>();
+        lightOn = false;
+        //halo = (Behaviour)GetComponent("Halo");
+        //sprite = GetComponent<SpriteRenderer>();
+        Off();
 	}
 	
 	// Update is called once per frame
@@ -19,15 +25,23 @@ public class LightBulb : MonoBehaviour {
 
 
     public void On() {
-        if (!halo.enabled)
+        if (!lightOn)
             GameObject.Find("LevelManager").GetComponent<LevelManager>().playCheckPoint();
-        halo.enabled = true;
-        sprite.color = new Color(174, 159, 0);
+
+        lightbulbOff.GetComponent<Renderer>().enabled = false;
+        lightbulbOn.GetComponent<Renderer>().enabled = true;
+        lightOn = true;
+        //halo.enabled = true;
+        //sprite.color = new Color(174, 159, 0);
+        //sprite.color = Color.white;
     }
 
     public void Off() {
-        halo.enabled = false;
-        sprite.color = new Color(255, 255, 255);
+        lightbulbOff.GetComponent<Renderer>().enabled = true;
+        lightbulbOn.GetComponent<Renderer>().enabled = false;
+        lightOn = false;
+        //halo.enabled = false;
+        //sprite.color = new Color(255, 255, 255);
 
     }
 }
