@@ -54,7 +54,7 @@ public class PlayerDevToss : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () //MAY NEED TO CHANGE tempX & tempY CALCULATION
+	void FixUpdate () //MAY NEED TO CHANGE tempX & tempY CALCULATION
     {
 
         float tempX, tempY;
