@@ -1,10 +1,17 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class HighScores : MonoBehaviour {
 
 
     #region Leaderboard Keys
+    // When adding a new key, do the following:
+    //    1) Follow the naming convention below
+    //    2) Update MAX_PRIVATE_KEYS
+    //    3) Update MAX_PUBLIC_KEYS
+    //    4) Update case statement in getPrivateKey()
+    //    5) Update case statement in getPublicKey()
     private const string PRIVATE_KEY_LVL1 = "LRxxlQV0vECmFOqIXZeiRAHn3Ssp-A2k-dyBd4sfpmTg";
     private const string PUBLIC_KEY_LVL1  = "574ba3f08af603062c13d36a";
 
@@ -26,16 +33,23 @@ public class HighScores : MonoBehaviour {
     #endregion
 
 
+    //public Text[] highScoreText;
     public HighScoresNode[] highScoresList;
+    public int level = 1;
+    //public int maxRetrievals = 5;
+    public int maxNameLengthForInsert = 20;
+    private DisplayHighScores highScoresDisplay;
 
 
     void Awake()
     {
-        insertHighScore("Cyrus the Handsome", 1, 50);
+        highScoresDisplay = GetComponent<DisplayHighScores>();
     }
 
 
-	void Start () { }
+    void Start ()
+    {
+    }
 	
 
 	void Update () { }
@@ -45,10 +59,23 @@ public class HighScores : MonoBehaviour {
     // Passes in player's name, the level played, and the time it took to complete that level to be
     // inserted into online leaderboard
     //------------------------------------------------------------------------------------------------
-    public void insertHighScore(string name, int lvl, float time)
+    public void insertHighScore(string name, float time)
     {
-        string privateKey = getPrivateKey(lvl), 
-               publicKey  = getPublicKey(lvl) ;
+        Debug.Log("Entering INSERT w/ time @ " + time);
+
+        string privateKey = getPrivateKey(level), 
+               publicKey  = getPublicKey(level) ;
+
+        #region Replace Malicious Words and Characters
+        name = name.Replace(' ', '_');
+        name = name.Replace("clear", "clr");
+        name = name.Replace("DROP TABLE", "Scum_bag");
+        #endregion
+
+        #region Concatanate Name by maxNameLength if necessary
+        if (name.Length + 1 > maxNameLengthForInsert)
+            name = name.Substring(0, maxNameLengthForInsert);
+        #endregion
 
         StartCoroutine(uploadToDB(name, time, privateKey, publicKey));
     }
@@ -66,7 +93,7 @@ public class HighScores : MonoBehaviour {
     //--------------------------------- getPrivateKey ------------------------------------------------
     // Returns the private key for a specified level
     //------------------------------------------------------------------------------------------------
-    private string getPrivateKey(int lvl)
+    private static string getPrivateKey(int lvl)
     {
         string privateKey;
 
@@ -99,7 +126,7 @@ public class HighScores : MonoBehaviour {
     //--------------------------------- getPublicKey -------------------------------------------------
     // Returns the public key for a specified level
     //------------------------------------------------------------------------------------------------
-    private string getPublicKey(int lvl)
+    private static string getPublicKey(int lvl)
     {
         string publicKey;
 
@@ -127,14 +154,14 @@ public class HighScores : MonoBehaviour {
 
         return publicKey;
     }
-    
-    
+      
+
     //--------------------------------- uploadToDB ---------------------------------------------------
     // Connects to web URL and adds player name and time to leaderboard
     //------------------------------------------------------------------------------------------------
-    private IEnumerator uploadToDB(string name, float time, string privateKey, string publicKey)
+    private static IEnumerator uploadToDB(string name, float time, string privateKey, string publicKey)
     {
-        WWW www = new WWW(URL + privateKey + "/add/" + WWW.EscapeURL(name) + "/" + time);
+        WWW www = new WWW(URL + privateKey + "/add/" + WWW.EscapeURL(name) + "/" + (int)Mathf.Ceil(time));
         yield return www;
 
         if (!string.IsNullOrEmpty(www.error))
@@ -145,14 +172,22 @@ public class HighScores : MonoBehaviour {
     //--------------------------------- downloadLevelDB ----------------------------------------------
     // Connects to web URL and downloads highscores for specified level
     //------------------------------------------------------------------------------------------------
-    private IEnumerator downloadLevelDB(string publicKey)
+    IEnumerator downloadLevelDB(string publicKey)
     {
-        WWW www = new WWW(URL + publicKey + "/pipe/0/10");
+        WWW www = new WWW(URL + publicKey + "/pipe/");
         yield return www;
 
         if (!string.IsNullOrEmpty(www.error))
+        {
             Debug.Log("Error occured in high scores coroutine download: " + www.error);
+        }
+        else
+        {
+            formatHighScores(www.text);
+            highScoresDisplay.OnHighscoresDownloaded(highScoresList);
+        }
     }
+
 
     //--------------------------------- formatHighScores ---------------------------------------------
     // Formats the high scores retrieved from the online database
@@ -168,11 +203,16 @@ public class HighScores : MonoBehaviour {
         {
             string[] entryInfo = entries[i].Split(new char[] { '|' });
             string userName = entryInfo[0];
-            float time = int.Parse(entryInfo[1]);
+            float time = (float) int.Parse(entryInfo[1]);
             highScoresList[i] = new HighScoresNode(userName, time, 1);
+            //Debug.Log(highScoresList[i].name + ": " + highScoresList[i].time);
         }
     }
+
+
 }
+
+
 
 public struct HighScoresNode
 {
@@ -180,10 +220,10 @@ public struct HighScoresNode
     public float time;
     public int lvl;
 
-    public HighScoresNode(string _name, float _time, int _lvl) : this()
+    public HighScoresNode(string _name, float _time, int _lvl)
     {
-        _name = name;
-        _time = time;
-        _lvl  = lvl;
+        name = _name;
+        time = _time;
+        lvl  = _lvl;
     }
 }

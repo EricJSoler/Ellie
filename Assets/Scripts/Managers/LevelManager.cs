@@ -25,6 +25,7 @@ public class LevelManager : MonoBehaviour {
     private GameObject MainMenuButton;
     private GameObject ResumeButton;
     private GameObject EndPanel;
+    private HighScores glb_highscore;
 
 
     void Awake() {
@@ -42,6 +43,8 @@ public class LevelManager : MonoBehaviour {
         ResumeButton.SetActive(false);
         EndPanel = GameObject.Find("LevelComplete");
         EndPanel.SetActive(false);
+
+        glb_highscore = GetComponent<HighScores>();
     }
 
 
@@ -68,6 +71,8 @@ public class LevelManager : MonoBehaviour {
         pauseLevel();
 
         float timeCompleted = FindObjectOfType<UITimer>().getTime();
+        glb_highscore.insertHighScore("Guy", timeCompleted);
+
         FindObjectOfType<GlobalManager>().SaveTimeCompleted(timeCompleted);
         EndPanel.SetActive(true);
         Invoke("loadScene", 4f);
