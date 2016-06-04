@@ -23,7 +23,7 @@ public class SmoothCamera : MonoBehaviour
             MouseCamera();
         }
         else {
-            TiedCamera();
+            ForwardCamera();
         }
         
     }
@@ -43,6 +43,20 @@ public class SmoothCamera : MonoBehaviour
     }
     void checkpoint() {
         transform.position = new Vector3(player.transform.position.x + 7, player.transform.position.y, transform.position.z);
+    }
+    void ForwardCamera() {
+        float posX;
+        float posY;
+        Vector3 mouseVector = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseVector.z = 0;
+        Vector3 newCameraLocation = Vector3.Lerp(player.transform.position, mouseVector, .5f);
+        float velY = player.GetComponent<Rigidbody2D>().velocity.y;
+        if (velY > 3) {
+            velY = 3;
+        }
+        posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x + player.GetComponent<Rigidbody2D>().velocity.x, ref velocity.x, smoothTimeX);
+        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + velY, ref velocity.y, smoothTimeY);
+        transform.position = new Vector3(posX, posY, transform.position.z);
     }
     void TiedCamera() {
         float posX;
