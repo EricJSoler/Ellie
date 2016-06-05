@@ -34,4 +34,8 @@ public class GlobalManager : MonoBehaviour {
         
     }
 
+    public void getName (string name) {
+        FindObjectOfType<DataHolder>().getName() ;
+    }
+
 }
