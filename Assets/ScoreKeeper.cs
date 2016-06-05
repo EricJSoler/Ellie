@@ -33,7 +33,7 @@ public class ScoreKeeper : Photon.MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (photonView.isMine) {
-            if (Time.time > timeSinceLastSpawn + 60) {
+            if (Time.time > timeSinceLastSpawn + 20) {
                 spawnBolt();
                 timeSinceLastSpawn = Time.time;
             }
