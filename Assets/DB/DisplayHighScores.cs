@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 using UnityEngine.UI;
 
 public class DisplayHighScores : MonoBehaviour {
@@ -30,20 +31,27 @@ public class DisplayHighScores : MonoBehaviour {
     //------------------------------------------------------------------------------------------------
     public void OnHighscoresDownloaded (HighScoresNode[] highScoresList)
     {
+        int rank = 0;
+        bool lessHighScoreNodes = highScoresList.Length < highScoreText.Length;
+
         for (int i = 0; i < highScoreText.Length; i++)
         {
-            highScoreText[i].text = i + 1 + ". ";
-            if (highScoresList.Length > i)
-            {
-                if (highScoresList[i].name.Length + 1 > maxNameLength)
-                {
-                    highScoresList[i].name = highScoresList[i].name.Substring(0, maxNameLength);
-                }
+            highScoreText[i].text = ++rank + ". ";
 
-                highScoreText[i].text += highScoresList[i].name + " - " + highScoresList[i].time;
+            try
+            {
+                if (highScoresList[highScoresList.Length - rank].name.Length + 1 > maxNameLength)
+                    highScoresList[highScoresList.Length - rank].name 
+                        = highScoresList[highScoresList.Length - rank].name.Substring(0, maxNameLength);
+
+                highScoreText[i].text += highScoresList[highScoresList.Length - rank].name
+                    + " - " + highScoresList[highScoresList.Length - rank].time;
             }
-            else
+            catch (Exception e)
+            {
                 highScoreText[i].text += "null";
+                Debug.Log(e);
+            }
         }
     }
 

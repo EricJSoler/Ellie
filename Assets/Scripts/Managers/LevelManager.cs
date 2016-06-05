@@ -73,8 +73,7 @@ public class LevelManager : MonoBehaviour {
         pauseLevel();
 
         float timeCompleted = FindObjectOfType<UITimer>().getTime();
-        glb_highscore.insertHighScore("Guy", timeCompleted);
-
+        glb_highscore.insertHighScore(FindObjectOfType<GlobalManager>().getName(), timeCompleted);
         FindObjectOfType<GlobalManager>().SaveTimeCompleted(timeCompleted);
         EndPanel.SetActive(true);
         Invoke("loadScene", 4f);
