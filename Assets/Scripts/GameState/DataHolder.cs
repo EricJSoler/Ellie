@@ -10,6 +10,7 @@ public class DataHolder : MonoBehaviour {
 
     [System.Serializable]
     struct DataToSave {
+        public string name;
         public float level1Time;
         public float level2Time;
         public float level3Time;
@@ -19,6 +20,7 @@ public class DataHolder : MonoBehaviour {
     DataToSave myData;
     // Use this for initialization
     void Start() {
+        myData.name = "";
         myData.level1Time = 9999999;
         myData.level2Time = 9999999;
         myData.level3Time = 9999999;
@@ -34,6 +36,17 @@ public class DataHolder : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
+    }
+
+    public void initName (string name) {
+        if (name.Equals("")) {
+            name = "Anonymous";
+        }
+        myData.name = name;
+    }
+
+    public string getName () {
+        return myData.name;
     }
 
     public void save(float time) {
