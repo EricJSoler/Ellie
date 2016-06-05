@@ -11,7 +11,7 @@ public class ScoreKeeper : Photon.MonoBehaviour {
 
     int masterClientScore;
     int otherScore;
-    string otherName;
+    public string otherName;
     System.Random rnd;
 	void Start () {
         masterClientScore = 0;
