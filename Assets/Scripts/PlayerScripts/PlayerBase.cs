@@ -144,7 +144,7 @@ public class PlayerBase : Photon.MonoBehaviour
                     sc.removeMasterClientScore();
                 }
                 else {
-                    photonView.RPC("removeOtherScore", PhotonTargets.OthersBuffered); 
+                    FindObjectOfType<ScoreKeeper>().callRemoveOtherScore(); 
                 }
             }
         }

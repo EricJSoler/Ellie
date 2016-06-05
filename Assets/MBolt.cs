@@ -1,17 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MBolt : Photon.MonoBehaviour {
+public class MBolt : Photon.MonoBehaviour
+{
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    // Use this for initialization
+    void Start() {
+
+    }
+
+    // Update is called once per frame
+    void Update() {
+
+    }
 
     void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
 
@@ -20,7 +21,7 @@ public class MBolt : Photon.MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.gameObject.tag == "Player") {
             if (other.gameObject.GetPhotonView().isMine) {
-                if (this.photonView.isMine) { //local im the master client
+                if (PhotonNetwork.isMasterClient) {//local im the master client
                     FindObjectOfType<ScoreKeeper>().addMasterClientScore();
                     PhotonNetwork.Destroy(this.gameObject);
                 }
@@ -33,7 +34,7 @@ public class MBolt : Photon.MonoBehaviour {
 
     [PunRPC]
     void otherHit() {
-        FindObjectOfType<ScoreKeeper>().addMasterClientScore();
+        FindObjectOfType<ScoreKeeper>().addOtherScore();
         PhotonNetwork.Destroy(this.gameObject);
     }
 }
