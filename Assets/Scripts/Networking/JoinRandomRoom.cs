@@ -62,7 +62,7 @@ public class JoinRandomRoom : Photon.MonoBehaviour {
         //PhotonNetwork.automaticallySyncScene = true;
         //PhotonNetwork.LoadLevel(1);//PhotonNetwork.LoadLevel(1);
         //if (!PhotonNetwork.isMasterClient)
-            PhotonNetwork.LoadLevel(1);
+        PhotonNetwork.LoadLevel("arena");
     }
 }
 

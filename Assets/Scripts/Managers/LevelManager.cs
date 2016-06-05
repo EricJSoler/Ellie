@@ -29,8 +29,10 @@ public class LevelManager : MonoBehaviour {
 
 
     void Awake() {
-        Instantiate((GameObject)Resources.Load(playerPrefab),
-            m_startSpawn, Quaternion.identity);
+        if (!PhotonNetwork.connected) {
+            Instantiate((GameObject)Resources.Load(playerPrefab),
+                m_startSpawn, Quaternion.identity);
+        }
 
     }
 	void Start () {

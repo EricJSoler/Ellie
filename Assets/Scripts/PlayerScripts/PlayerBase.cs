@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerBase : MonoBehaviour
+public class PlayerBase : Photon.MonoBehaviour
 {
 
     #region PlayerComponents
@@ -125,14 +125,28 @@ public class PlayerBase : MonoBehaviour
     }
 
     public void loseHealthTrap() {
-        if (!relocationPlayer) {
-            if (m_stats.takeHit()) { //player dead
-                m_anim.killPlayer();
-                FindObjectOfType<LevelManager>().restartLevel();
+        if (!PhotonNetwork.connected) {
+            if (!relocationPlayer) {
+                if (m_stats.takeHit()) { //player dead
+                    m_anim.killPlayer();
+                    FindObjectOfType<LevelManager>().restartLevel();
+                }
+                m_timeAnimStarted = Time.time;
+                m_anim.hurtPlayer();
+                repositionPlayer(playerForces.lastCheckPoint);
             }
-            m_timeAnimStarted = Time.time;
-            m_anim.hurtPlayer();
-            repositionPlayer(playerForces.lastCheckPoint);
+        }
+        else {
+            if (photonView.isMine) {
+                FindObjectOfType<spawnManager>().respawn();
+                ScoreKeeper sc = FindObjectOfType<ScoreKeeper>();
+                if (sc.photonView.isMine) {
+                    sc.removeMasterClientScore();
+                }
+                else {
+                    photonView.RPC("removeOtherScore", PhotonTargets.OthersBuffered); 
+                }
+            }
         }
     }
 
