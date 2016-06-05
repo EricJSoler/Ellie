@@ -140,12 +140,14 @@ public class PlayerBase : Photon.MonoBehaviour
             if (photonView.isMine) {
                 FindObjectOfType<spawnManager>().respawn();
                 ScoreKeeper sc = FindObjectOfType<ScoreKeeper>();
+                
                 if (sc.photonView.isMine) {
                     sc.removeMasterClientScore();
                 }
                 else {
                     FindObjectOfType<ScoreKeeper>().callRemoveOtherScore(); 
                 }
+                playerForces.removeAllDeltas();
             }
         }
     }

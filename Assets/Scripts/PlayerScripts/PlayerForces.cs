@@ -164,4 +164,10 @@ public class PlayerForces : Photon.MonoBehaviour
 
     }
 
+    public void removeAllDeltas() {
+        if (PhotonNetwork.connected) {
+            ext_field = new Vector2(0, 0);
+        }
+    }
+
 }
