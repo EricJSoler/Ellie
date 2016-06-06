@@ -11,7 +11,8 @@ public class PlayerController : Photon.MonoBehaviour
     public float m_reloadTime = 5f;
     //public float m_guideWait = 0.1f;
     //public float m_prevGuide;
-    float m_timeSinceLastThrow;
+    public float m_timeSinceLastThrow;
+    public bool hasFired = true;
     //set to r if the device to be thrown is positive
     //set to e if the device to be throw is negative
     //set to n if nothing is in the process of being thrown
@@ -103,10 +104,12 @@ public class PlayerController : Photon.MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.R)) {
                         m_base.playerDevice.startTimer();
                         m_devToBeTossed = 'r';
+                        hasFired = false;
                     }
                     else if (Input.GetKeyDown(KeyCode.E)) {
                         m_base.playerDevice.startTimer();
                         m_devToBeTossed = 'e';
+                        hasFired = false;
                     }
                 }
 
@@ -114,12 +117,14 @@ public class PlayerController : Photon.MonoBehaviour
                     m_base.playerDevice.throwDevice(-10f);
                     m_devToBeTossed = 'n';
                     m_timeSinceLastThrow = Time.time;
+                    hasFired = true;
                 }
 
                 if (Input.GetKeyUp(KeyCode.E) && m_devToBeTossed == 'e') {
                     m_base.playerDevice.throwDevice(10f);
                     m_devToBeTossed = 'n';
                     m_timeSinceLastThrow = Time.time;
+                    hasFired = true;
                 }
             }
             else {
@@ -127,10 +132,13 @@ public class PlayerController : Photon.MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Mouse0)) {
                         m_base.playerDevice.startTimer();
                         m_devToBeTossed = 'r';
+                        hasFired = false;
+
                     }
                     else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.Mouse1)) {
                         m_base.playerDevice.startTimer();
                         m_devToBeTossed = 'e';
+                        hasFired = false;
                     }
                 }
 
@@ -138,12 +146,14 @@ public class PlayerController : Photon.MonoBehaviour
                     m_base.playerDevice.throwDevice(-.25f);
                     m_devToBeTossed = 'n';
                     m_timeSinceLastThrow = Time.time;
+                    hasFired = true;
                 }
 
                 if ((Input.GetKeyUp(KeyCode.DownArrow) || Input.GetKeyUp(KeyCode.Mouse1)) && m_devToBeTossed == 'e') {
                     m_base.playerDevice.throwDevice(.25f);
                     m_devToBeTossed = 'n';
                     m_timeSinceLastThrow = Time.time;
+                    hasFired = true;
                 }
             }
         }
