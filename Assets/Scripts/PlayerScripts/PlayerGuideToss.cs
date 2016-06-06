@@ -190,7 +190,7 @@ public class PlayerGuideToss : MonoBehaviour {
     private void determineAdditionalDist()
     {
             if (!pController.hasFired && (Input.GetMouseButton(0) || Input.GetMouseButton(1)))
-                additionalDist += Time.fixedDeltaTime * PlayerDevToss.MAX_DIST * 1.5f;
+                additionalDist += Time.fixedDeltaTime * PlayerDevToss.MAX_DIST / 1.5f;
             else if (Input.GetMouseButtonUp(0) && Input.GetMouseButtonUp(1))
                 additionalDist = additionalDist - 0.5f > 0 ?
                                  additionalDist - 0.5f : 0;
