@@ -79,6 +79,16 @@ public class LevelManager : MonoBehaviour {
         Invoke("loadScene", 4f);
     }
 
+    public void cheatCodeUsedToComplete() {
+        bkMusic.PlayOneShot(finalSound, sfxVolume); // SFX
+        pauseLevel();
+
+        float timeCompleted = Mathf.Infinity;
+        FindObjectOfType<GlobalManager>().SaveTimeCompleted(timeCompleted);
+        EndPanel.SetActive(true);
+        Invoke("loadScene", 4f);
+    }
+
     private void loadScene () {
         SceneManager.LoadScene(
             (SceneManager.GetActiveScene().buildIndex + 1)

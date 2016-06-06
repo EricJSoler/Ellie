@@ -84,7 +84,7 @@ public class PlayerController : Photon.MonoBehaviour
     //}
     void cheatCodes() {
         if(Input.GetKey(KeyCode.N)) {
-            FindObjectOfType<LevelManager>().levelCompleted();
+            FindObjectOfType<LevelManager>().cheatCodeUsedToComplete();
         }
         if (Input.GetKey(KeyCode.Alpha1) && Input.GetKey(KeyCode.Alpha2)) {
             m_base.addHealth();
