@@ -51,11 +51,15 @@ public class SmoothCamera : MonoBehaviour
         mouseVector.z = 0;
         Vector3 newCameraLocation = Vector3.Lerp(player.transform.position, mouseVector, .5f);
         float velY = player.GetComponent<Rigidbody2D>().velocity.y;
-        if (velY > 3) {
-            velY = 3;
+        if (velY > 1) {
+            velY = 1;
+        }
+        if (velY < -1) {
+            velY = -1;
         }
         posX = Mathf.SmoothDamp(transform.position.x, player.transform.position.x + player.GetComponent<Rigidbody2D>().velocity.x, ref velocity.x, smoothTimeX);
-        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + velY, ref velocity.y, smoothTimeY);
+        posY = Mathf.SmoothDamp(transform.position.y, player.transform.position.y + velY, ref velocity.y, .6f);
+
         transform.position = new Vector3(posX, posY, transform.position.z);
     }
     void TiedCamera() {
