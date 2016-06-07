@@ -79,10 +79,10 @@ public class DisplayHighScores : MonoBehaviour {
     //------------------------------------------------------------------------------------------------
     private string formatTime(float time)
     {
-        string minutes = Mathf.Floor(time / 60) + "";
-        string seconds = time % 60 < 10 ? "0" + time % 60 : (time % 60) + "";
+        float minutes = time / 60;
+        float seconds = time % 60;
 
-        return minutes + ":" + seconds;
+        return minutes.ToString("00") + ":" + seconds.ToString("00");
     }
 
 

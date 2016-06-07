@@ -72,7 +72,7 @@ public class LevelManager : MonoBehaviour {
         bkMusic.PlayOneShot(finalSound, sfxVolume); // SFX
         pauseLevel();
 
-        float timeCompleted = FindObjectOfType<UITimer>().getTime();
+        float timeCompleted = Mathf.Floor(FindObjectOfType<UITimer>().getTime());
         glb_highscore.insertHighScore(FindObjectOfType<GlobalManager>().getName(), timeCompleted);
         FindObjectOfType<GlobalManager>().SaveTimeCompleted(timeCompleted);
         EndPanel.SetActive(true);

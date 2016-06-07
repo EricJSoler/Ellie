@@ -44,6 +44,18 @@ public class HighScores : MonoBehaviour {
     void Awake()
     {
         highScoresDisplay = GetComponent<DisplayHighScores>();
+        //StartCoroutine(uploadToDB("Cyrus", 503, "LRxxlQV0vECmFOqIXZeiRAHn3Ssp-A2k-dyBd4sfpmTg", "574ba3f08af603062c13d36a"));
+        //StartCoroutine(uploadToDB("Is", 504, "LRxxlQV0vECmFOqIXZeiRAHn3Ssp-A2k-dyBd4sfpmTg", "574ba3f08af603062c13d36a"));
+        //StartCoroutine(uploadToDB("Handsom", 505, "LRxxlQV0vECmFOqIXZeiRAHn3Ssp-A2k-dyBd4sfpmTg", "574ba3f08af603062c13d36a"));
+
+        //StartCoroutine(uploadToDB("Cyrus", 703, "vGVXU2qcykyGRp9HPaqVRw_csdbPY0vkyXawHvsRLaCw", "574bbc738af603062c13e637"));
+        //StartCoroutine(uploadToDB("Is", 704, "vGVXU2qcykyGRp9HPaqVRw_csdbPY0vkyXawHvsRLaCw", "574bbc738af603062c13e637"));
+        //StartCoroutine(uploadToDB("Handsom", 705, "vGVXU2qcykyGRp9HPaqVRw_csdbPY0vkyXawHvsRLaCw", "574bbc738af603062c13e637"));
+
+        //StartCoroutine(uploadToDB("Cyrus", 903, "xEi9Ao5V7kik_iP21rK-Zgbc5txWD6U0qhwrIdiJ-EkA", "574bbca18af603062c13e671"));
+        //StartCoroutine(uploadToDB("Is", 904, "xEi9Ao5V7kik_iP21rK-Zgbc5txWD6U0qhwrIdiJ-EkA", "574bbca18af603062c13e671"));
+        //StartCoroutine(uploadToDB("Handsom", 905, "xEi9Ao5V7kik_iP21rK-Zgbc5txWD6U0qhwrIdiJ-EkA", "574bbca18af603062c13e671"));
+
     }
 
 
@@ -69,7 +81,8 @@ public class HighScores : MonoBehaviour {
         #region Replace Malicious Words and Characters
         name = name.Replace(' ', '_');
         name = name.Replace("clear", "clr");
-        name = name.Replace("DROP TABLE", "Scum_bag");
+        name = name.Replace("DROP TABLE", "Scumbag");
+        name = name.Replace("fuck", "fock");
         #endregion
 
         #region Concatanate Name by maxNameLength if necessary
@@ -161,7 +174,7 @@ public class HighScores : MonoBehaviour {
     //------------------------------------------------------------------------------------------------
     private static IEnumerator uploadToDB(string name, float time, string privateKey, string publicKey)
     {
-        WWW www = new WWW(URL + privateKey + "/add/" + WWW.EscapeURL(name) + "/" + (int)Mathf.Ceil(time));
+        WWW www = new WWW(URL + privateKey + "/add/" + WWW.EscapeURL(name) + "/" + (int)Mathf.Floor(time));
         yield return www;
 
         if (!string.IsNullOrEmpty(www.error))
